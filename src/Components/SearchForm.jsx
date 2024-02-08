@@ -1,14 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-library.add(coffee);
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const SearchForm = () => {
   return (
     <>
       <div className="search-line-container">
-        <FontAwesomeIcon icon="coffee" />
-
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          className='search-icon'
+        />
         <input
           type="text"
           placeholder="Номер рейсу або місто"
@@ -22,5 +22,4 @@ const SearchForm = () => {
     </>
   );
 };
-
 export default SearchForm;
