@@ -1,20 +1,23 @@
-import {
-    printDepartures,
-    printArrivals,
-    PRINT_DEPARTURES,
-    PRINT_ARRIVALS,
-  } from './actions.js';
-  const initialState = { flights: { departures: [1], arrivals: [1] } };
-  const flightsReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case PRINT_DEPARTURES:
-        return { ...state };
-    }
-    switch (action.type) {
-      case PRINT_ARRIVALS:
-        return { ...state};
-      default:
-        return state;
-    }
-  };
-  export default flightsReducer;
+import { PRINT_DEPARTURES, PRINT_ARRIVALS } from './actions.js';
+import fetchRequest from './serverRequests.js';
+const departures = await fetchRequest().then((data) =>
+  data.map(({ departureCity }) => departureCity)
+);
+const arrivals = await fetchRequest().then((data) =>
+  data.map(({ arrivalCity }) => arrivalCity)
+);
+const flights = await fetchRequest().then((data) => data);
+const initialState = flights;
+const flightsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case PRINT_DEPARTURES:
+      return state;
+  }
+  switch (action.type) {
+    case PRINT_ARRIVALS:
+      return state;
+    default:
+      return state;
+  }
+};
+export default flightsReducer;

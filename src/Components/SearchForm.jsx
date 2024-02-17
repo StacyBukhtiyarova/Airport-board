@@ -1,57 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { connect, useSelector } from 'react-redux';
+import { flightsSelector } from '../selector.js';
+import { printArrivals, printDepartures } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
-import flightsReducer from '.././reducer.js';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  PRINT_DEPARTURES,
-  printDepartures,
-  printArrivals,
-} from '../actions.js';
-import { connect } from 'react-redux';
-
-import fetchRequest from '../serverRequests.js';
-const SearchForm = () => {
-  console.log(this.props)
-  const data = fetchRequest().then(data=>console.log(data));
+export const SearchForm = () => {
+  const flights = useSelector(flightsSelector);
+  const [filteredFlights, setFilteredFlights] = useState([]); // state for the list of flights to show
+  const handleDepartures = () => {
+    const filterDepartures = flights.filter(
+      (departures) => departures === data.departures
+    );
+    console.log(departures);
+  };
+  const handleClick = (event) => {
+    // add event as a parameter
+    event.preventDefault();
+    console.log(flights);
+    setFilteredFlights(flights);
+  };
   return (
     <>
       <div className="search-line-container">
-        <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          className="search-icon"
+        />
         <input
           type="text"
           placeholder="Номер рейсу або місто"
-          className="search-line-container"
-        ></input>
+          className="search-line-container"></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={()=>data}
-        >
+          onClick={handleClick}>
           Знайти
         </button>
       </div>
       <FlightButtons />
-     <ul>
-       {
-         
-       }
-     </ul>
+      {filteredFlights.length > 0 && ( // only render the list if there are flights
+        <ul style={{ color: 'red' }}>
+          {filteredFlights.map(
+            ({
+              terminal,
+              departureCity,
+              arrivalCity,
+              type,
+              departureDate,
+              arrivalDate,
+              departureDateExpected,
+              arrivalDateExpected,
+              status,
+              airlineName,
+              airlineLogo,
+              id,
+              codeShare,
+            }) => (
+              <li>
+                <span>{terminal}</span>
+
+                <span>{departureCity}</span>
+
+                <span>{arrivalCity}</span>
+
+                <span>{type}</span>
+
+                <span>{departureDate}</span>
+
+                <span>{arrivalDate}</span>
+                <span>{departureDateExpected}</span>
+                <span>{arrivalDateExpected}</span>
+              </li>
+            )
+          )}
+        </ul>
+      )}
     </>
   );
 };
-const mapState = (state) => ({
-  departures: state.departures,
-  arrivals: state.arrivals,
-});
-const mapDispatch =()=> ({
-  
+
+//};
+
+const mapDispatch = () => ({
   printDepartures: printDepartures,
-  printArrivals: printArrivals
+  printArrivals: printArrivals,
 });
 
-
-export default connect(mapState, mapDispatch)(SearchForm);
-
-export default SearchForm;
+export default connect(mapDispatch)(SearchForm);

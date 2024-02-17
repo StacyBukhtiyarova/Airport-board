@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+.main-search {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: url(https://iev.aero/images/main.jpg) no-repeat;
+  background-size: cover;
+  background-color: #000;
+  color: #fff;
+}
+.title {
+  text-align: center;
+  line-height: 80px;
+  font-size: 60px;
+}
+.search-line-container {
+  display: flex;
+  //flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  // align-items: center;
+  // text-align: center;
+  // padding: 0 5vh 0 5vh;
+  height: 60px;
+  border: none;
+}
+.search-button {
+  width: 20%;
+  background-color: #1eb7ee;
+  color: #fff;
+  border: none;
+  border-radius: 0 80px 0 0;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 700;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.search-icon {
+  position: relative;
+  left: 40px;
+  height: 30px;
+  color: grey;
+}
+.flights {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  //  margin: 0 auto;
+  margin: 20px auto;
+  width: 80%;
+
+  &__arrival-button {
+    //  width: 500%;
+    height: 40px;
+    width: 250px;
+    margin-left: 4vh;
+    //   margin-right: 140px;
+    //   margin-left: 30px;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 0 80px 0 0;
+    //   font-size: 20px;
+    //   font-weight: 700;
+  }
+  &__departure-button {
+    width: 250px;
+    height: 40px;
+    // width: 500%;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 80px 0px 0 0;
+    //   font-size: 20px;
+    //   font-weight: 700;
+  }
+
+  .plane-icon__arrival {
+    position: absolute;
+    top: 10px;
+    left: 5vh;
+    color: #1eb7ee;
+  }
+  .plane-icon__departure {
+    position: absolute;
+    top: 10px;
+    right: 1vh;
+    color: #1eb7ee;
+  }
+}
