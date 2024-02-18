@@ -1,13 +1,13 @@
 import { PRINT_DEPARTURES, PRINT_ARRIVALS } from './actions.js';
 import fetchRequest from './serverRequests.js';
-const departures = await fetchRequest().then((data) =>
+const departures = fetchRequest().then((data) =>
   data.map(({ departureCity }) => departureCity)
 );
-const arrivals = await fetchRequest().then((data) =>
+const arrivals = fetchRequest().then((data) =>
   data.map(({ arrivalCity }) => arrivalCity)
 );
-const flights = await fetchRequest().then((data) => data);
-const initialState = flights;
+const flights = fetchRequest().then((data) => data.json());
+const initialState = 1;
 const flightsReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRINT_DEPARTURES:
