@@ -7,6 +7,6 @@ export const printDepartures = () => {
 export const printArrivals = () => {
   return { type: PRINT_ARRIVALS };
 };
-export const printFlights = () => {
-  return { type: PRINT_FLIGHTS };
+export const printFlights = (flights) => {
+  return { type: PRINT_FLIGHTS, payload: flights };
 };

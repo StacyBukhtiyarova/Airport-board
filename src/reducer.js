@@ -6,12 +6,16 @@ const departures = fetchRequest().then((data) =>
 const arrivals = fetchRequest().then((data) =>
   data.map(({ arrivalCity }) => arrivalCity)
 );
-const flights = fetchRequest().then((data) => data.json());
-const initialState = 1;
+const flights = await fetchRequest().then((data) => data);
+const initialState = flights;
 const flightsReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRINT_DEPARTURES:
       return state;
+  }
+  switch (action.type) {
+    case PRINT_FLIGHTS:
+      return { ...state, flights: action.payload.flights };
   }
   switch (action.type) {
     case PRINT_ARRIVALS:

@@ -1,46 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { flightsSelector } from '../selector.js';
-import { printArrivals, printDepartures, printFlights } from '../actions.js';
+import {
+  PRINT_FLIGHTS,
+  printArrivals,
+  printDepartures,
+  printFlights,
+} from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const SearchForm = ({ flights }) => {
-  console.log(flights);
+const SearchForm = ({ flights, printFlights }) => {
   // const [filteredFlights, setFilteredFlights] = useState([]);
   // state for the list of flights to show
-  const handleDepartures = () => {
-    const filterDepartures = flights.filter(
-      (departures) => departures === data.departures
-    );
-  };
+
   const handleClick = (event) => {
     // add event as a parameter
     event.preventDefault();
-
-    //setFilteredFlights(flights);
-    flights;
+    return dispatch(printFlights);
   };
   return (
     <>
       <div className="search-line-container">
-        <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          className="search-icon"
+        />
         <input
           type="text"
           placeholder="Номер рейсу або місто"
-          className="search-line-container"
-        ></input>
+          className="search-line-container"></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={handleClick}
-        >
+          onClick={printFlights}>
           Знайти
         </button>
       </div>
       <FlightButtons />
-      {flights.length > 0 && ( // only render the list if there are flights
+
+      {
         <ul style={{ color: 'red' }}>
           {flights.map(
             ({
