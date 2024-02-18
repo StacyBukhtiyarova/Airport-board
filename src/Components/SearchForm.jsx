@@ -2,24 +2,15 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect, useSelector } from 'react-redux';
 import { flightsSelector } from '../selector.js';
-import { printArrivals, printDepartures } from '../actions.js';
+import { printArrivals, printDepartures, printFlights } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-
-export const SearchForm = () => {
-  const flights = useSelector(flightsSelector);
-  const [filteredFlights, setFilteredFlights] = useState([]); // state for the list of flights to show
-  const handleDepartures = () => {
-    const filterDepartures = flights.filter(
-      (departures) => departures === data.departures
-    );
-    console.log(departures);
-  };
+export const SearchForm = ({ flights }) => {
+  // state for the list of flights to show
+  console.log(flights);
   const handleClick = (event) => {
     // add event as a parameter
     event.preventDefault();
-    console.log(flights);
-    setFilteredFlights(flights);
   };
   return (
     <>
@@ -40,9 +31,10 @@ export const SearchForm = () => {
         </button>
       </div>
       <FlightButtons />
-      {filteredFlights.length > 0 && ( // only render the list if there are flights
+      {
+        // only render the list if there are flights
         <ul style={{ color: 'red' }}>
-          {filteredFlights.map(
+          {flights.map(
             ({
               terminal,
               departureCity,
@@ -76,16 +68,18 @@ export const SearchForm = () => {
             )
           )}
         </ul>
-      )}
+      }
     </>
   );
 };
 
-//};
-
-const mapDispatch = () => ({
-  printDepartures: printDepartures,
-  printArrivals: printArrivals,
-});
-
-export default connect(mapDispatch)(SearchForm);
+const mapState = (state) => {
+  // определяем функцию mapState
+  return {
+    flights: flightsSelector(state), // возвращаем объект с нужными свойствами из state
+  };
+};
+const mapDispatch = {
+  printFlights,
+};
+export default connect(mapState, mapDispatch)(SearchForm);

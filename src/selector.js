@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 export const flights = (state) => {
+  console.log(state);
   return state.flights;
 };
 
