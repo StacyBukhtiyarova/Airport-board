@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { flightsSelector } from '../selector.js';
 import {
   PRINT_FLIGHTS,
@@ -12,14 +12,16 @@ import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const SearchForm = ({ flights, printFlights }) => {
-  // const [filteredFlights, setFilteredFlights] = useState([]);
-  // state for the list of flights to show
+  const dispatch = useDispatch();
+  const [displayedFlights, setDisplayedFlights] = useState([]);
 
-  const handleClick = (event) => {
-    // add event as a parameter
-    event.preventDefault();
-    return dispatch(printFlights);
+  const handleSearchClick = () => {
+    // Здесь должен быть ваш код для получения данных поиска, например, из поля ввода
+    console.log(dispatch(printFlights(flights)));
+    setDisplayedFlights(flights);
+    return dispatch(printFlights(printFlights));
   };
+
   return (
     <>
       <div className="search-line-container">
@@ -34,15 +36,14 @@ const SearchForm = ({ flights, printFlights }) => {
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={printFlights}>
+          onClick={handleSearchClick}>
           Знайти
         </button>
       </div>
       <FlightButtons />
-
-      {
+      {handleSearchClick && (
         <ul style={{ color: 'red' }}>
-          {flights.map(
+          {displayedFlights.map(
             ({
               terminal,
               departureCity,
@@ -76,13 +77,12 @@ const SearchForm = ({ flights, printFlights }) => {
             )
           )}
         </ul>
-      }
+      )}
     </>
   );
 };
 
 const mapState = (state) => {
-  console.log(state);
   return {
     flights: flightsSelector(state),
   };
