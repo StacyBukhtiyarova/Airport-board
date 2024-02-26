@@ -1,21 +1,19 @@
-import { PRINT_DEPARTURES, PRINT_ARRIVALS, PRINT_FLIGHTS } from './actions.js';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import fetchRequest from './serverRequests.js';
-// const departures = fetchRequest().then((data) =>
-//   data.map(({ departureCity }) => departureCity)
-// );
-// const arrivals = fetchRequest().then((data) =>
-//   data.map(({ arrivalCity }) => arrivalCity)
-// );
-const flights = await fetchRequest().then((data) => data);
-const initialState = flights;
-const flightsReducer = (state = initialState, action) => {
+
+import { PRINT_DEPARTURES, PRINT_ARRIVALS, PRINT_FLIGHTS } from './actions.js';
+
+const flightsReducer = (state = [], action) => {
   switch (action.type) {
     case PRINT_DEPARTURES:
       return state;
   }
   switch (action.type) {
     case PRINT_FLIGHTS:
-      return state;
+      return {
+        ...state,
+      };
   }
   switch (action.type) {
     case PRINT_ARRIVALS:

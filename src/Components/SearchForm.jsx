@@ -2,24 +2,21 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect, useDispatch } from 'react-redux';
 import { flightsSelector } from '../selector.js';
-import {
-  PRINT_FLIGHTS,
-  printArrivals,
-  printDepartures,
-  printFlights,
-} from '../actions.js';
+import { printArrivals, printDepartures, printFlights } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import fetchRequest from '../serverRequests.js';
 
+const fetchedFlights = await fetchRequest();
 const SearchForm = ({ flights, printFlights }) => {
+  const [searchFormValue, setSearchFormValue] = useState('');
+  const [allFlights, setAllFlights] = useState([]);
   const dispatch = useDispatch();
-  const [displayedFlights, setDisplayedFlights] = useState([]);
 
-  const handleSearchClick = () => {
-    // Здесь должен быть ваш код для получения данных поиска, например, из поля ввода
-    console.log(dispatch(printFlights(flights)));
-    setDisplayedFlights(flights);
-    return dispatch(printFlights(printFlights));
+  const handleSearchClick = (event) => {
+    event.preventDefault();
+    setAllFlights(fetchedFlights);
+    dispatch(printFlights(fetchedFlights));
   };
 
   return (
@@ -32,7 +29,10 @@ const SearchForm = ({ flights, printFlights }) => {
         <input
           type="text"
           placeholder="Номер рейсу або місто"
-          className="search-line-container"></input>
+          className="search-line-container"
+          value={searchFormValue}
+          onChange={(event) => setSearchFormValue(event.target.value)}></input>
+
         <button
           className="search-line-container search-button"
           type="submit"
@@ -41,43 +41,42 @@ const SearchForm = ({ flights, printFlights }) => {
         </button>
       </div>
       <FlightButtons />
-      {handleSearchClick && (
-        <ul style={{ color: 'red' }}>
-          {displayedFlights.map(
-            ({
-              terminal,
-              departureCity,
-              arrivalCity,
-              type,
-              departureDate,
-              arrivalDate,
-              departureDateExpected,
-              arrivalDateExpected,
-              status,
-              airlineName,
-              airlineLogo,
-              id,
-              codeShare,
-            }) => (
-              <li>
-                <span>{terminal}</span>
 
-                <span>{departureCity}</span>
+      <ul style={{ color: 'red' }}>
+        {allFlights.map(
+          ({
+            terminal,
+            departureCity,
+            arrivalCity,
+            type,
+            departureDate,
+            arrivalDate,
+            departureDateExpected,
+            arrivalDateExpected,
+            status,
+            airlineName,
+            airlineLogo,
+            id,
+            codeShare,
+          }) => (
+            <li>
+              <span>{terminal}</span>
 
-                <span>{arrivalCity}</span>
+              <span>{departureCity}</span>
 
-                <span>{type}</span>
+              <span>{arrivalCity}</span>
 
-                <span>{departureDate}</span>
+              <span>{type}</span>
 
-                <span>{arrivalDate}</span>
-                <span>{departureDateExpected}</span>
-                <span>{arrivalDateExpected}</span>
-              </li>
-            )
-          )}
-        </ul>
-      )}
+              <span>{departureDate}</span>
+
+              <span>{arrivalDate}</span>
+              <span>{departureDateExpected}</span>
+              <span>{arrivalDateExpected}</span>
+            </li>
+          )
+        )}
+      </ul>
     </>
   );
 };
@@ -85,6 +84,7 @@ const SearchForm = ({ flights, printFlights }) => {
 const mapState = (state) => {
   return {
     flights: flightsSelector(state),
+    searchField: state,
   };
 };
 const mapDispatch = {
