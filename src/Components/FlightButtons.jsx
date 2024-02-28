@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { printArrivals, printDepartures, printFlights } from '../actions.js';
-import {
-  flightsSelector,
-  arrivalsSelector,
-  departuresSelector,
-} from '../selector.js';
+import { flightsSelector } from '../selector.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlaneDeparture,
@@ -18,7 +14,7 @@ const FlightButtons = ({ flights, printFlights }) => {
   const [filteredFlights, setfilteredFlights] = useState([]);
   const onClickArrivals = (e) => {
     e.preventDefault();
-    const filteredFlights = flights.match()
+    const filteredFlights = flights.match();
   };
   return (
     <div className="flights">
@@ -50,8 +46,8 @@ const FlightButtons = ({ flights, printFlights }) => {
 
 const mapState = (state) => {
   return {
-    arrivals: arrivalsSelector(state),
-    departures: departuresSelector(state),
+  //  arrivals: arrivalsSelector(state),
+   // departures: departuresSelector(state),
     flights: flightsSelector(state),
   };
 };

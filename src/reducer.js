@@ -1,35 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import fetchRequest from './serverRequests.js';
-
 import {
   PRINT_DEPARTURES,
   PRINT_ARRIVALS,
   PRINT_FLIGHTS,
-  SEARCH_FIELD,
+  SEARCH_FLIGHTS,
 } from './actions.js';
 
-const flightsReducer = (state = [], action) => {
+import fetchRequest from './serverRequests.js';
+const departures = fetchRequest().then((data) =>
+  data.map(({ departureCity }) => departureCity)
+);
+const arrivals = fetchRequest().then((data) =>
+  data.map(({ arrivalCity }) => arrivalCity)
+);
+
+export const flightsReducer = (state = [], action) => {
   switch (action.type) {
     case PRINT_DEPARTURES:
-      return state;
+      return { ...state, flightsList: action.payload };
   }
   switch (action.type) {
     case PRINT_FLIGHTS:
-      return {
-        ...state,
-        flights: action.payload.flights.flightsList,
-      };
+      return { ...state, flightsList: action.payload };
   }
   switch (action.type) {
     case PRINT_ARRIVALS:
       return state;
-  }
-  switch (action.type) {
-    case SEARCH_FIELD:
-      return { ...state, searchField: action.payload.filteredSearch.search };
     default:
       return state;
   }
 };
-export default flightsReducer;
+export const searchFlightsReducer = (state = '', action) => {
+  switch (action.type) {
+    case SEARCH_FLIGHTS:
+      return state;
+    default:
+      return state;
+  }
+};

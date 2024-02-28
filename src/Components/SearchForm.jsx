@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { connect, useDispatch } from 'react-redux';
-import { flightsSelector } from '../selector.js';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { flightsSelector, searchFlightsSelector } from '../selector.js';
+import fetchRequest from '.././serverRequests.js';
 import {
+  searchFlights,
   printArrivals,
   printDepartures,
   printFlights,
-  searchField,
 } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import fetchRequest from '../serverRequests.js';
-const fetchedFlights = await fetchRequest();
-const SearchForm = ({ flights, printFlights }) => {
-  console.log(flights);
-  const [searchFormValue, setSearchFormValue] = useState('');
-  const [allFlights, setAllFlights] = useState([]);
-  const dispatch = useDispatch();
 
-  const handleSearchClick = (event) => {
-    event.preventDefault();
-    console.log(searchFormValue);
-    setAllFlights(fetchedFlights);
-    dispatch(printFlights(fetchedFlights));
-    dispatch();
+const SearchForm = ({ flights, printFlights, searchFlights, search }) => {
+  const [filteredFlights, setAllFlights] = useState([]);
+  const [input, setInput] = useState('');
+  const dispatch = useDispatch();
+  const handleClick = (e) => {
+    e.preventDefault();
+    fetchRequest().then((data) => {
+      return setAllFlights(data), dispatch(printFlights(data));
+    });
   };
 
   return (
@@ -37,69 +34,71 @@ const SearchForm = ({ flights, printFlights }) => {
           type="text"
           placeholder="Номер рейсу або місто"
           className="search-line-container"
-          value={searchFormValue}
-          onChange={(event) => setSearchFormValue(event.target.value)}></input>
-
+          value={input}
+          onChange={(e) => {
+            return setInput(e.target.value);
+          }}></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={handleSearchClick}>
+          onClick={handleClick}>
           Знайти
         </button>
       </div>
       <FlightButtons />
 
-      <ul style={{ color: 'red' }}>
-        {allFlights.map(
-          ({
-            terminal,
-            departureCity,
-            arrivalCity,
-            type,
-            departureDate,
-            arrivalDate,
-            departureDateExpected,
-            arrivalDateExpected,
-            status,
-            airlineName,
-            airlineLogo,
-            id,
-            codeShare,
-          }) => (
-            <li>
-              <span>{terminal}</span>
+      {
+        <ul style={{ color: 'red' }}>
+          {filteredFlights.map(
+            ({
+              terminal,
+              departureCity,
+              arrivalCity,
+              type,
+              departureDate,
+              arrivalDate,
+              departureDateExpected,
+              arrivalDateExpected,
+              status,
+              airlineName,
+              airlineLogo,
+              id,
+              codeShare,
+            }) => (
+              <li>
+                <span>{terminal}</span>
 
-              <span>{departureCity}</span>
+                <span>{departureCity}</span>
 
-              <span>{arrivalCity}</span>
+                <span>{arrivalCity}</span>
 
-              <span>{type}</span>
+                <span>{type}</span>
 
-              <span>{departureDate}</span>
+                <span>{departureDate}</span>
 
-              <span>{arrivalDate}</span>
-              <span>{departureDateExpected}</span>
-              <span>{arrivalDateExpected}</span>
-            </li>
-          )
-        )}
-      </ul>
+                <span>{arrivalDate}</span>
+                <span>{departureDateExpected}</span>
+                <span>{arrivalDateExpected}</span>
+              </li>
+            )
+          )}
+        </ul>
+      }
     </>
   );
 };
 
 const mapState = (state) => {
-   console.log(state);
   return {
-    flights: flightsSelector(state),
-    searchField: state,
+    flightsList: flightsSelector(state),
+    searchFlights: searchFlightsSelector(state),
   };
 };
 const mapDispatch = {
   printDepartures,
   printArrivals,
   printFlights,
-  searchField,
+  searchFlights,
 };
 
 export default connect(mapState, mapDispatch)(SearchForm);
