@@ -16,11 +16,17 @@ const arrivals = fetchRequest().then((data) =>
 export const flightsReducer = (state = [], action) => {
   switch (action.type) {
     case PRINT_DEPARTURES:
-      return { ...state, flightsList: action.payload };
+      return {
+        ...state,
+        flightsList: action.payload,
+      };
   }
   switch (action.type) {
     case PRINT_FLIGHTS:
-      return { ...state, flightsList: action.payload };
+      return {
+        ...state,
+        flightsList: action.payload,
+      };
   }
   switch (action.type) {
     case PRINT_ARRIVALS:
@@ -32,7 +38,7 @@ export const flightsReducer = (state = [], action) => {
 export const searchFlightsReducer = (state = '', action) => {
   switch (action.type) {
     case SEARCH_FLIGHTS:
-      return state;
+      return { ...state, searchFlight: action.payload };
     default:
       return state;
   }

@@ -12,17 +12,21 @@ import {
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const SearchForm = ({ flights, printFlights, searchFlights, search }) => {
+const SearchForm = ({ flights, printFlights, searchFlights }) => {
   const [filteredFlights, setAllFlights] = useState([]);
   const [input, setInput] = useState('');
   const dispatch = useDispatch();
-  const handleClick = (e) => {
+  const handleClickFlights = (e) => {
     e.preventDefault();
+    console.log(input);
     fetchRequest().then((data) => {
       return setAllFlights(data), dispatch(printFlights(data));
     });
   };
-
+  const handleClickSearchFlight = (e) => {
+    setInput(e.target.value);
+    dispatch(searchFlights(e.target.value));
+  };
   return (
     <>
       <div className="search-line-container">
@@ -35,13 +39,11 @@ const SearchForm = ({ flights, printFlights, searchFlights, search }) => {
           placeholder="Номер рейсу або місто"
           className="search-line-container"
           value={input}
-          onChange={(e) => {
-            return setInput(e.target.value);
-          }}></input>
+          onChange={handleClickSearchFlight}></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={handleClick}>
+          onClick={handleClickFlights}>
           Знайти
         </button>
       </div>
@@ -91,7 +93,7 @@ const SearchForm = ({ flights, printFlights, searchFlights, search }) => {
 const mapState = (state) => {
   return {
     flightsList: flightsSelector(state),
-    searchFlights: searchFlightsSelector(state),
+    searchFlight: searchFlightsSelector(state),
   };
 };
 const mapDispatch = {

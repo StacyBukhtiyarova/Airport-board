@@ -4,10 +4,10 @@ export const flights = (state) => {
 };
 export const flightsSelector = createSelector(flights, (flights) => flights);
 
-export const searchFlights = (state) => {
+export const searchFlight = (state) => {
   return state;
 };
 export const searchFlightsSelector = createSelector(
-  searchFlights,
-  (searchFlights) => searchFlights
+  searchFlight,
+  (searchFlight) => searchFlight
 );
