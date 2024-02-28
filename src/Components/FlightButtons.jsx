@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const FlightButtons = ({ flights, printFlights }) => {
-  console.log(flights);
+  //console.log(flights);
 
   const [filteredFlights, setfilteredFlights] = useState([]);
   const onClickArrivals = (e) => {

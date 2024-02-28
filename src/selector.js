@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 export const flights = (state) => {
-  return state;
+  return state.flights.flights;
 };
 export const flightsSelector = createSelector([flights], (flights) => flights);
 
