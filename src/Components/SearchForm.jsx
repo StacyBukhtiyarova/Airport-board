@@ -12,21 +12,34 @@ import {
 import FlightButtons from '../Components/FlightButtons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const SearchForm = ({ flights, printFlights, searchFlights }) => {
-  const [filteredFlights, setAllFlights] = useState([]);
+const SearchForm = ({ printFlights, searchFlights }) => {
+  const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const dispatch = useDispatch();
-  const handleClickFlights = (e) => {
+  const onClickFlights = (e) => {
     e.preventDefault();
     console.log(input);
     fetchRequest().then((data) => {
-      return setAllFlights(data), dispatch(printFlights(data));
+      return setFlights(data), dispatch(printFlights(data));
     });
   };
-  const handleClickSearchFlight = (e) => {
+  const onClickSearchFlight = (e) => {
     setInput(e.target.value);
     dispatch(searchFlights(e.target.value));
   };
+  // const displayedFlights = filteredFlights.map(
+  //   ({ departureCity, arrivalCity }) =>
+  //     console.log(input === departureCity)
+  // );
+  const filteredFlights = flights.filter(({ departureCity, arrivalCity }) => {
+    //  const departureFlight = input.toLowerCase() === departureCity.toLowerCase();
+    //  const arrivalFlight = input.toLowerCase() === arrivalCity.toLowerCase();
+    //   return departureFlight || arrivalFlight;
+    const match = departureCity.toLowerCase().match(input.toLowerCase());
+    return match;
+  });
+  console.log(filteredFlights);
+  // console.log(input);
   return (
     <>
       <div className="search-line-container">
@@ -39,11 +52,11 @@ const SearchForm = ({ flights, printFlights, searchFlights }) => {
           placeholder="Номер рейсу або місто"
           className="search-line-container"
           value={input}
-          onChange={handleClickSearchFlight}></input>
+          onChange={onClickSearchFlight}></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={handleClickFlights}>
+          onClick={onClickFlights}>
           Знайти
         </button>
       </div>
