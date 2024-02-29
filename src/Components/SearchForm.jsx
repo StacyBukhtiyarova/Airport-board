@@ -41,7 +41,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   console.log(filteredFlights);
   // console.log(input);
   return (
-    <>
+    <div className='container'>
       <div className="search-line-container">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
@@ -50,7 +50,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         <input
           type="text"
           placeholder="Номер рейсу або місто"
-          className="search-line-container"
+          className="text-field"
           value={input}
           onChange={onClickSearchFlight}></input>
         <button
@@ -99,7 +99,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
           )}
         </ul>
       }
-    </>
+    </div>
   );
 };
 
