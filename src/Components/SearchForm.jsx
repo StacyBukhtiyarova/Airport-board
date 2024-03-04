@@ -41,7 +41,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   console.log(filteredFlights);
   // console.log(input);
   return (
-    <div className='container'>
+    <div className="container">
       <div className="search-line-container">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
@@ -62,8 +62,16 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       </div>
       <FlightButtons />
 
-      {
-        <ul style={{ color: 'red' }}>
+      <section>
+        <ul className="flights-list">
+          <li className="flights-list__titles">Terminal</li>
+          <li className="flights-list__titles">Schedule</li>
+          <li className="flights-list__titles">Destination</li>
+          <li className="flights-list__titles">Status</li>
+          <li className="flights-list__titles">Airline</li>
+          <li className="flights-list__titles">Flight</li>
+        </ul>
+        <ul>
           {filteredFlights.map(
             ({
               terminal,
@@ -79,26 +87,32 @@ const SearchForm = ({ printFlights, searchFlights }) => {
               airlineLogo,
               id,
               codeShare,
-            }) => (
-              <li>
-                <span>{terminal}</span>
+            }) => {
+              const scheduleDateHour = new Date(departureDate).getHours();
+              const scheduleDateMinutes = new Date(departureDate).getMinutes();
+              return (
+                <li className=" flights-list__display">
+                  <span>{terminal}</span>
 
-                <span>{departureCity}</span>
+                  <span>
+                    {scheduleDateHour}:{scheduleDateMinutes}
+                  </span>
 
-                <span>{arrivalCity}</span>
+                  <span>{arrivalCity}</span>
 
-                <span>{type}</span>
+                  <span>{type}</span>
 
-                <span>{departureDate}</span>
+                  {/* <span>{departureDate}</span>
 
                 <span>{arrivalDate}</span>
                 <span>{departureDateExpected}</span>
-                <span>{arrivalDateExpected}</span>
-              </li>
-            )
+                <span>{arrivalDateExpected}</span> */}
+                </li>
+              );
+            }
           )}
         </ul>
-      }
+      </section>
     </div>
   );
 };
