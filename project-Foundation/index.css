@@ -123,16 +123,21 @@
 }
 .flights-list__time {
   position: absolute;
-  right: 65%;
+  right: 66.6%;
 }
 .flights-list__departure {
   position: absolute;
-  right: 50%;
+  right: 54%;
+  width: 100px;
+}
+.flights-list__arrival {
+  position: absolute;
+  right: 44.5%;
   width: 100px;
 }
 .flights-list__status {
   position: absolute;
-  right: 42%;
+  right: 38%;
 }
 .flights-list__codeshare {
   position: absolute;
@@ -140,7 +145,7 @@
 }
 .flights-list__airline {
   position: absolute;
-  right: 28%;
+  right: 25%;
   word-wrap: break-word;
   width: 150px;
 }

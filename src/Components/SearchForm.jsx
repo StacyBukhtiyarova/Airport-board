@@ -66,7 +66,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         <ul className="flights-list">
           <li className="flights-list__titles">Terminal</li>
           <li className="flights-list__titles">Schedule</li>
-          <li className="flights-list__titles">Destination</li>
+          <li className="flights-list__titles">Departure</li>
+          <li className="flights-list__titles">Arrival</li>
           <li className="flights-list__titles">Status</li>
           <li className="flights-list__titles">Airline</li>
           <li className="flights-list__titles">Flight</li>
@@ -99,6 +100,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
                 <li className="flights-list__item">
                   <span>{terminal}</span>
                   <span className="flights-list__time">{time}</span>
+                  <span className="flights-list__arrival">{arrivalCity}</span>
                   <span className="flights-list__departure">
                     {departureCity}
                   </span>

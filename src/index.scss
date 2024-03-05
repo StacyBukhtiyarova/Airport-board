@@ -116,16 +116,21 @@
   }
   &__time {
     position: absolute;
-    right: 65%;
+    right:66.6%;
   }
   &__departure {
     position: absolute;
-    right: 50%;
+    right: 54%;
+    width: 100px;
+  }
+   &__arrival {
+    position: absolute;
+    right: 44.5%;
     width: 100px;
   }
   &__status {
     position: absolute;
-    right: 42%;
+    right: 38%;
   }
   &__codeshare {
     position: absolute;
@@ -133,7 +138,7 @@
   }
   &__airline {
     position: absolute;
-    right: 28%;
+    right: 25%;
     word-wrap: break-word;
     width: 150px;
   }
