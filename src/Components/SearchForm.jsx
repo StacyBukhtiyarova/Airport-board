@@ -71,7 +71,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
           <li className="flights-list__titles">Airline</li>
           <li className="flights-list__titles">Flight</li>
         </ul>
-        <ul>
+        <ul className="flights-list__display">
           {filteredFlights.map(
             ({
               terminal,
@@ -90,23 +90,29 @@ const SearchForm = ({ printFlights, searchFlights }) => {
             }) => {
               const scheduleDateHour = new Date(departureDate).getHours();
               const scheduleDateMinutes = new Date(departureDate).getMinutes();
+              const time = new Date(departureDate).toLocaleTimeString('it-IT', {
+                hour: '2-digit',
+                minute: '2-digit',
+              });
+              // console.log(new Date(departureDate).toLocaleTimeString('en-ru'));
               return (
-                <li className=" flights-list__display">
+                <li className="flights-list__item">
                   <span>{terminal}</span>
-
-                  <span>
-                    {scheduleDateHour}:{scheduleDateMinutes}
+                  <span className="flights-list__time">{time}</span>
+                  <span className="flights-list__departure">
+                    {departureCity}
                   </span>
-
-                  <span>{arrivalCity}</span>
-
-                  <span>{type}</span>
-
-                  {/* <span>{departureDate}</span>
-
-                <span>{arrivalDate}</span>
-                <span>{departureDateExpected}</span>
-                <span>{arrivalDateExpected}</span> */}
+                  <span className="flights-list__status">{status}</span>
+                  <span className="flights-list__airline">
+                    {airlineName}
+                    <img
+                      className="flights-list__logo"
+                      src={airlineLogo}
+                      width="20px"
+                      height="20px"
+                    />
+                  </span>
+                  <span className="flights-list__codeshare">{codeShare}</span>
                 </li>
               );
             }

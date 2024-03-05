@@ -1,0 +1,151 @@
+* {
+  box-sizing: border-box;
+}
+
+.main-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: url(https://iev.aero/images/main.jpg) no-repeat;
+  background-color: #e7efec;
+  background-size: inherit;
+  color: #fff;
+}
+
+.title {
+  text-align: center;
+  line-height: 80px;
+  font-size: 60px;
+}
+
+.search-line-container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 11px auto;
+  width: 80%;
+  height: 80px;
+  border: none;
+}
+
+.text-field {
+  width: 40%;
+  height: 80px;
+  text-align: center;
+  border: none;
+}
+
+.search-button {
+  width: 20%;
+  margin: 0;
+  background-color: #1eb7ee;
+  color: #fff;
+  border: none;
+  border-radius: 0 80px 0 0;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 700;
+}
+.search-button:hover {
+  cursor: pointer;
+}
+
+.search-icon {
+  position: relative;
+  left: 40px;
+  height: 30px;
+  color: grey;
+}
+
+.flights {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 20px auto;
+  width: 50%;
+}
+.flights__arrival-button {
+  height: 60px;
+  width: 320px;
+  background-color: #fff;
+  color: #1eb7ee;
+  border: none;
+  border-radius: 80px 0px 0 0;
+}
+.flights__departure-button {
+  width: 320px;
+  height: 60px;
+  margin-left: 4vh;
+  background-color: #fff;
+  color: #1eb7ee;
+  border: none;
+  border-radius: 0px 80px 0px 0px;
+}
+.flights .plane-icon__arrival {
+  position: absolute;
+  top: 25px;
+  left: 8vh;
+  color: #1eb7ee;
+}
+.flights .plane-icon__departure {
+  position: absolute;
+  top: 25px;
+  right: 4vh;
+  color: #1eb7ee;
+}
+
+.flights-list {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 60%;
+  padding: 0;
+  color: grey;
+  list-style: none;
+}
+.flights-list__titles {
+  margin-top: 50px;
+}
+.flights-list__display {
+  margin: auto;
+  padding: 0;
+  color: grey;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+.flights-list__item {
+  height: 50px;
+  width: 60px;
+  text-align: center;
+}
+.flights-list__time {
+  position: absolute;
+  right: 65%;
+}
+.flights-list__departure {
+  position: absolute;
+  right: 50%;
+  width: 100px;
+}
+.flights-list__status {
+  position: absolute;
+  right: 42%;
+}
+.flights-list__codeshare {
+  position: absolute;
+  right: 19%;
+}
+.flights-list__airline {
+  position: absolute;
+  right: 28%;
+  word-wrap: break-word;
+  width: 150px;
+}
+.flights-list__logo {
+  position: absolute;
+  top: 0;
+  right: 2%;
+}/*# sourceMappingURL=index.css.map */

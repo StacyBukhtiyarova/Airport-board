@@ -101,14 +101,45 @@
     margin-top: 50px;
   }
   &__display {
-    //   display: flex;
-    // justify-content: space-between;
-    // margin-top: 10px;
-
-    margin: 10px 0 0 0 ;
-    width: 60%;
+    margin: auto;
     padding: 0;
     color: grey;
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+  &__item {
+    height: 50px;
+    width: 60px;
+    text-align: center;
+  }
+  &__time {
+    position: absolute;
+    right: 65%;
+  }
+  &__departure {
+    position: absolute;
+    right: 50%;
+    width: 100px;
+  }
+  &__status {
+    position: absolute;
+    right: 42%;
+  }
+  &__codeshare {
+    position: absolute;
+    right: 19%;
+  }
+  &__airline {
+    position: absolute;
+    right: 28%;
+    word-wrap: break-word;
+    width: 150px;
+  }
+  &__logo {
+    position: absolute;
+    top: 0;
+    right: 2%;
   }
 }
