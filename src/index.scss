@@ -93,61 +93,82 @@
   display: flex;
   justify-content: space-between;
   margin: auto;
-  width: 60%;
+  width: 90%;
   padding: 0;
   color: grey;
   list-style: none;
-  &__titles {
-    margin-top: 50px;
-  }
+  font-size: 20px;
 
+  &__titles {
+    margin: 50px 0 20px 0;
+  }
   &__display {
     margin: auto;
-    margin-top: 20px;
     padding: 0;
+    height: 80px;
     color: grey;
     list-style: none;
     display: flex;
     flex-direction: column;
-    width: 63%;
-    background-color: #fff;
+    width: 90%;
+    font-size: 20px;
+    :nth-child(odd) {
+      background-color: #fff;
+    }
   }
   &__item {
     height: 50px;
-    width: 100px;
+    width: 70px;
     text-align: center;
   }
   &__time {
+    position: absolute;
+    right: 76%;
+  }
+  &__terminal {
     position: absolute;
     right: 66.6%;
   }
   &__departure {
     position: absolute;
-    right: 54%;
+    right: 59%;
     width: 100px;
+    text-align: center;
   }
   &__arrival {
     position: absolute;
-    right: 44.5%;
+    right: 44%;
     width: 100px;
+    text-align: center;
   }
   &__status {
     position: absolute;
-    right: 38%;
+    right: 33%;
   }
   &__codeshare {
     position: absolute;
-    right: 19%;
+    right: 4%;
   }
   &__airline {
     position: absolute;
-    right: 25%;
+    right: 11%;
     word-wrap: break-word;
-    width: 150px;
+    width: 200px;
   }
   &__logo {
     position: absolute;
-    top: 0;
     right: 2%;
+    &-img {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      right: 1%;
+    }
+  }
+}
+.week {
+  display: flex;
+  &__day {
+    margin-left: 5px;
   }
 }

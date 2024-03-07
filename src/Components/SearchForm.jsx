@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import fetchRequest from '.././serverRequests.js';
+
 import {
   searchFlights,
   printArrivals,
@@ -15,6 +16,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
   const dispatch = useDispatch();
   const onClickFlights = (e) => {
     e.preventDefault();
@@ -60,6 +62,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
           Знайти
         </button>
       </div>
+
       <FlightButtons />
 
       <section>
@@ -72,7 +75,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
           <li className="flights-list__titles">Airline</li>
           <li className="flights-list__titles">Flight</li>
         </ul>
-        <ul className="flights-list__display">
+        <ul>
           {filteredFlights.map(
             ({
               terminal,
@@ -97,7 +100,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
               });
               // console.log(new Date(departureDate).toLocaleTimeString('en-ru'));
               return (
-                <li className="flights-list__item">
+                <li className="flights-list__display">
                   <span>{terminal}</span>
                   <span className="flights-list__time">{time}</span>
                   <span className="flights-list__arrival">{arrivalCity}</span>
@@ -108,10 +111,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
                   <span className="flights-list__airline">
                     {airlineName}
                     <img
-                      className="flights-list__logo"
+                      className="flights-list__logo-img"
                       src={airlineLogo}
-                      width="20px"
-                      height="20px"
                     />
                   </span>
                   <span className="flights-list__codeshare">{codeShare}</span>
