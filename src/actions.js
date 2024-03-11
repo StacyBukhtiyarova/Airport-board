@@ -21,5 +21,3 @@ export const searchFlights = (searchFlight) => {
     payload: searchFlight,
   };
 };
-
->>>>>>> 09c9048e201e0d494276d0d885bdffc9db9be40f
