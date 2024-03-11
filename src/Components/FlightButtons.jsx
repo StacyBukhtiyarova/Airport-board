@@ -9,9 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const FlightButtons = ({ flights, printFlights }) => {
-  //console.log(flights);
-
-  const [filteredFlights, setfilteredFlights] = useState([]);
+ const [filteredFlights, setfilteredFlights] = useState([]);
   const onClickArrivals = (e) => {
     e.preventDefault();
     const filteredFlights = flights.match();
@@ -59,4 +57,3 @@ const mapDispatch = {
 
 export default connect(mapState, mapDispatch)(FlightButtons);
 
->>>>>>> 09c9048e201e0d494276d0d885bdffc9db9be40f
