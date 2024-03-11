@@ -9,7 +9,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const FlightButtons = ({ flights, printFlights }) => {
- const [filteredFlights, setfilteredFlights] = useState([]);
+  //console.log(flights);
+
+  const [filteredFlights, setfilteredFlights] = useState([]);
   const onClickArrivals = (e) => {
     e.preventDefault();
     const filteredFlights = flights.match();
@@ -21,9 +23,7 @@ const FlightButtons = ({ flights, printFlights }) => {
           icon={faPlaneDeparture}
           className="plane-icon__departure"
         />
-        <button
-          type="submit"
-          className=" flights__departure-button">
+        <button type="submit" className=" flights__departure-button">
           Виліт
         </button>
       </div>
@@ -32,9 +32,7 @@ const FlightButtons = ({ flights, printFlights }) => {
           icon={faPlaneArrival}
           className="plane-icon__arrival"
         />
-        <button
-          type="submit"
-          className=" flights__arrival-button">
+        <button type="submit" className=" flights__arrival-button">
           Приліт
         </button>
       </div>
@@ -44,8 +42,8 @@ const FlightButtons = ({ flights, printFlights }) => {
 
 const mapState = (state) => {
   return {
-  //  arrivals: arrivalsSelector(state),
-   // departures: departuresSelector(state),
+    //  arrivals: arrivalsSelector(state),
+    // departures: departuresSelector(state),
     flights: flightsSelector(state),
   };
 };
@@ -56,4 +54,3 @@ const mapDispatch = {
 };
 
 export default connect(mapState, mapDispatch)(FlightButtons);
-

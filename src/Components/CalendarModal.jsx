@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from 'react-calendar';
+import Calendar, { onClickDay } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-const CalendarModal = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  return (
-    <Calendar
-      onChange={setStartDate}
-      value={startDate}
-    />
-  );
-};
-export default CalendarModal;
-
 
 const CalendarModal = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [pickedDate, setPickedDate] = useState(new Date());
   const onClickDay = (clickedDay) => {
-    return setStartDate(clickedDay);
+    console.log(clickedDay);
+    return setPickedDate(clickedDay);
   };
   return (
-    <Calendar onChange={onClickDay} onClickDay={onClickDay} value={startDate} />
+    <Calendar
+      onChange={onClickDay}
+      onClickDay={onClickDay}
+      value={pickedDate}
+    />
   );
 };
 
