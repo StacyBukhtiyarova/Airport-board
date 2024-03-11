@@ -58,3 +58,5 @@ const mapDispatch = {
 };
 
 export default connect(mapState, mapDispatch)(FlightButtons);
+
+>>>>>>> 09c9048e201e0d494276d0d885bdffc9db9be40f

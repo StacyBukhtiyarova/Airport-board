@@ -1,12 +1,14 @@
+* {
+  box-sizing: border-box;
+}
 .main-search {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: url(https://iev.aero/images/main.jpg) no-repeat;
-  background-size: cover;
+  background-color: #e7efec;
+  background-size: inherit;
   color: #fff;
-  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.38);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.38);
-  position: relative;
-  overflow: hidden;
 }
 .title {
   text-align: center;
@@ -15,13 +17,23 @@
 }
 .search-line-container {
   display: flex;
+  align-items: center;
+  text-align: center;
   justify-content: center;
-  padding: 0 10vh 0 10vh;
-  height: 60px;
+  margin: 11px auto;
+  width: 80%;
+  height: 80px;
+  border: none;
+}
+.text-field {
+  width: 40%;
+  height: 80px;
+  text-align: center;
   border: none;
 }
 .search-button {
-  width: 200px;
+  width: 20%;
+  margin: 0;
   background-color: #1eb7ee;
   color: #fff;
   border: none;
@@ -35,8 +47,168 @@
 }
 .search-icon {
   position: relative;
-  top: 15px;
   left: 40px;
   height: 30px;
   color: grey;
 }
+.flights {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 20px auto;
+  width: 50%;
+
+  &__arrival-button {
+    height: 60px;
+    width: 320px;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 80px 0px 0 0;
+  }
+  &__departure-button {
+    width: 320px;
+    height: 60px;
+    margin-left: 4vh;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 0px 80px 0px 0px;
+  }
+
+  .plane-icon__arrival {
+    position: absolute;
+    top: 25px;
+    left: 8vh;
+    color: #1eb7ee;
+  }
+  .plane-icon__departure {
+    position: absolute;
+    top: 25px;
+    right: 4vh;
+    color: #1eb7ee;
+  }
+}
+.flights-list__voyages li:nth-of-type(odd) {
+  // width: 95%;
+  //  margin-left: 5%;
+  background-color: #fff;
+}
+.flights-list {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 90%;
+  padding: 0;
+  color: grey;
+  list-style: none;
+  font-size: 20px;
+
+  &__titles {
+    margin: 50px 0 20px 0;
+  }
+  &__display {
+    margin: auto;
+    padding: 0;
+    height: 80px;
+    color: grey;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    //   width: 90%;
+    font-size: 20px;
+    line-height: 60px;
+    // :nth-of-type(odd) {
+    //   background-color: #fff;
+    // }
+  }
+
+  &__item {
+    height: 50px;
+    width: 70px;
+    text-align: center;
+  }
+  &__time {
+    position: absolute;
+    right: 76%;
+  }
+  &__terminal {
+    width: 100px;
+    text-align: center;
+    //  position: absolute;
+    //  right: 66.6%;
+  }
+  &__departure {
+    position: absolute;
+    right: 59%;
+    width: 100px;
+    text-align: center;
+  }
+  &__arrival {
+    position: absolute;
+    right: 44%;
+    width: 100px;
+    text-align: center;
+  }
+  &__status {
+    position: absolute;
+    right: 33%;
+  }
+  &__codeshare {
+    position: absolute;
+    right: 4%;
+  }
+  &__airline {
+    position: absolute;
+    right: 11%;
+    word-wrap: break-word;
+    width: 200px;
+  }
+  &__logo {
+    position: absolute;
+    right: 2%;
+    &-img {
+      position: absolute;
+      top: 10px;
+      width: 40px;
+      height: 40px;
+      right: 1%;
+    }
+  }
+}
+.calendar {
+  &__icon {
+    position: absolute;
+    left: 20%;
+    top: 200px;
+    height: 50px;
+    width: 50px;
+    color: #fff;
+  }
+  &__modal {
+    position: relative;
+    margin-left: 1%;
+    top: -120px;
+    height: 15px;
+    width: 250px;
+    line-height: 10px;
+    font-size: 12px;
+    border: none;
+    padding: 0;
+  }
+}
+
+.react-calendar__navigation button {
+  min-width: 0;
+}
+
+.react-calendar {
+  // width: 250px;
+  // line-height: 10px;
+  // font-size: 12px;
+  &__navigation {
+    margin: 0;
+    height: 20px;
+  }
+}
+
