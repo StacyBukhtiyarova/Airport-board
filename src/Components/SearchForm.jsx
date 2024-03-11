@@ -40,25 +40,20 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         className="calendar__icon"
       />
       <div className="search-line-container">
-        <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          className="search-icon"
+        />
         <input
           type="text"
           placeholder="Номер рейсу або місто"
           className="text-field"
           value={input}
-          onChange={onClickSearchFlight}
-          className="text-field"
-          value={input}
-          onChange={onClickSearchFlight}
-        ></input>
+          onChange={onClickSearchFlight}></input>
         <button
           className="search-line-container search-button"
           type="submit"
-          onClick={onClickFlights}
-          className="search-line-container search-button"
-          type="submit"
-          onClick={onClickFlights}
-        >
+          onClick={onClickFlights}>
           Знайти
         </button>
       </div>

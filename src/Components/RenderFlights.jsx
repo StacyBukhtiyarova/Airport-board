@@ -43,7 +43,10 @@ const RenderFlights = ({ filteredFlights }) => {
                 <span className="flights-list__status">{status}</span>
                 <span className="flights-list__airline">
                   {airlineName}
-                  <img className="flights-list__logo-img" src={airlineLogo} />
+                  <img
+                    className="flights-list__logo-img"
+                    src={airlineLogo}
+                  />
                 </span>
                 <span className="flights-list__codeshare">{codeShare}</span>
               </li>

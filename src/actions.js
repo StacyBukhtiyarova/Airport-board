@@ -12,7 +12,7 @@ export const printArrivals = () => {
 export const printFlights = (flights) => {
   return {
     type: PRINT_FLIGHTS,
-    payload:  flights,
+    payload: flights,
   };
 };
 export const searchFlights = (searchFlight) => {

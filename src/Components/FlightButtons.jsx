@@ -23,7 +23,9 @@ const FlightButtons = ({ flights, printFlights }) => {
           icon={faPlaneDeparture}
           className="plane-icon__departure"
         />
-        <button type="submit" className=" flights__departure-button">
+        <button
+          type="submit"
+          className=" flights__departure-button">
           Виліт
         </button>
       </div>
@@ -32,7 +34,9 @@ const FlightButtons = ({ flights, printFlights }) => {
           icon={faPlaneArrival}
           className="plane-icon__arrival"
         />
-        <button type="submit" className=" flights__arrival-button">
+        <button
+          type="submit"
+          className=" flights__arrival-button">
           Приліт
         </button>
       </div>
