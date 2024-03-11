@@ -40,7 +40,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         flights={flights}
         setFlights={setFlights}
         onClickFlights={onClickFlights}
-        // onClickSearchFlight={onClickSearchFlight}
+        onClickSearchFlight={onClickSearchFlight}
       />
       {modalWindow === true && (
         <button className="calendar__modal">
