@@ -3,10 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Calendar, { onClickDay } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-const CalendarModal = () => {
-  const [pickedDate, setPickedDate] = useState(new Date());
+const CalendarModal = ({ pickedDate, setPickedDate }) => {
   const onClickDay = (clickedDay) => {
-    console.log(clickedDay);
     return setPickedDate(clickedDay);
   };
   return (

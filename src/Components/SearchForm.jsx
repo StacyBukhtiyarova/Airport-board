@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect, useDispatch } from 'react-redux';
 import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import fetchRequest from '.././serverRequests.js';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import CalendarModal from './CalendarModal.jsx';
 import RenderFlights from './RenderFlights.jsx';
+import SearchField from './SearchField.jsx';
 import {
   searchFlights,
   printArrivals,
@@ -13,12 +12,16 @@ import {
   printFlights,
 } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const SearchForm = ({ printFlights, searchFlights }) => {
+  const [pickedDate, setPickedDate] = useState(new Date());
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
   const dispatch = useDispatch();
+  console.log(pickedDate);
+  const filteredFlights = flights.filter(({ departureCity }) =>
+    departureCity.toLowerCase().match(input.toLowerCase())
+  );
   const onClickFlights = (e) => {
     e.preventDefault();
     fetchRequest().then((data) => {
@@ -29,37 +32,22 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     setInput(e.target.value);
     dispatch(searchFlights(e.target.value));
   };
-  const filteredFlights = flights.filter(({ departureCity }) =>
-    departureCity.toLowerCase().match(input.toLowerCase())
-  );
   return (
     <div className="container">
-      <FontAwesomeIcon
-        icon={faCalendar}
-        onClick={() => setModalWindow(!modalWindow)}
-        className="calendar__icon"
+      <SearchField
+        modalWindow={modalWindow}
+        setModalWindow={setModalWindow}
+        flights={flights}
+        setFlights={setFlights}
+        onClickFlights={onClickFlights}
+        // onClickSearchFlight={onClickSearchFlight}
       />
-      <div className="search-line-container">
-        <FontAwesomeIcon
-          icon={faMagnifyingGlass}
-          className="search-icon"
-        />
-        <input
-          type="text"
-          placeholder="Номер рейсу або місто"
-          className="text-field"
-          value={input}
-          onChange={onClickSearchFlight}></input>
-        <button
-          className="search-line-container search-button"
-          type="submit"
-          onClick={onClickFlights}>
-          Знайти
-        </button>
-      </div>
       {modalWindow === true && (
         <button className="calendar__modal">
-          <CalendarModal />
+          <CalendarModal
+            pickedDate={pickedDate}
+            setPickedDate={setPickedDate}
+          />
         </button>
       )}
       <FlightButtons />
@@ -79,5 +67,4 @@ const mapDispatch = {
   printFlights,
   searchFlights,
 };
-
 export default connect(mapState, mapDispatch)(SearchForm);

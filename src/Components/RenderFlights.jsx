@@ -1,10 +1,4 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { connect, useDispatch } from 'react-redux';
-import { flightsSelector, searchFlightsSelector } from '../selector.js';
-import fetchRequest from '.././serverRequests.js';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import CalendarModal from './CalendarModal.jsx';
+import React from 'react';
 
 const RenderFlights = ({ filteredFlights }) => {
   return (
