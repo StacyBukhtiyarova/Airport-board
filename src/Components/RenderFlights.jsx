@@ -2,6 +2,7 @@ import React from 'react';
 import FlightsTitles from '../Components/FlightsTitles';
 
 const RenderFlights = ({ filterFlightsSearchForm }) => {
+  console.log(filterFlightsSearchForm)
   return (
     <ul className="flights-list__voyages">
       {filterFlightsSearchForm.map(
@@ -23,7 +24,6 @@ const RenderFlights = ({ filterFlightsSearchForm }) => {
             <li className="flights-list__display">
               <span className="flights-list__terminal">{terminal}</span>
               <span className="flights-list__time">{time}</span>
-              <span className="flights-list__arrival">{arrivalCity}</span>
               <span className="flights-list__departure">{departureCity}</span>
               <span className="flights-list__status">{status}</span>
               <span className="flights-list__airline">
