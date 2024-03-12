@@ -12,7 +12,7 @@ const SearchField = ({
   onClickSearchFlight,
 }) => {
   return (
-    <div className="container">
+    <div>
       <FontAwesomeIcon
         icon={faCalendar}
         onClick={() => setModalWindow(!modalWindow)}

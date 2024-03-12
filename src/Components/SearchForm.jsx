@@ -4,6 +4,7 @@ import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import fetchRequest from '.././serverRequests.js';
 import CalendarModal from './CalendarModal.jsx';
 import RenderFlights from './RenderFlights.jsx';
+import FlightsTitles from './FlightsTitles.jsx';
 import SearchField from './SearchField.jsx';
 import {
   searchFlights,
@@ -12,14 +13,18 @@ import {
   printFlights,
 } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
-const SearchForm = ({ printFlights, searchFlights }) => {
-  const [pickedDate, setPickedDate] = useState(new Date());
+const SearchForm = ({
+  printFlights,
+  searchFlights,
+  pickedDate,
+  setPickedDate,
+}) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
   const dispatch = useDispatch();
-  console.log(pickedDate);
-  const filteredFlights = flights.filter(({ departureCity }) =>
+
+  const filterFlightsSearchForm = flights.filter(({ departureCity }) =>
     departureCity.toLowerCase().match(input.toLowerCase())
   );
   const onClickFlights = (e) => {
@@ -42,16 +47,18 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         onClickFlights={onClickFlights}
         onClickSearchFlight={onClickSearchFlight}
       />
-      {modalWindow === true && (
-        <button className="calendar__modal">
-          <CalendarModal
-            pickedDate={pickedDate}
-            setPickedDate={setPickedDate}
-          />
-        </button>
-      )}
       <FlightButtons />
-      <RenderFlights filteredFlights={filteredFlights} />
+      <FlightsTitles />
+      {modalWindow === true && (
+        <CalendarModal
+       //   modalWindow={modalWindow}
+        //  setModalWindow={setModalWindow}
+          pickedDate={pickedDate}
+          setPickedDate={setPickedDate}
+        />
+      )}
+
+      <RenderFlights filterFlightsSearchForm={filterFlightsSearchForm} />
     </div>
   );
 };

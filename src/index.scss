@@ -186,9 +186,9 @@
     color: #fff;
   }
   &__modal {
-    position: relative;
+    position: absolute;
     margin-left: 1%;
-    top: -120px;
+    top: 150px;
     height: 15px;
     width: 250px;
     line-height: 10px;
@@ -203,9 +203,6 @@
 }
 
 .react-calendar {
-  // width: 250px;
-  // line-height: 10px;
-  // font-size: 12px;
   &__navigation {
     margin: 0;
     height: 20px;
