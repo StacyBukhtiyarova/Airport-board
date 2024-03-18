@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import fetchRequest from '.././serverRequests.js';
@@ -6,16 +6,16 @@ import Calendar, { onClickDay } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { printFlights } from '../actions.js';
 
-const CalendarModal = ({ setModalWindow, modalWindow }) => {
+const CalendarModal = ({ modalWindow, setModalWindow }) => {
   const [flights, setFlights] = useState([]);
   const [pickedDate, setPickedDate] = useState(new Date());
-  console.log(modalWindow);
+  const [isLoading, setIsLoading] = useState('');
   const onClickDay = (clickedDay, e) => {
+    setPickedDate(clickedDay);
     e.preventDefault();
     fetchRequest().then((data) => {
-      return setFlights(data);
+      setFlights(data);
     });
-    setPickedDate(clickedDay);
   };
 
   const filterFlightsByDate = flights.filter(
@@ -24,12 +24,11 @@ const CalendarModal = ({ setModalWindow, modalWindow }) => {
       new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
       new Date(arrivalDate).getFullYear() === new Date(pickedDate).getFullYear()
   );
+
   return (
     <div>
       <div className="calendar__modal">
         <Calendar
-          pickedDate={pickedDate}
-          setPickedDate={setPickedDate}
           onChange={onClickDay}
           onClickDay={onClickDay}
           value={pickedDate}

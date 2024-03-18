@@ -22,6 +22,9 @@ const SearchForm = ({
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
+  const closeModal = () => {
+    setModalWindow(!modalWindow);
+  };
   const dispatch = useDispatch();
 
   const filterFlightsSearchForm = flights.filter(({ departureCity }) =>
@@ -33,6 +36,7 @@ const SearchForm = ({
       return setFlights(data), dispatch(printFlights(data));
     });
   };
+
   const onClickSearchFlight = (e) => {
     setInput(e.target.value);
     dispatch(searchFlights(e.target.value));
@@ -49,10 +53,10 @@ const SearchForm = ({
       />
       <FlightButtons />
       <FlightsTitles />
-      {modalWindow === true && (
+      {modalWindow && (
         <CalendarModal
+          setModalWindow={closeModal}
           modalWindow={modalWindow}
-          setModalWindow={setModalWindow}
           pickedDate={pickedDate}
           setPickedDate={setPickedDate}
         />

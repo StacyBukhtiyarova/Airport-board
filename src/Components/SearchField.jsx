@@ -7,15 +7,15 @@ const SearchField = ({
   modalWindow,
   setModalWindow,
   input,
-  setFlights,
   onClickFlights,
   onClickSearchFlight,
+ 
 }) => {
   return (
     <div>
       <FontAwesomeIcon
         icon={faCalendar}
-        onClick={() => setModalWindow(!modalWindow)}
+         onClick={() => setModalWindow(!modalWindow)}
         className="calendar__icon"
       />
       <div className="search-line-container">

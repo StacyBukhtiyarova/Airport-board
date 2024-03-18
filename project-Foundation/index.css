@@ -95,62 +95,110 @@
   color: #1eb7ee;
 }
 
+.flights-list__voyages li:nth-of-type(odd) {
+  background-color: #fff;
+}
+
 .flights-list {
   display: flex;
   justify-content: space-between;
   margin: auto;
-  width: 60%;
+  width: 90%;
   padding: 0;
   color: grey;
   list-style: none;
+  font-size: 20px;
 }
 .flights-list__titles {
-  margin-top: 50px;
+  margin: 50px 0 20px 0;
 }
 .flights-list__display {
   margin: auto;
   padding: 0;
+  height: 80px;
   color: grey;
   list-style: none;
   display: flex;
   flex-direction: column;
-  width: 60%;
+  font-size: 20px;
+  line-height: 60px;
 }
 .flights-list__item {
   height: 50px;
-  width: 60px;
+  width: 70px;
   text-align: center;
 }
 .flights-list__time {
   position: absolute;
-  right: 66.6%;
+  right: 74%;
+}
+.flights-list__terminal {
+  width: 100px;
+  text-align: center;
 }
 .flights-list__departure {
   position: absolute;
-  right: 54%;
+  right: 55%;
   width: 100px;
+  text-align: center;
 }
 .flights-list__arrival {
   position: absolute;
-  right: 44.5%;
+  right: 44%;
   width: 100px;
+  text-align: center;
 }
 .flights-list__status {
   position: absolute;
-  right: 38%;
+  right: 40%;
 }
 .flights-list__codeshare {
   position: absolute;
-  right: 19%;
+  right: 4%;
 }
 .flights-list__airline {
   position: absolute;
-  right: 25%;
+  right: 13.5%;
   word-wrap: break-word;
-  width: 150px;
+  width: 200px;
 }
 .flights-list__logo {
   position: absolute;
-  top: 0;
   right: 2%;
+}
+.flights-list__logo-img {
+  position: absolute;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  right: 1%;
+}
+
+.calendar__icon {
+  position: absolute;
+  left: 20%;
+  top: 200px;
+  height: 50px;
+  width: 50px;
+  color: #fff;
+}
+.calendar__modal {
+  position: absolute;
+  margin-left: 1%;
+  top: 150px;
+  height: 15px;
+  width: 250px;
+  line-height: 10px;
+  font-size: 12px;
+  border: none;
+  padding: 0;
+}
+
+.react-calendar__navigation button {
+  min-width: 0;
+}
+
+.react-calendar__navigation {
+  margin: 0;
+  height: 20px;
 }/*# sourceMappingURL=index.css.map */
