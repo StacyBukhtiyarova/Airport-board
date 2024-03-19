@@ -9,7 +9,6 @@ import { printFlights } from '../actions.js';
 const CalendarModal = ({ modalWindow, setModalWindow }) => {
   const [flights, setFlights] = useState([]);
   const [pickedDate, setPickedDate] = useState(new Date());
-  const [isLoading, setIsLoading] = useState('');
   const onClickDay = (clickedDay, e) => {
     setPickedDate(clickedDay);
     e.preventDefault();
@@ -27,11 +26,14 @@ const CalendarModal = ({ modalWindow, setModalWindow }) => {
 
   return (
     <div>
-      <div className="calendar__modal">
+      <div
+        className="calendar__modal"
+        style={{ visibility: flights.length > 0 ? 'hidden' : '' }}>
         <Calendar
           onChange={onClickDay}
           onClickDay={onClickDay}
           value={pickedDate}
+          setModalWindow={() => setModalWindow(!modalWindow)}
         />
       </div>
       <ul className="flights-list__voyages">
@@ -39,7 +41,6 @@ const CalendarModal = ({ modalWindow, setModalWindow }) => {
           ({
             terminal,
             departureCity,
-            arrivalCity,
             departureDate,
             status,
             airlineName,
