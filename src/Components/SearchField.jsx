@@ -13,8 +13,8 @@ const SearchField = ({
   return (
     <div>
       <FontAwesomeIcon
+        onClick={()=>setModalWindow(!modalWindow)}
         icon={faCalendar}
-        onClick={() => setModalWindow(!modalWindow)}
         className="calendar__icon"
       />
       <div className="search-line-container">

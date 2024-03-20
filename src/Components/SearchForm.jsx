@@ -53,7 +53,7 @@ const SearchForm = ({
       <FlightsTitles />
       {modalWindow && (
         <CalendarModal
-          setModalWindow={()=>setModalWindow(!modalWindow)}
+          setModalWindow={setModalWindow}
           modalWindow={modalWindow}
           pickedDate={pickedDate}
           setPickedDate={setPickedDate}

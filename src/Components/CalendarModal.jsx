@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { flightsSelector, searchFlightsSelector } from '../selector.js';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import fetchRequest from '.././serverRequests.js';
-import Calendar, { onClickDay } from 'react-calendar';
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { printFlights } from '../actions.js';
 
 const CalendarModal = ({ modalWindow, setModalWindow }) => {
+  const dispatch = useDispatch();
   const [flights, setFlights] = useState([]);
   const [pickedDate, setPickedDate] = useState(new Date());
   const onClickDay = (clickedDay, e) => {
@@ -14,21 +14,21 @@ const CalendarModal = ({ modalWindow, setModalWindow }) => {
     e.preventDefault();
     fetchRequest().then((data) => {
       setFlights(data);
+      dispatch(printFlights(data));
     });
   };
-
   const filterFlightsByDate = flights.filter(
     ({ arrivalDate }) =>
       new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
       new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
       new Date(arrivalDate).getFullYear() === new Date(pickedDate).getFullYear()
   );
-
   return (
     <div>
       <div
         className="calendar__modal"
-        style={{ visibility: flights.length > 0 ? 'hidden' : '' }}>
+        //   style={{ visibility: flights.length > 0 ? 'hidden' : '' }}
+      >
         <Calendar
           onChange={onClickDay}
           onClickDay={onClickDay}
