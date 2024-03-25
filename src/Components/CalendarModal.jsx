@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const CalendarModal = ({ modalWindow, setModalWindow, onClickDate }) => {
-  const [pickedDate, setPickedDate] = useState(new Date());
-
   const onClickDay = () => {
     setTimeout(() => {
       setModalWindow(!modalWindow);
@@ -19,10 +17,7 @@ const CalendarModal = ({ modalWindow, setModalWindow, onClickDate }) => {
           onClickDate={onClickDate}
           onChange={onClickDate}
           onClickDay={onClickDay}
-          value={pickedDate}
-          pickedDate={pickedDate}
-          setPickedDate={setPickedDate}
-          setModalWindow={setModalWindow}
+          //setModalWindow={setModalWindow}
         />
       </div>
     </div>

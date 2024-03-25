@@ -18,9 +18,8 @@ const SearchForm = ({ printFlights, searchFlights, onClickDay }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
-  const [pickedDate, setPickedDate] = useState(new Date());
   const dispatch = useDispatch();
-
+  const [pickedDate, setPickedDate] = useState(new Date());
   const filterFlights = flights.filter(({ departureCity, arrivalDate }) => {
     return (
       departureCity.toLowerCase().match(input.toLowerCase()) &&
@@ -41,7 +40,6 @@ const SearchForm = ({ printFlights, searchFlights, onClickDay }) => {
     setInput(e.target.value);
     dispatch(searchFlights(e.target.value));
   };
-  console.log(pickedDate);
   const onClickDate = (date) => {
     setPickedDate(date);
     dispatch(searchFlights(date));
@@ -49,7 +47,6 @@ const SearchForm = ({ printFlights, searchFlights, onClickDay }) => {
       setFlights(data);
       dispatch(printFlights(data));
     });
-    console.log(date);
   };
   return (
     <div className="container">
