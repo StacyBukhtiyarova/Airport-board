@@ -9,11 +9,12 @@ const SearchField = ({
   input,
   onClickFlights,
   onClickSearchFlight,
+  onClickDate,
 }) => {
   return (
     <div>
       <FontAwesomeIcon
-        onClick={()=>setModalWindow(!modalWindow)}
+        onClick={() => setModalWindow(!modalWindow)}
         icon={faCalendar}
         className="calendar__icon"
       />

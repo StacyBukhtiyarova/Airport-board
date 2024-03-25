@@ -1,10 +1,10 @@
 import React from 'react';
 import FlightsTitles from '../Components/FlightsTitles';
 
-const RenderFlights = ({ filterFlightsSearchForm }) => {
+const RenderFlights = ({ filterFlights }) => {
   return (
     <ul className="flights-list__voyages">
-      {filterFlightsSearchForm.map(
+      {filterFlights.map(
         ({
           terminal,
           departureCity,

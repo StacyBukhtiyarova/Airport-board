@@ -13,21 +13,23 @@ import {
   printFlights,
 } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
-const SearchForm = ({
-  printFlights,
-  searchFlights,
-  pickedDate,
-  setPickedDate,
-}) => {
+
+const SearchForm = ({ printFlights, searchFlights, onClickDay }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
-
+  const [pickedDate, setPickedDate] = useState(new Date());
   const dispatch = useDispatch();
 
-  const filterFlightsSearchForm = flights.filter(({ departureCity }) =>
-    departureCity.toLowerCase().match(input.toLowerCase())
-  );
+  const filterFlights = flights.filter(({ departureCity, arrivalDate }) => {
+    return (
+      departureCity.toLowerCase().match(input.toLowerCase()) &&
+      new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
+      new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
+      new Date(arrivalDate).getFullYear() === new Date(pickedDate).getFullYear()
+    );
+  });
+
   const onClickFlights = (e) => {
     e.preventDefault();
     fetchRequest().then((data) => {
@@ -39,6 +41,16 @@ const SearchForm = ({
     setInput(e.target.value);
     dispatch(searchFlights(e.target.value));
   };
+  console.log(pickedDate);
+  const onClickDate = (date) => {
+    setPickedDate(date);
+    dispatch(searchFlights(date));
+    fetchRequest().then((data) => {
+      setFlights(data);
+      dispatch(printFlights(data));
+    });
+    console.log(date);
+  };
   return (
     <div className="container">
       <SearchField
@@ -48,19 +60,22 @@ const SearchForm = ({
         setFlights={setFlights}
         onClickFlights={onClickFlights}
         onClickSearchFlight={onClickSearchFlight}
+        pickedDate={pickedDate}
+        setPickedDate={setPickedDate}
       />
       <FlightButtons />
       <FlightsTitles />
       {modalWindow && (
         <CalendarModal
+          onClickDate={onClickDate}
           setModalWindow={setModalWindow}
           modalWindow={modalWindow}
           pickedDate={pickedDate}
           setPickedDate={setPickedDate}
+          onClickDay={onClickDay}
         />
       )}
-
-      <RenderFlights filterFlightsSearchForm={filterFlightsSearchForm} />
+      <RenderFlights filterFlights={filterFlights} />
     </div>
   );
 };
@@ -76,4 +91,5 @@ const mapDispatch = {
   printFlights,
   searchFlights,
 };
+
 export default connect(mapState, mapDispatch)(SearchForm);
