@@ -1,7 +1,8 @@
 import React from 'react';
 import FlightsTitles from '../Components/FlightsTitles';
 
-const RenderFlights = ({ filterFlights }) => {
+const RenderFlights = ({ filterFlights,filteredFlights }) => {
+
   return (
     <ul className="flights-list__voyages">
       {filterFlights.map(

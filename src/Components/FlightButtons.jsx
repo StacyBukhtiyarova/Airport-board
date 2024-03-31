@@ -1,21 +1,46 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { printArrivals, printDepartures, printFlights } from '../actions.js';
-import { flightsSelector } from '../selector.js';
+import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import fetchRequest from '.././serverRequests.js';
 import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
 
-const FlightButtons = ({ flights, printFlights }) => {
-  //console.log(flights);
+const FlightButtons = ({
+  flights,
+  setPickedDate,
+  pickedDate,
+  printFlights,
 
-  const [filteredFlights, setfilteredFlights] = useState([]);
-  const onClickArrivals = (e) => {
-    e.preventDefault();
-    const filteredFlights = flights.match();
+  searchFlights,
+  onClickDate,
+}) => {
+  const dispatch = useDispatch();
+  const [filteredFlights, setFilteredFlights] = useState([]);
+
+  const arrivals = () => {
+    // dispatch(searchFlights(pickedDate));
+    fetchRequest().then((data) => {
+      const filter = data
+        .map((flights) => flights)
+        .filter(
+          (arrivals) =>
+            new Date(arrivals.arrivalDate).getDate() ===
+              new Date(pickedDate).getDate() &&
+            new Date(arrivals.arrivalDate).getMonth() ===
+              new Date(pickedDate).getMonth() &&
+            new Date(arrivals.arrivalDate).getFullYear() ===
+              new Date(pickedDate).getFullYear()
+        );
+      setFilteredFlights(filter);
+      dispatch(printFlights(filter));
+    });
   };
+  console.log(filteredFlights);
+
   return (
     <div className="flights">
       <div className="flights__button">
@@ -25,7 +50,9 @@ const FlightButtons = ({ flights, printFlights }) => {
         />
         <button
           type="submit"
-          className=" flights__departure-button">
+          className=" flights__departure-button"
+          // onClick={departures}
+          pickedDate={pickedDate}>
           Виліт
         </button>
       </div>
@@ -36,7 +63,8 @@ const FlightButtons = ({ flights, printFlights }) => {
         />
         <button
           type="submit"
-          className=" flights__arrival-button">
+          className=" flights__arrival-button"
+          onClick={arrivals}>
           Приліт
         </button>
       </div>
@@ -46,8 +74,8 @@ const FlightButtons = ({ flights, printFlights }) => {
 
 const mapState = (state) => {
   return {
-    //  arrivals: arrivalsSelector(state),
-    // departures: departuresSelector(state),
+    arrivals: searchFlightsSelector(state),
+    departures: searchFlightsSelector(state),
     flights: flightsSelector(state),
   };
 };

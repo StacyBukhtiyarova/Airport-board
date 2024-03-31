@@ -16,8 +16,6 @@ const CalendarModal = ({ modalWindow, setModalWindow, onClickDate }) => {
         <Calendar
           onClickDate={onClickDate}
           onChange={onClickDate}
-          onClickDay={onClickDay}
-          //setModalWindow={setModalWindow}
         />
       </div>
     </div>

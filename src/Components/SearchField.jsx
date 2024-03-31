@@ -9,7 +9,6 @@ const SearchField = ({
   input,
   onClickFlights,
   onClickSearchFlight,
-  onClickDate,
 }) => {
   return (
     <div>
