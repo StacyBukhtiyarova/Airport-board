@@ -14,32 +14,34 @@ const FlightButtons = ({
   setPickedDate,
   pickedDate,
   printFlights,
-
+  filterDepartures,
+  filterArrivals,
   searchFlights,
   onClickDate,
+  clickArrivals,
+  setClickArrivals,
 }) => {
   const dispatch = useDispatch();
   const [filteredFlights, setFilteredFlights] = useState([]);
 
-  const arrivals = () => {
+  const onClickArrivals = () => {
     // dispatch(searchFlights(pickedDate));
-    fetchRequest().then((data) => {
-      const filter = data
-        .map((flights) => flights)
-        .filter(
-          (arrivals) =>
-            new Date(arrivals.arrivalDate).getDate() ===
-              new Date(pickedDate).getDate() &&
-            new Date(arrivals.arrivalDate).getMonth() ===
-              new Date(pickedDate).getMonth() &&
-            new Date(arrivals.arrivalDate).getFullYear() ===
-              new Date(pickedDate).getFullYear()
-        );
-      setFilteredFlights(filter);
-      dispatch(printFlights(filter));
-    });
+    // fetchRequest().then((data) => {
+    //   const flights = data.map((flight) => flight);
+    //   setFilteredFlights(flights);
+    //   dispatch(printFlights(flights));
+    // });
+    // setClickArrivals(!clickArrivals);
+    // if (clickArrivals) {
+    //   return filterArrivals;
+    // } else {
+    //   filterDepartures;
+    // }
+    setFilteredFlights(filterArrivals);
+    dispatch(printFlights(filterArrivals));
+    setClickArrivals(true);
+    // console.log(filterArrivals,filterDepartures)
   };
-  console.log(filteredFlights);
 
   return (
     <div className="flights">
@@ -51,8 +53,10 @@ const FlightButtons = ({
         <button
           type="submit"
           className=" flights__departure-button"
+
           // onClick={departures}
-          pickedDate={pickedDate}>
+          //  pickedDate={pickedDate}
+        >
           Виліт
         </button>
       </div>
@@ -64,7 +68,8 @@ const FlightButtons = ({
         <button
           type="submit"
           className=" flights__arrival-button"
-          onClick={arrivals}>
+          setClickArrivals={setClickArrivals}
+          onClick={onClickArrivals}>
           Приліт
         </button>
       </div>

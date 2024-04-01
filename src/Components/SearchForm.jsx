@@ -14,45 +14,70 @@ import {
 } from '../actions.js';
 import FlightButtons from '../Components/FlightButtons';
 
-const SearchForm = ({ printFlights, searchFlights, onClickDay, arrivals }) => {
+const SearchForm = ({
+  printFlights,
+  searchFlights,
+  onClickDay,
+  arrivals,
+  filteredFlights,
+  onClickArrivals,
+}) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
+  const [clickArrivals, setClickArrivals] = useState(false);
   const dispatch = useDispatch();
   const [pickedDate, setPickedDate] = useState(new Date());
-
-  const filterFlights = flights.filter(
+  const filterDepartures = flights.filter(
     ({ departureCity, departureDate, arrivalDate }) => {
-      return (
+      const filteredFlights =
         departureCity.toLowerCase().match(input.toLowerCase()) &&
         new Date(departureDate).getDate() === new Date(pickedDate).getDate() &&
         new Date(departureDate).getMonth() ===
           new Date(pickedDate).getMonth() &&
         new Date(departureDate).getFullYear() ===
-          new Date(pickedDate).getFullYear() &&
-        new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
-        new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
-        new Date(arrivalDate).getFullYear() ===
-          new Date(pickedDate).getFullYear()
-      );
+          new Date(pickedDate).getFullYear();
+      // (new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
+      //   new Date(arrivalDate).getMonth() ===
+      //     new Date(pickedDate).getMonth() &&
+      //   new Date(arrivalDate).getFullYear() ===
+      //     new Date(pickedDate).getFullYear());
+
+      return filteredFlights;
     }
   );
-  const filter = flights.filter(
-    ({ departureCity, departureDate, arrivalCity, arrivalDate }) => {
-      return (
-        arrivalCity.toLowerCase().match(input.toLowerCase()) &&
-        new Date(departureDate).getDate() === new Date(pickedDate).getDate() &&
-        new Date(departureDate).getMonth() ===
-          new Date(pickedDate).getMonth() &&
-        new Date(departureDate).getFullYear() ===
-          new Date(pickedDate).getFullYear() &&
-        new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
-        new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
-        new Date(arrivalDate).getFullYear() ===
-          new Date(pickedDate).getFullYear()
-      );
-    }
-  );
+  const filterArrivals = flights.filter(({ arrivalCity, arrivalDate }) => {
+    const filteredFlights =
+      arrivalCity.toLowerCase().match(input.toLowerCase()) &&
+      new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
+      new Date(arrivalDate).getMonth() === new Date(pickedDate).getMonth() &&
+      new Date(arrivalDate).getFullYear() ===
+        new Date(pickedDate).getFullYear();
+
+    return filteredFlights;
+  });
+  // const filterFlights = flights.filter(
+  //   ({ departureCity, departureDate, arrivalDate }) => {
+  //     const filteredFlights =
+  //       (departureCity.toLowerCase().match(input.toLowerCase()) &&
+  //         new Date(departureDate).getDate() ===
+  //           new Date(pickedDate).getDate() &&
+  //         new Date(departureDate).getMonth() ===
+  //           new Date(pickedDate).getMonth() &&
+  //         new Date(departureDate).getFullYear() ===
+  //           new Date(pickedDate).getFullYear()) ||
+  //       (new Date(arrivalDate).getDate() === new Date(pickedDate).getDate() &&
+  //         new Date(arrivalDate).getMonth() ===
+  //           new Date(pickedDate).getMonth() &&
+  //         new Date(arrivalDate).getFullYear() ===
+  //           new Date(pickedDate).getFullYear());
+
+  //     return filteredFlights;
+  //   }
+  // );
+  const filterFlights = flights.map((data) => data);
+  //  setFlights(filterFlights);
+  // console.log(filterFlights);
   const onClickFlights = (e) => {
     e.preventDefault();
     fetchRequest().then((data) => {
@@ -98,10 +123,14 @@ const SearchForm = ({ printFlights, searchFlights, onClickDay, arrivals }) => {
         setPickedDate={setPickedDate}
       />
       <FlightButtons
-        pickedDate={pickedDate}
+        // pickedDate={pickedDate}
         //  onClickDate={onClickDate}
-        arrivals={arrivals}
+        clickArrivals={clickArrivals}
+        onClickArrivals={onClickArrivals}
         onClickDepartures={onClickDepartures}
+        filterDepartures={filterDepartures}
+        filterArrivals={filterArrivals}
+        setClickArrivals={setClickArrivals}
       />
       <FlightsTitles />
       {modalWindow && (
@@ -115,8 +144,12 @@ const SearchForm = ({ printFlights, searchFlights, onClickDay, arrivals }) => {
         />
       )}
       <RenderFlights
-        pickedDate={pickedDate}
+        // pickedDate={pickedDate}
         filterFlights={filterFlights}
+        filterDepartures={filterDepartures}
+        filterArrivals={filterArrivals}
+        clickArrivals={clickArrivals}
+        setClickArrivals={setClickArrivals}
       />
     </div>
   );
