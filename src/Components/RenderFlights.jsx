@@ -3,17 +3,15 @@ import React from 'react';
 const RenderFlights = ({
   filterArrivals,
   filterDepartures,
-  pickedDate,
   clickArrivals,
+  clickDepartures,
 }) => {
-  console.log(filterArrivals, filterDepartures);
   return (
     <ul className="flights-list__voyages">
-      {clickArrivals
+      {clickArrivals === true && clickDepartures === false
         ? filterArrivals.map(
             ({
               terminal,
-              departureCity,
               arrivalCity,
               departureDate,
               status,
@@ -29,7 +27,6 @@ const RenderFlights = ({
                 <li className="flights-list__display">
                   <span className="flights-list__terminal">{terminal}</span>
                   <span className="flights-list__time">{time}</span>
-
                   <span className="flights-list__departure">{arrivalCity}</span>
                   <span className="flights-list__status">{status}</span>
                   <span className="flights-list__airline">
@@ -48,7 +45,6 @@ const RenderFlights = ({
             ({
               terminal,
               departureCity,
-              arrivalCity,
               departureDate,
               status,
               airlineName,

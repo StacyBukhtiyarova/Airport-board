@@ -3,44 +3,32 @@ import { connect, useDispatch } from 'react-redux';
 import { printArrivals, printDepartures, printFlights } from '../actions.js';
 import { flightsSelector, searchFlightsSelector } from '../selector.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import fetchRequest from '.././serverRequests.js';
 import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
 
 const FlightButtons = ({
-  flights,
-  setPickedDate,
-  pickedDate,
   printFlights,
-  filterDepartures,
   filterArrivals,
-  searchFlights,
-  onClickDate,
-  clickArrivals,
+  filterDepartures,
   setClickArrivals,
+  setClickDepartures,
 }) => {
   const dispatch = useDispatch();
   const [filteredFlights, setFilteredFlights] = useState([]);
 
   const onClickArrivals = () => {
-    // dispatch(searchFlights(pickedDate));
-    // fetchRequest().then((data) => {
-    //   const flights = data.map((flight) => flight);
-    //   setFilteredFlights(flights);
-    //   dispatch(printFlights(flights));
-    // });
-    // setClickArrivals(!clickArrivals);
-    // if (clickArrivals) {
-    //   return filterArrivals;
-    // } else {
-    //   filterDepartures;
-    // }
     setFilteredFlights(filterArrivals);
     dispatch(printFlights(filterArrivals));
     setClickArrivals(true);
-    // console.log(filterArrivals,filterDepartures)
+    setClickDepartures(false);
+  };
+  const handleDepartures = () => {
+    setFilteredFlights(filterDepartures);
+    dispatch(printFlights(filterDepartures));
+    setClickDepartures(true);
+    setClickArrivals(false);
   };
 
   return (
@@ -53,10 +41,8 @@ const FlightButtons = ({
         <button
           type="submit"
           className=" flights__departure-button"
-
-          // onClick={departures}
-          //  pickedDate={pickedDate}
-        >
+          onClick={handleDepartures}
+          setClickDepartures={setClickDepartures}>
           Виліт
         </button>
       </div>
