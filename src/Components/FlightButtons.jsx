@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { printArrivals, printDepartures, printFlights } from '../actions.js';
-import { flightsSelector, searchFlightsSelector } from '../selector.js';
+import { useDispatch } from 'react-redux';
+import { printFlights } from '../actions.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const FlightButtons = ({
-  printFlights,
   filterArrivals,
   filterDepartures,
   setClickArrivals,
   setClickDepartures,
+  location,
 }) => {
   const dispatch = useDispatch();
   const [filteredFlights, setFilteredFlights] = useState([]);
@@ -24,6 +24,7 @@ const FlightButtons = ({
     setClickArrivals(true);
     setClickDepartures(false);
   };
+
   const handleDepartures = () => {
     setFilteredFlights(filterDepartures);
     dispatch(printFlights(filterDepartures));
@@ -38,42 +39,32 @@ const FlightButtons = ({
           icon={faPlaneDeparture}
           className="plane-icon__departure"
         />
-        <button
-          type="submit"
-          className=" flights__departure-button"
-          onClick={handleDepartures}
-          setClickDepartures={setClickDepartures}>
-          Виліт
-        </button>
+        <Link to="/departures">
+          <button
+            type="submit"
+            className="flights__departure-button"
+            onClick={handleDepartures}>
+            Виліт
+          </button>
+        </Link>
       </div>
+
       <div className="flights__button">
         <FontAwesomeIcon
           icon={faPlaneArrival}
           className="plane-icon__arrival"
         />
-        <button
-          type="submit"
-          className=" flights__arrival-button"
-          setClickArrivals={setClickArrivals}
-          onClick={onClickArrivals}>
-          Приліт
-        </button>
+        <Link to="/arrivals">
+          <button
+            type="submit"
+            className="flights__arrival-button"
+            onClick={onClickArrivals}>
+            Приліт
+          </button>
+        </Link>
       </div>
     </div>
   );
 };
 
-const mapState = (state) => {
-  return {
-    arrivals: searchFlightsSelector(state),
-    departures: searchFlightsSelector(state),
-    flights: flightsSelector(state),
-  };
-};
-const mapDispatch = {
-  printDepartures,
-  printArrivals,
-  printFlights,
-};
-
-export default connect(mapState, mapDispatch)(FlightButtons);
+export default FlightButtons;

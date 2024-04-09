@@ -49,6 +49,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const onClickFlights = (e) => {
     e.preventDefault();
     setModalWindow(false);
+
     return fetchRequest().then((data) => {
       setFlights(data), dispatch(printFlights(data));
     });
@@ -61,10 +62,6 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const onClickDate = (date) => {
     setPickedDate(date);
     dispatch(searchFlights(date));
-    // fetchRequest().then((data) => {
-    //   setFlights(data);
-    //   dispatch(printFlights(data));
-    // });
   };
 
   return (
@@ -80,12 +77,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         setClickDepartures={setClickDepartures}
       />
       <FlightsTitles />
-      {modalWindow && (
-        <CalendarModal
-          onClickDate={onClickDate}
-          //  onClickDay={onClickDay}
-        />
-      )}
+
+      {modalWindow && <CalendarModal onClickDate={onClickDate} />}
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}
