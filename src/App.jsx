@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './components/Header';
-import SearchForm from './components/SearchForm';
+import Header from './components/header/Header';
+import SearchForm from './components/searchForm/SearchForm';
 import store from './store';
 import { Provider } from 'react-redux';
 import {
@@ -9,7 +9,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import './styles/index.scss';
+import './index.scss';
 
 const routes = [
   {
