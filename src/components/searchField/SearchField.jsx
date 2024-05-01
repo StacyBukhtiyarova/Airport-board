@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -39,3 +40,11 @@ const SearchField = ({
   );
 };
 export default SearchField;
+
+SearchField.propTypes = {
+  modalWindow: PropTypes.bool,
+  setModalWindow: PropTypes.func,
+  input: PropTypes.string,
+  onClickFlights: PropTypes.func,
+  onClickSearchFlight: PropTypes.func,
+};

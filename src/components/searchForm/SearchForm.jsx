@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   flightsSelector,
   searchFlightsSelector,
@@ -105,3 +106,10 @@ const mapDispatch = {
 };
 
 export default connect(mapState, mapDispatch)(SearchForm);
+
+SearchForm.propTypes = {
+  searchFlights: PropTypes.func,
+  printArrivals: PropTypes.func,
+  printDepartures: PropTypes.func,
+  printFlights: PropTypes.func,
+};

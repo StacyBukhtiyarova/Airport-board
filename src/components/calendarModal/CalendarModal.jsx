@@ -1,7 +1,6 @@
 import React from 'react';
-
 import Calendar from 'react-calendar';
-
+import PropTypes from 'prop-types';
 import './calendar.scss';
 
 const CalendarModal = ({ onClickDate }) => {
@@ -18,3 +17,7 @@ const CalendarModal = ({ onClickDate }) => {
 };
 
 export default CalendarModal;
+
+CalendarModal.propTypes = {
+  onClickDate: PropTypes.func,
+};

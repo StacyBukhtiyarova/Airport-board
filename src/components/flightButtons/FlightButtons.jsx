@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { printFlights } from '../../redux/actions.js';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlaneDeparture,
@@ -67,3 +68,10 @@ const FlightButtons = ({
 };
 
 export default FlightButtons;
+
+FlightButtons.propTypes = {
+  filterArrivals: PropTypes.array,
+  filterDepartures: PropTypes.array,
+  setClickArrivals: PropTypes.func,
+  setClickDepartures: PropTypes.func,
+};

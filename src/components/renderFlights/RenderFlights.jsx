@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import './RenderFlights.scss';
 const RenderFlights = ({
   filterArrivals,
@@ -25,7 +25,9 @@ const RenderFlights = ({
                 minute: '2-digit',
               });
               return (
-                <li className="flights-list__display">
+                <li
+                  key={codeShare}
+                  className="flights-list__display">
                   <span className="flights-list__terminal">{terminal}</span>
                   <span className="flights-list__time">{time}</span>
                   <span className="flights-list__departure">{arrivalCity}</span>
@@ -57,7 +59,9 @@ const RenderFlights = ({
                 minute: '2-digit',
               });
               return (
-                <li className="flights-list__display">
+                <li
+                  key={codeShare}
+                  className="flights-list__display">
                   <span className="flights-list__terminal">{terminal}</span>
                   <span className="flights-list__time">{time}</span>
 
@@ -82,3 +86,9 @@ const RenderFlights = ({
 };
 
 export default RenderFlights;
+RenderFlights.propTypes = {
+  filterArrivals: PropTypes.array,
+  filterDepartures: PropTypes.array,
+  setClickArrivals: PropTypes.func,
+  setClickDepartures: PropTypes.func,
+};
