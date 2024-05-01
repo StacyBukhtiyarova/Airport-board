@@ -1,15 +1,10 @@
 import React from 'react';
 
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
-const CalendarModal = ({ modalWindow, setModalWindow, onClickDate }) => {
-  const onClickDay = () => {
-    setTimeout(() => {
-      setModalWindow(!modalWindow);
-    }, 1000);
-  };
+import '../styles/calendar.scss';
 
+const CalendarModal = ({ onClickDate }) => {
   return (
     <div>
       <div className="calendar__modal">

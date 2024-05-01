@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { flightsSelector, searchFlightsSelector } from '../selector.js';
-import fetchRequest from '.././serverRequests.js';
+import { flightsSelector, searchFlightsSelector } from '../redux/selector.js';
+import fetchRequest from '../redux/serverRequests.js';
 import CalendarModal from './CalendarModal.jsx';
 import RenderFlights from './RenderFlights.jsx';
 import FlightsTitles from './FlightsTitles.jsx';
@@ -11,8 +11,8 @@ import {
   printArrivals,
   printDepartures,
   printFlights,
-} from '../actions.js';
-import FlightButtons from '../Components/FlightButtons';
+} from '../redux/actions.js';
+import FlightButtons from './FlightButtons';
 
 const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);

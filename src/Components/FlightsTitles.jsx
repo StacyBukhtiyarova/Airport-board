@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/flightsTitles.scss';
 const FlightsTitles = () => {
   return (
     <ul className="flights-list">

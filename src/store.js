@@ -1,4 +1,4 @@
-import { flightsReducer, searchFlightsReducer } from './reducer';
+import { flightsReducer, searchFlightsReducer } from './redux/reducer';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
 

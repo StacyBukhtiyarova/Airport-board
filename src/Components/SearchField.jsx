@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import fetchRequest from '.././serverRequests.js';
+import '../styles/SearchField.scss';
 const SearchField = ({
   modalWindow,
   setModalWindow,

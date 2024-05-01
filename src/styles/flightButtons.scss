@@ -1,0 +1,37 @@
+.plane-icon__arrival {
+  position: absolute;
+  top: 25px;
+  left: 8vh;
+  color: #1eb7ee;
+}
+.plane-icon__departure {
+  position: absolute;
+  top: 25px;
+  right: 4vh;
+  color: #1eb7ee;
+}
+.flights {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 20px auto;
+  width: 50%;
+
+  &__arrival-button {
+    height: 60px;
+    width: 320px;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 80px 0px 0 0;
+  }
+  &__departure-button {
+    width: 320px;
+    height: 60px;
+    margin-left: 4vh;
+    background-color: #fff;
+    color: #1eb7ee;
+    border: none;
+    border-radius: 0px 80px 0px 0px;
+  }
+}

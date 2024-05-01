@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { printFlights } from '../actions.js';
+import { printFlights } from '../redux/actions.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-
+import '../styles/flightButtons.scss';
 const FlightButtons = ({
   filterArrivals,
   filterDepartures,
   setClickArrivals,
   setClickDepartures,
-  location,
 }) => {
   const dispatch = useDispatch();
   const [filteredFlights, setFilteredFlights] = useState([]);

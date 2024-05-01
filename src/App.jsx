@@ -1,7 +1,6 @@
 import React from 'react';
-import Header from './Components/Header';
-import SearchForm from './Components/SearchForm';
-import RenderFlights from './Components/RenderFlights';
+import Header from './components/Header';
+import SearchForm from './components/SearchForm';
 import store from './store';
 import { Provider } from 'react-redux';
 import {
@@ -10,26 +9,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import './index.scss';
+import './styles/index.scss';
 
-// const App = () => {
-//   const router = createBrowserRouter([
-//     {
-//       path: '/',
-//       element: (
-//         <section className="main-search">
-//           <Header />
-//           <SearchForm />
-//         </section>
-//       ),
-//     },
-//   ]);
-//   return (
-//     <Provider store={store}>
-//       <RouterProvider router={router} />
-//     </Provider>
-//   );
-// };
 const routes = [
   {
     path: '/',

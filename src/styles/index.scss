@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+.main-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: url(https://iev.aero/images/main.jpg) no-repeat;
+  background-color: #e7efec;
+  color: #fff;
+}
