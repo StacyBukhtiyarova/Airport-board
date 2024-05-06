@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import Header from './components/header/Header';
 import SearchForm from './components/searchForm/SearchForm';
 import store from './store';
@@ -43,7 +44,6 @@ const routes = [
 
 const App = () => {
   const router = createBrowserRouter(routes);
-
   return (
     <Provider store={store}>
       <RouterProvider router={router}>

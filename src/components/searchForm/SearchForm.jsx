@@ -77,12 +77,17 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         onClickFlights={onClickFlights}
       />
       <FlightButtons
+        filterArrivals={filterArrivals}
+        filterDepartures={filterDepartures}
         setClickArrivals={setClickArrivals}
         setClickDepartures={setClickDepartures}
       />
-      <FlightsTitles />
+      <FlightsTitles
+        filterArrivals={filterArrivals}
+        filterDepartures={filterDepartures}
+      />
 
-      {modalWindow && <CalendarModal onClickDate={onClickDate} />}
+      {modalWindow && <CalendarModal onClickDate={onClickDate} pickedDate={pickedDate} />}
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}
