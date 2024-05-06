@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   flightsSelector,
@@ -87,7 +95,13 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         filterDepartures={filterDepartures}
       />
 
-      {modalWindow && <CalendarModal onClickDate={onClickDate} pickedDate={pickedDate} />}
+      {modalWindow && (
+        <CalendarModal
+          onClickDate={onClickDate}
+          pickedDate={pickedDate}
+        />
+      )}
+
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}

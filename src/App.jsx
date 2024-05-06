@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Header from './components/header/Header';
 import SearchForm from './components/searchForm/SearchForm';
+import CalendarModal from './components/calendarModal/CalendarModal';
 import store from './store';
 import { Provider } from 'react-redux';
 import {
@@ -13,6 +14,10 @@ import {
 import './index.scss';
 
 const routes = [
+  {
+    path: '/:pickedDate',
+    element: <CalendarModal />,
+  },
   {
     path: '/',
     element: (
