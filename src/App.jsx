@@ -8,60 +8,52 @@ import { Provider } from 'react-redux';
 import {
   createBrowserRouter,
   RouterProvider,
+  BrowserRouter,
   Routes,
   Route,
+  Link,
 } from 'react-router-dom';
 import './index.scss';
 
-const routes = [
-  {
-    path: '/:pickedDate',
-    element: <CalendarModal />,
-  },
-  {
-    path: '/',
-    element: (
-      <section className="main-search">
-        <Header />
-        <SearchForm />
-      </section>
-    ),
-  },
-  {
-    path: 'departures',
-    element: (
-      <section className="main-search">
-        <Header />
-        <SearchForm />
-      </section>
-    ),
-  },
-  {
-    path: '/arrivals',
-    element: (
-      <section className="main-search">
-        <Header />
-        <SearchForm />
-      </section>
-    ),
-  },
-];
-
 const App = () => {
-  const router = createBrowserRouter(routes);
   return (
     <Provider store={store}>
-      <RouterProvider router={router}>
+      <BrowserRouter>
         <Routes>
-          {routes.map(({ path, element }) => (
-            <Route
-              key={path}
-              path={path}
-              element={element}
-            />
-          ))}
+          <Route
+            path="/"
+            element={
+              <section className="main-search">
+                <Header />
+                <SearchForm />
+              </section>
+            }></Route>
+          <Route
+            path="/arrivals"
+            element={
+              <section className="main-search">
+                <Header />
+                <SearchForm />
+              </section>
+            }></Route>
+          <Route
+            path="/departures"
+            element={
+              <section className="main-search">
+                <Header />
+                <SearchForm />
+              </section>
+            }></Route>
+          <Route
+            path="/:pickedDate"
+            element={
+              <section className="main-search">
+                <Header />
+                <SearchForm />
+              </section>
+            }></Route>
         </Routes>
-      </RouterProvider>
+      </BrowserRouter>
     </Provider>
   );
 };

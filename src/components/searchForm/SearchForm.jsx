@@ -84,12 +84,14 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
       />
+
       <FlightButtons
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
         setClickArrivals={setClickArrivals}
         setClickDepartures={setClickDepartures}
       />
+
       <FlightsTitles
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}

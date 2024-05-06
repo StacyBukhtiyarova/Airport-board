@@ -14,19 +14,19 @@ import './calendar.css';
 import './calendarModal.scss';
 
 const CalendarModal = ({ onClickDate, pickedDate }) => {
+  const pickedDateUrl = useParams();
   return (
     <div>
-   
-      <div className="calendar__modal">
-        
+      <Link to={`/${new Date(pickedDate).toISOString()}`}>
+        <div className="calendar__modal">
           <Calendar
             onClickDate={onClickDate}
             onChange={onClickDate}
             pickedDate={pickedDate}
-        />
-          
+            value={pickedDate}
+          />
         </div>
-   
+      </Link>
     </div>
   );
 };
