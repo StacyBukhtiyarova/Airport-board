@@ -1,7 +1,8 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
-import './calendar.scss';
+import './calendar.css';
+import './calendarModal.scss';
 
 const CalendarModal = ({ onClickDate }) => {
   return (
