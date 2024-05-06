@@ -5,7 +5,7 @@ import {
   SEARCH_FLIGHTS,
 } from './actions.js';
 
-import fetchRequest from './serverRequests.js';
+import fetchRequest from '../gateways/serverRequests.js';
 const departures = fetchRequest().then((data) =>
   data.map(({ departureCity }) => departureCity)
 );
