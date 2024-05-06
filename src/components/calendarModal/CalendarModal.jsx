@@ -1,23 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from 'react-router-dom';
 import './calendar.css';
 import './calendarModal.scss';
 
 const CalendarModal = ({ onClickDate, pickedDate }) => {
-  const pickedDateUrl = useParams();
   return (
     <div>
-      <Link to={`/${new Date(pickedDate).toISOString()}`}>
+      <Link to={`/${pickedDate.toLocaleDateString()}`}>
         <div className="calendar__modal">
           <Calendar
             onClickDate={onClickDate}

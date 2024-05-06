@@ -80,6 +80,20 @@ const RenderFlights = ({
               );
             }
           )}
+      {filterArrivals.length === 0 && filterDepartures.length === 0 ? (
+        <span
+          style={{
+            position: 'absolute',
+            paddingLeft: 550,
+            marginTop: 150,
+            color: 'black',
+            fontSize: 42,
+          }}>
+          No flights
+        </span>
+      ) : (
+        ''
+      )}
     </ul>
   );
 };

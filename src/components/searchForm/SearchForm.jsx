@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import {
   flightsSelector,
@@ -18,6 +11,7 @@ import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
+
 import {
   searchFlights,
   printArrivals,
@@ -61,7 +55,6 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const onClickFlights = (e) => {
     e.preventDefault();
     setModalWindow(false);
-
     return fetchRequest().then((data) => {
       setFlights(data), dispatch(printFlights(data));
     });
