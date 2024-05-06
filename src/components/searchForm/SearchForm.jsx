@@ -5,7 +5,7 @@ import {
   flightsSelector,
   searchFlightsSelector,
 } from '../../redux/selector.js';
-import fetchRequest from '../../redux/serverRequests.js';
+import fetchRequest from '../../gateways/serverRequests.js';
 import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';

@@ -64,7 +64,6 @@ const RenderFlights = ({
                   className="flights-list__display">
                   <span className="flights-list__terminal">{terminal}</span>
                   <span className="flights-list__time">{time}</span>
-
                   <span className="flights-list__departure">
                     {departureCity}
                   </span>
