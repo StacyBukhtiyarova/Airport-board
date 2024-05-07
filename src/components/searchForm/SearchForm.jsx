@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import {
+  useNavigate,
+  createSearchParams,
+  useSearchParams,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   flightsSelector,
@@ -11,7 +15,6 @@ import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
-import UrlParams from '../urlParams/UrlParams.jsx';
 
 import {
   searchFlights,
@@ -21,7 +24,7 @@ import {
 } from '../../redux/actions.js';
 import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
-const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
+const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -30,7 +33,32 @@ const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
   const [pickedDate, setPickedDate] = useState(new Date());
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
+  const onClickFlights = (e) => {
+    e.preventDefault();
+    setModalWindow(false);
+    return fetchRequest().then((data) => {
+      setFlights(data), dispatch(printFlights(data));
+    });
+  };
+
+  const onClickSearchFlight = (e) => {
+    setInput(e.target.value);
+    dispatch(searchFlights(e.target.value));
+  };
+
+  const onClickDate = (date) => {
+    setPickedDate(date);
+    dispatch(searchFlights(date));
+    const searchParams = createSearchParams({
+      pickedDate: date.toLocaleDateString(),
+    });
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
+  };
   const filterDepartures = flights.filter(
     ({ departureCity, departureDate }) => {
       const filteredFlights =
@@ -53,30 +81,29 @@ const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
 
     return filteredFlights;
   });
-
-  const onClickFlights = (e) => {
-    e.preventDefault();
-    setModalWindow(false);
-    return fetchRequest().then((data) => {
-      setFlights(data), dispatch(printFlights(data));
-    });
-  };
-
-  const onClickSearchFlight = (e) => {
-    setInput(e.target.value);
-    dispatch(searchFlights(e.target.value));
-  };
-  const onClickDate = (date) => {
-    setPickedDate(date);
-    dispatch(searchFlights(date));
-    const searchParams = createSearchParams({
-      selectedDate: date.toLocaleDateString(), // Форматируем дату в формат YYYY-MM-DD
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
-  };
+  useEffect(() => {
+    const pickedDateFromURL = searchParams.get('pickedDate');
+    if (
+      pickedDateFromURL &&
+      new Date(pickedDateFromURL).toISOString().split('T')[0] !==
+        pickedDate.toISOString().split('T')[0]
+    ) {
+      setPickedDate(new Date(pickedDateFromURL));
+      fetchRequest().then((data) => {
+        const filteredFlights = data.filter(
+          ({ departureDate, arrivalDate }) => {
+            return (
+              new Date(departureDate).toDateString() ===
+                new Date(pickedDateFromURL).toDateString() ||
+              new Date(arrivalDate).toDateString() ===
+                new Date(pickedDateFromURL).toDateString()
+            );
+          }
+        );
+        setFlights(filteredFlights);
+      });
+    }
+  }, [searchParams, pickedDate]);
 
   return (
     <div className="container">
@@ -106,7 +133,7 @@ const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
           value={pickedDate}
         />
       )}
-      <UrlParams printFlights={printFlights} handleFlightsList={handleFlightsList} />
+
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}
@@ -116,12 +143,14 @@ const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
     </div>
   );
 };
+
 const mapState = (state) => {
   return {
     flightsList: flightsSelector(state),
     searchFlight: searchFlightsSelector(state),
   };
 };
+
 const mapDispatch = {
   printDepartures,
   printArrivals,
