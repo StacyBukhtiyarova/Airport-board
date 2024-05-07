@@ -7,6 +7,7 @@ const RenderFlights = ({
   clickArrivals,
   clickDepartures,
 }) => {
+  console.log(filterArrivals)
   return (
     <ul className="flights-list__voyages">
       {clickArrivals === true && clickDepartures === false

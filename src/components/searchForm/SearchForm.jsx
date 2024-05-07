@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   flightsSelector,
@@ -11,6 +11,7 @@ import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
+import UrlParams from '../urlParams/UrlParams.jsx';
 
 import {
   searchFlights,
@@ -20,7 +21,7 @@ import {
 } from '../../redux/actions.js';
 import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
-const SearchForm = ({ printFlights, searchFlights }) => {
+const SearchForm = ({ handleFlightsList, printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -28,6 +29,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const [clickDepartures, setClickDepartures] = useState(false);
   const [pickedDate, setPickedDate] = useState(new Date());
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const filterDepartures = flights.filter(
     ({ departureCity, departureDate }) => {
@@ -67,6 +69,13 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const onClickDate = (date) => {
     setPickedDate(date);
     dispatch(searchFlights(date));
+    const searchParams = createSearchParams({
+      selectedDate: date.toLocaleDateString(), // Форматируем дату в формат YYYY-MM-DD
+    });
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
   };
 
   return (
@@ -94,9 +103,10 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         <CalendarModal
           onClickDate={onClickDate}
           pickedDate={pickedDate}
+          value={pickedDate}
         />
       )}
-
+      <UrlParams printFlights={printFlights} handleFlightsList={handleFlightsList} />
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}

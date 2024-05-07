@@ -8,16 +8,13 @@ import './calendarModal.scss';
 const CalendarModal = ({ onClickDate, pickedDate }) => {
   return (
     <div>
-      <Link to={`/${pickedDate.toLocaleDateString()}`}>
-        <div className="calendar__modal">
-          <Calendar
-            onClickDate={onClickDate}
-            onChange={onClickDate}
-            pickedDate={pickedDate}
-            value={pickedDate}
-          />
-        </div>
-      </Link>
+      <div className="calendar__modal">
+        <Calendar
+          onClickDate={onClickDate}
+          onChange={onClickDate}
+          pickedDate={pickedDate}
+        />
+      </div>
     </div>
   );
 };
