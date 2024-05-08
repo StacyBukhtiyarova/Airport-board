@@ -1,23 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import './searchField.scss';
-const SearchField = ({
-  modalWindow,
-  setModalWindow,
-  input,
-  onClickFlights,
-  onClickSearchFlight,
-}) => {
+const SearchField = ({ input, onClickFlights, onClickSearchFlight }) => {
   return (
     <div>
-      {/* <FontAwesomeIcon
-        onClick={() => setModalWindow(!modalWindow)}
-        icon={faCalendar}
-        className="calendar__icon"
-      /> */}
       <div className="search-line-container">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
@@ -42,8 +30,6 @@ const SearchField = ({
 export default SearchField;
 
 SearchField.propTypes = {
-  modalWindow: PropTypes.bool,
-  setModalWindow: PropTypes.func,
   input: PropTypes.string,
   onClickFlights: PropTypes.func,
   onClickSearchFlight: PropTypes.func,
