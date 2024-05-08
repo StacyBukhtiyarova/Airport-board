@@ -1,39 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import {
-  useNavigate,
-  createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  flightsSelector,
-  searchFlightsSelector,
-} from '../../redux/selector.js';
-import fetchRequest from '../../gateways/serverRequests.js';
-import CalendarModal from '../calendarModal/CalendarModal.jsx';
-import RenderFlights from '../renderFlights/RenderFlights.jsx';
-import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
-import SearchField from '../searchField/SearchField.jsx';
 import './datePanel.scss';
-
-import {
-  searchFlights,
-  printArrivals,
-  printDepartures,
-  printFlights,
-} from '../../redux/actions.js';
-import FlightButtons from '../flightButtons/FlightButtons.jsx';
-
-const DatePanel = ({ onClickFlights, onClickDate }) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+const DatePanel = ({ onClickDate, setModalWindow, modalWindow }) => {
   const oneDayMs = 86400000;
-  // const yesterday = new Date(
-  //   new Date().getTime() - oneDayMs
-  // ).toLocaleDateString('ua-Ua', {
-  //   day: '2-digit',
-  //   month: '2-digit',
-  // });
-  const yesterday = new Date(new Date('2023-04-04')).toLocaleDateString();
+  const yesterday = new Date(
+    new Date().getTime() - oneDayMs
+  ).toLocaleDateString('ua-Ua', {
+    day: '2-digit',
+    month: '2-digit',
+  });
   const today = new Date(new Date().getTime()).toLocaleDateString('ua-Ua', {
     day: '2-digit',
     month: '2-digit',
@@ -45,12 +23,31 @@ const DatePanel = ({ onClickFlights, onClickDate }) => {
       month: '2-digit',
     }
   );
+  const handleClickYesterday = () => {
+    const yesterdayDate = new Date(new Date().getTime() - oneDayMs);
+    onClickDate(yesterdayDate);
+  };
+
+  const handleClickToday = () => {
+    onClickDate(new Date());
+  };
+
+  const handleClickTomorrow = () => {
+    const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
+    onClickDate(tomorrowDate);
+  };
+
   return (
     <div className="date-panel">
+      <FontAwesomeIcon
+        onClick={() => setModalWindow(!modalWindow)}
+        icon={faCalendar}
+        className="date-panel__calendar-icon"
+      />
       <div className="date-panel__container">
         <span>{yesterday}</span>
         <button
-          onClick={onClickFlights}
+          onClick={handleClickYesterday}
           className="date-panel__button">
           <span>YESTERDAY</span>
         </button>
@@ -58,14 +55,18 @@ const DatePanel = ({ onClickFlights, onClickDate }) => {
       </div>
       <div className="date-panel__container">
         <span>{today}</span>
-        <button className="date-panel__button">
+        <button
+          onClick={handleClickToday}
+          className="date-panel__button">
           <span>TODAY</span>
         </button>
         <span className="date-panel__line"></span>
       </div>
       <div className="date-panel__container">
         <span>{tomorrow}</span>
-        <button className="date-panel__button">
+        <button
+          onClick={handleClickTomorrow}
+          className="date-panel__button">
           <span>TOMORROW</span>
         </button>
         <span className="date-panel__line"></span>
@@ -73,4 +74,9 @@ const DatePanel = ({ onClickFlights, onClickDate }) => {
     </div>
   );
 };
+
+DatePanel.propTypes = {
+  onClickDate: PropTypes.func.isRequired,
+};
+
 export default DatePanel;

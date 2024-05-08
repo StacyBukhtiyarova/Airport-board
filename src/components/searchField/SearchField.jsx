@@ -13,11 +13,11 @@ const SearchField = ({
 }) => {
   return (
     <div>
-      <FontAwesomeIcon
+      {/* <FontAwesomeIcon
         onClick={() => setModalWindow(!modalWindow)}
         icon={faCalendar}
         className="calendar__icon"
-      />
+      /> */}
       <div className="search-line-container">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
