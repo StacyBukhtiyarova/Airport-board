@@ -15,6 +15,7 @@ import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
+import DatePanel from '../datePanel/DatePanel.jsx';
 
 import {
   searchFlights,
@@ -85,8 +86,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     const pickedDateFromURL = searchParams.get('pickedDate');
     if (
       pickedDateFromURL &&
-      new Date(pickedDateFromURL).toISOString().split('T')[0] !==
-        pickedDate.toISOString().split('T')[0]
+      new Date(pickedDateFromURL).toLocaleDateString() !==
+        pickedDate.toLocaleDateString()
     ) {
       setPickedDate(new Date(pickedDateFromURL));
       fetchRequest().then((data) => {
@@ -133,7 +134,10 @@ const SearchForm = ({ printFlights, searchFlights }) => {
           value={pickedDate}
         />
       )}
-
+      <DatePanel
+        onClickDate={onClickDate}
+        onClickFlights={onClickFlights}
+      />
       <RenderFlights
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}

@@ -1,0 +1,25 @@
+.date-panel {
+  display: flex;
+  justify-content: center;
+  margin: 0 33%;
+  text-align: center;
+  border: 1.5px solid;
+  &__container {
+    flex-direction: column;
+    width: 100px;
+    margin-right: 15px;
+  }
+  &__button {
+    height: 50px;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  &__line {
+    display: block;
+    width: 115px;
+    height: 5px;
+    border-bottom: 5px solid #fff;
+  }
+}

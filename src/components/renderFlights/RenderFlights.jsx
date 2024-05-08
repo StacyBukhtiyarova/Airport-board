@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './RenderFlights.scss';
+import './renderFlights.scss';
 const RenderFlights = ({
   filterArrivals,
   filterDepartures,
   clickArrivals,
   clickDepartures,
 }) => {
-  console.log(filterArrivals)
+
   return (
     <ul className="flights-list__voyages">
       {clickArrivals === true && clickDepartures === false
