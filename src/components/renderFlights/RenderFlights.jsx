@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './RenderFlights.scss';
+import './renderFlights.scss';
 const RenderFlights = ({
   filterArrivals,
   filterDepartures,
