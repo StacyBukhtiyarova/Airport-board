@@ -71,18 +71,18 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       setFlights(filteredFlights);
     });
   };
- const onChangeDate = (e) => {
-   const date = new Date(e.target.value); // Получаем значение даты из события
-   setPickedDate(date);
-   fetchFlightsForDate(date);
-   const searchParams = createSearchParams({
-     pickedDate: date.toLocaleDateString(),
-   });
-   navigate({
-     pathname: location.pathname,
-     search: searchParams.toString(),
-   });
- };
+  const onChangeDate = (e) => {
+    const date = new Date(e.target.value); // Получаем значение даты из события
+    setPickedDate(date);
+    fetchFlightsForDate(date);
+    const searchParams = createSearchParams({
+      pickedDate: date.toLocaleDateString(),
+    });
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
+  };
 
   useEffect(() => {
     const pickedDateFromURL = searchParams.get('pickedDate');
@@ -117,6 +117,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         setModalWindow={setModalWindow}
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
+        filterDepartures={filterDepartures}
+        filterArrivals={filterArrivals}
       />
       <FlightButtons
         filterArrivals={filterArrivals}
