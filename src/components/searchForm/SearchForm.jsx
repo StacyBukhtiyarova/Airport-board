@@ -48,8 +48,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     dispatch(searchFlights(e.target.value));
   };
 
-  const onClickDate = (e) => {
-    const date = new Date(e.target.value);
+  const onClickDate = (date) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
@@ -72,6 +71,18 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       setFlights(filteredFlights);
     });
   };
+ const onChangeDate = (e) => {
+   const date = new Date(e.target.value); // Получаем значение даты из события
+   setPickedDate(date);
+   fetchFlightsForDate(date);
+   const searchParams = createSearchParams({
+     pickedDate: date.toLocaleDateString(),
+   });
+   navigate({
+     pathname: location.pathname,
+     search: searchParams.toString(),
+   });
+ };
 
   useEffect(() => {
     const pickedDateFromURL = searchParams.get('pickedDate');
@@ -114,19 +125,13 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         setClickDepartures={setClickDepartures}
       />
       <DatePanel
+        onChangeDate={onChangeDate}
         onClickDate={onClickDate}
-        setModalWindow={setModalWindow}
-        modalWindow={modalWindow}
+        pickedDate={pickedDate}
       />
       <FlightsTitles
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
-      />
-
-      <input
-        type="date"
-        value={pickedDate.toLocaleDateString()}
-        onChange={onClickDate}
       />
 
       <RenderFlights

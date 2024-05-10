@@ -1,17 +1,25 @@
 .date-panel {
   display: flex;
   justify-content: center;
-  margin: 0 33%;
+  margin: 0 37%;
   text-align: center;
   border: 1.5px solid;
+
   &__container {
     flex-direction: column;
     width: 100px;
     margin-right: 15px;
+
     &:hover {
       background-color: #1eb7ee;
+
+      /* Применяем стили к .date-panel__line при наведении на .date-panel__container */
+      .date-panel__line {
+        border-bottom-color: #1eb7ee;
+      }
     }
   }
+
   &__button {
     height: 50px;
     color: #fff;
@@ -19,17 +27,38 @@
     border: none;
     cursor: pointer;
   }
+
   &__line {
     display: block;
-    width: 115px;
+    width: 100px;
     height: 5px;
     border-bottom: 5px solid #fff;
   }
+
   &__calendar-icon {
     height: 40px;
     width: 40px;
     margin-top: 10px;
     margin-right: 25px;
     color: #fff;
+  }
+}
+
+.input__type-date {
+  position: absolute;
+  left: 390px;
+  height: 75px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid;
+  cursor: pointer;
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: #1eb7ee;
   }
 }

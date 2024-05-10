@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './datePanel.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-const DatePanel = ({ onClickDate, setModalWindow, modalWindow }) => {
+const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
   const oneDayMs = 86400000;
   const yesterday = new Date(
     new Date().getTime() - oneDayMs
@@ -39,6 +37,12 @@ const DatePanel = ({ onClickDate, setModalWindow, modalWindow }) => {
 
   return (
     <div className="date-panel">
+      <input
+        type="date"
+        value={pickedDate.toLocaleDateString()}
+        onChange={(e) => onChangeDate(e)}
+        className="input__type-date"
+      />
       <div className="date-panel__container">
         <span>{yesterday}</span>
         <button
