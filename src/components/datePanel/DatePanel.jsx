@@ -39,11 +39,6 @@ const DatePanel = ({ onClickDate, setModalWindow, modalWindow }) => {
 
   return (
     <div className="date-panel">
-      <FontAwesomeIcon
-        onClick={() => setModalWindow(!modalWindow)}
-        icon={faCalendar}
-        className="date-panel__calendar-icon"
-      />
       <div className="date-panel__container">
         <span>{yesterday}</span>
         <button

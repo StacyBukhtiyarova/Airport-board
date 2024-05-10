@@ -11,11 +11,11 @@ import {
   searchFlightsSelector,
 } from '../../redux/selector.js';
 import fetchRequest from '../../gateways/serverRequests.js';
-import CalendarModal from '../calendarModal/CalendarModal.jsx';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
 import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
 import DatePanel from '../datePanel/DatePanel.jsx';
+import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
 import {
   searchFlights,
@@ -23,7 +23,6 @@ import {
   printDepartures,
   printFlights,
 } from '../../redux/actions.js';
-import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
 const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
@@ -49,7 +48,8 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     dispatch(searchFlights(e.target.value));
   };
 
-  const onClickDate = (date) => {
+  const onClickDate = (e) => {
+    const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
@@ -122,13 +122,12 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
       />
-      {modalWindow && (
-        <CalendarModal
-          onClickDate={onClickDate}
-          pickedDate={pickedDate}
-          value={pickedDate}
-        />
-      )}
+
+      <input
+        type="date"
+        value={pickedDate.toLocaleDateString()}
+        onChange={onClickDate}
+      />
 
       <RenderFlights
         filterDepartures={filterDepartures}
