@@ -88,13 +88,9 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
   useEffect(() => {
     const pickedDateFromURL = searchParams.get('selectedDate');
     if (pickedDateFromURL) {
-      // Разделяем дату по точке и получаем день, месяц и год
       const [day, month, year] = pickedDateFromURL.split('.');
-      // Создаем новую дату в формате гггг-мм-дд
       const formattedDate = `${year}-${month}-${day}`;
-      // Устанавливаем эту дату как выбранную дату
       setPickedDate(new Date(formattedDate));
-      // Затем выполняем загрузку рейсов для этой даты
       fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams, pickedDate]);
