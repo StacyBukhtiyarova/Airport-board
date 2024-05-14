@@ -52,7 +52,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -69,14 +69,15 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         );
       });
       setFlights(filteredFlights);
+      dispatch(printFlights(filteredFlights));
     });
   };
   const onChangeDate = (e) => {
-    const date = new Date(e.target.value); // Получаем значение даты из события
+    const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -85,14 +86,16 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   };
 
   useEffect(() => {
-    const pickedDateFromURL = searchParams.get('pickedDate');
-    if (
-      pickedDateFromURL &&
-      new Date(pickedDateFromURL).toLocaleDateString() !==
-        pickedDate.toLocaleDateString()
-    ) {
-      setPickedDate(new Date(pickedDateFromURL));
-      fetchFlightsForDate(new Date(pickedDateFromURL));
+    const pickedDateFromURL = searchParams.get('selectedDate');
+    if (pickedDateFromURL) {
+      // Разделяем дату по точке и получаем день, месяц и год
+      const [day, month, year] = pickedDateFromURL.split('.');
+      // Создаем новую дату в формате гггг-мм-дд
+      const formattedDate = `${year}-${month}-${day}`;
+      // Устанавливаем эту дату как выбранную дату
+      setPickedDate(new Date(formattedDate));
+      // Затем выполняем загрузку рейсов для этой даты
+      fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams, pickedDate]);
 
