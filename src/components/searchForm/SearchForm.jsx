@@ -24,7 +24,7 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({ printFlights, searchFlights }) => {
+const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -52,7 +52,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -69,6 +69,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         );
       });
       setFlights(filteredFlights);
+      dispatch(printFlights(filteredFlights));
     });
   };
   const onChangeDate = (e) => {
@@ -76,7 +77,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -85,14 +86,12 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   };
 
   useEffect(() => {
-    const pickedDateFromURL = searchParams.get('pickedDate');
-    if (
-      pickedDateFromURL &&
-      new Date(pickedDateFromURL).toLocaleDateString() !==
-        pickedDate.toLocaleDateString()
-    ) {
-      setPickedDate(new Date(pickedDateFromURL));
-      fetchFlightsForDate(new Date(pickedDateFromURL));
+    const pickedDateFromURL = searchParams.get('selectedDate');
+    if (pickedDateFromURL) {
+      const [day, month, year] = pickedDateFromURL.split('.');
+      const formattedDate = `${year}-${month}-${day}`;
+      setPickedDate(new Date(formattedDate));
+      fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams, pickedDate]);
 
@@ -130,6 +129,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         onChangeDate={onChangeDate}
         onClickDate={onClickDate}
         pickedDate={pickedDate}
+        onChangeInputDate={onChangeInputDate}
       />
       <FlightsTitles
         filterArrivals={filterArrivals}
