@@ -24,7 +24,7 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({ printFlights, searchFlights }) => {
+const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -133,6 +133,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         onChangeDate={onChangeDate}
         onClickDate={onClickDate}
         pickedDate={pickedDate}
+        onChangeInputDate={onChangeInputDate}
       />
       <FlightsTitles
         filterArrivals={filterArrivals}
