@@ -4,23 +4,9 @@ import './datePanel.scss';
 
 const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
   const oneDayMs = 86400000;
-  const yesterday = new Date(
-    new Date().getTime() - oneDayMs
-  ).toLocaleDateString('ua-Ua', {
-    day: '2-digit',
-    month: '2-digit',
-  });
-  const today = new Date(new Date().getTime()).toLocaleDateString('ua-Ua', {
-    day: '2-digit',
-    month: '2-digit',
-  });
-  const tomorrow = new Date(new Date().getTime() + oneDayMs).toLocaleDateString(
-    'ua-Ua',
-    {
-      day: '2-digit',
-      month: '2-digit',
-    }
-  );
+  const yesterday = new Date(new Date().getTime() - oneDayMs).toLocaleDateString('ua-Ua', dateOptions);
+  const today = new Date(new Date().getTime()).toLocaleDateString('ua-Ua', dateOptions );
+  const tomorrow = new Date(new Date().getTime() + oneDayMs).toLocaleDateString('ua-Ua',dateOptions);
   const handleClickYesterday = () => {
     const yesterdayDate = new Date(new Date().getTime() - oneDayMs);
     onClickDate(yesterdayDate);
