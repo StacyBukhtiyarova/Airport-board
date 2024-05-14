@@ -72,7 +72,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     });
   };
   const onChangeDate = (e) => {
-    const date = new Date(e.target.value); // Получаем значение даты из события
+    const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
