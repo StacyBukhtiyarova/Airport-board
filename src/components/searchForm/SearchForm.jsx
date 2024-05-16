@@ -93,7 +93,7 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
       setPickedDate(new Date(formattedDate));
       fetchFlightsForDate(new Date(formattedDate));
     }
-  }, [searchParams, pickedDate]);
+  }, [searchParams]);
 
   const filterDepartures = flights.filter(
     ({ departureDate, departureCity }) =>
