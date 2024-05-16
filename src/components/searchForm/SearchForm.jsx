@@ -24,7 +24,7 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
+const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -69,7 +69,6 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
         );
       });
       setFlights(filteredFlights);
-      dispatch(printFlights(filteredFlights));
     });
   };
   const onChangeDate = (e) => {
@@ -89,8 +88,11 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
     const pickedDateFromURL = searchParams.get('selectedDate');
     if (pickedDateFromURL) {
       const [day, month, year] = pickedDateFromURL.split('.');
+
       const formattedDate = `${year}-${month}-${day}`;
+
       setPickedDate(new Date(formattedDate));
+
       fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams]);
@@ -129,7 +131,6 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
         onChangeDate={onChangeDate}
         onClickDate={onClickDate}
         pickedDate={pickedDate}
-        onChangeInputDate={onChangeInputDate}
       />
       <FlightsTitles
         filterArrivals={filterArrivals}

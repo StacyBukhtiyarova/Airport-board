@@ -37,29 +37,14 @@ const DatePanel = ({
     const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
     onClickDate(tomorrowDate);
   };
-  const onChangeInputDate = (e) => {
-    const date = new Date(e.target.value);
-    setPickedDate(date);
-    fetchFlightsForDate(date);
-    const formattedDate = `${date.getDate()}.${
-      date.getMonth() + 1
-    }.${date.getFullYear()}`;
-    const searchParams = createSearchParams({
-      selectedDate: formattedDate,
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
-  };
+
   return (
     <div className="date-panel">
       <input
         type="date"
-        value={onChangeInputDate}
+        value={pickedDate.toLocaleDateString()}
         onChange={(e) => onChangeDate(e)}
         className="input__type-date"
-        onChangeInputDate={onChangeInputDate}
       />
       <div className="date-panel__container">
         <span>{yesterday}</span>
@@ -91,3 +76,4 @@ DatePanel.propTypes = {
 };
 
 export default DatePanel;
+
