@@ -24,7 +24,7 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
+const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -52,7 +52,7 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      selectedDate: date.toLocaleDateString(),
+      pickedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -69,15 +69,14 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
         );
       });
       setFlights(filteredFlights);
-      dispatch(printFlights(filteredFlights));
     });
   };
   const onChangeDate = (e) => {
-    const date = new Date(e.target.value);
+    const date = new Date(e.target.value); // Получаем значение даты из события
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      selectedDate: date.toLocaleDateString(),
+      pickedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -86,14 +85,16 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
   };
 
   useEffect(() => {
-    const pickedDateFromURL = searchParams.get('selectedDate');
-    if (pickedDateFromURL) {
-      const [day, month, year] = pickedDateFromURL.split('.');
-      const formattedDate = `${year}-${month}-${day}`;
-      setPickedDate(new Date(formattedDate));
-      fetchFlightsForDate(new Date(formattedDate));
+    const pickedDateFromURL = searchParams.get('pickedDate');
+    if (
+      pickedDateFromURL &&
+      new Date(pickedDateFromURL).toLocaleDateString() !==
+        pickedDate.toLocaleDateString()
+    ) {
+      setPickedDate(new Date(pickedDateFromURL));
+      fetchFlightsForDate(new Date(pickedDateFromURL));
     }
-  }, [searchParams, pickedDate]);
+  }, [searchParams]);
 
   const filterDepartures = flights.filter(
     ({ departureDate, departureCity }) =>
@@ -129,7 +130,6 @@ const SearchForm = ({ printFlights, searchFlights, onChangeInputDate }) => {
         onChangeDate={onChangeDate}
         onClickDate={onClickDate}
         pickedDate={pickedDate}
-        onChangeInputDate={onChangeInputDate}
       />
       <FlightsTitles
         filterArrivals={filterArrivals}

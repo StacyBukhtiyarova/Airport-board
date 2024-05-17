@@ -7,7 +7,6 @@ const RenderFlights = ({
   clickArrivals,
   clickDepartures,
 }) => {
-
   return (
     <ul className="flights-list__voyages">
       {clickArrivals === true && clickDepartures === false
@@ -82,7 +81,14 @@ const RenderFlights = ({
             }
           )}
       {filterArrivals.length === 0 && filterDepartures.length === 0 ? (
-        <span className='no-flights'>
+        <span
+          style={{
+            position: 'absolute',
+            paddingLeft: 550,
+            marginTop: 150,
+            color: 'black',
+            fontSize: 42,
+          }}>
           No flights
         </span>
       ) : (
