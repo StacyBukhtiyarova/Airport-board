@@ -52,7 +52,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
@@ -72,27 +72,23 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     });
   };
   const onChangeDate = (e) => {
-    const date = new Date(e.target.value); // Получаем значение даты из события
+    const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
     const searchParams = createSearchParams({
-      pickedDate: date.toLocaleDateString(),
+      selectedDate: date.toLocaleDateString(),
     });
     navigate({
       pathname: location.pathname,
       search: searchParams.toString(),
     });
   };
-
+  const pickedDateFromURL = searchParams.get('selectedDate');
   useEffect(() => {
-    const pickedDateFromURL = searchParams.get('selectedDate');
     if (pickedDateFromURL) {
       const [day, month, year] = pickedDateFromURL.split('.');
-
       const formattedDate = `${year}-${month}-${day}`;
-
       setPickedDate(new Date(formattedDate));
-
       fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams]);
@@ -101,7 +97,9 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     ({ departureDate, departureCity }) =>
       departureCity.toLowerCase().match(input.toLowerCase()) &&
       new Date(departureDate).toDateString() ===
-        new Date(pickedDate).toDateString()
+        new Date(pickedDate).toDateString() &&
+      new Date(pickedDate).toDateString() ===
+        new Date(pickedDateFromURL).toDateString()
   );
 
   const filterArrivals = flights.filter(
@@ -126,6 +124,12 @@ const SearchForm = ({ printFlights, searchFlights }) => {
         filterDepartures={filterDepartures}
         setClickArrivals={setClickArrivals}
         setClickDepartures={setClickDepartures}
+        searchParams={searchParams}
+        pickedDateFromURL={pickedDateFromURL}
+        setPickedDate={setPickedDate}
+        pickedDate={pickedDate}
+        setFlights={setFlights}
+        fetchFlightsForDate={fetchFlightsForDate}
       />
       <DatePanel
         onChangeDate={onChangeDate}

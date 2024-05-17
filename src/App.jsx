@@ -28,7 +28,7 @@ const App = () => {
               </section>
             }></Route>
           <Route
-            path="/arrivals"
+            path="/arrivals/:selectedDate"
             element={
               <section className="main-search">
                 <Header />
@@ -36,7 +36,7 @@ const App = () => {
               </section>
             }></Route>
           <Route
-            path="/departures"
+            path="/departures/:selectedDate"
             element={
               <section className="main-search">
                 <Header />

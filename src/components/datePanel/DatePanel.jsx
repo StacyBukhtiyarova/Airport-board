@@ -2,24 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './datePanel.scss';
 
-const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
+const DatePanel = ({
+  onClickDate,
+  setPickedDate,
+  pickedDate,
+  onChangeDate,
+}) => {
   const oneDayMs = 86400000;
+  const dateOptions = {
+    day: '2-digit',
+    month: '2-digit',
+  };
   const yesterday = new Date(
     new Date().getTime() - oneDayMs
-  ).toLocaleDateString('ua-Ua', {
-    day: '2-digit',
-    month: '2-digit',
-  });
-  const today = new Date(new Date().getTime()).toLocaleDateString('ua-Ua', {
-    day: '2-digit',
-    month: '2-digit',
-  });
+  ).toLocaleDateString('ua-Ua', dateOptions);
+  const today = new Date(new Date().getTime()).toLocaleDateString(
+    'ua-Ua',
+    dateOptions
+  );
   const tomorrow = new Date(new Date().getTime() + oneDayMs).toLocaleDateString(
     'ua-Ua',
-    {
-      day: '2-digit',
-      month: '2-digit',
-    }
+    dateOptions
   );
   const handleClickYesterday = () => {
     const yesterdayDate = new Date(new Date().getTime() - oneDayMs);
@@ -39,7 +42,7 @@ const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
     <div className="date-panel">
       <input
         type="date"
-        value={pickedDate.toLocaleDateString()}
+       // value={pickedDate.toLocaleDateString()}
         onChange={(e) => onChangeDate(e)}
         className="input__type-date"
       />
@@ -79,4 +82,3 @@ DatePanel.propTypes = {
 };
 
 export default DatePanel;
-
