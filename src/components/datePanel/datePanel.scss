@@ -12,8 +12,6 @@
 
     &:hover {
       background-color: #1eb7ee;
-
-      /* Применяем стили к .date-panel__line при наведении на .date-panel__container */
       .date-panel__line {
         border-bottom-color: #1eb7ee;
       }

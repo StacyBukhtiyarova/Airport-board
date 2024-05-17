@@ -85,14 +85,15 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   };
 
   useEffect(() => {
-    const pickedDateFromURL = searchParams.get('pickedDate');
-    if (
-      pickedDateFromURL &&
-      new Date(pickedDateFromURL).toLocaleDateString() !==
-        pickedDate.toLocaleDateString()
-    ) {
-      setPickedDate(new Date(pickedDateFromURL));
-      fetchFlightsForDate(new Date(pickedDateFromURL));
+    const pickedDateFromURL = searchParams.get('selectedDate');
+    if (pickedDateFromURL) {
+      const [day, month, year] = pickedDateFromURL.split('.');
+
+      const formattedDate = `${year}-${month}-${day}`;
+
+      setPickedDate(new Date(formattedDate));
+
+      fetchFlightsForDate(new Date(formattedDate));
     }
   }, [searchParams]);
 
