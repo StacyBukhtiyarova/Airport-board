@@ -1,28 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  useNavigate,
-  useParams,
-  createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import './renderFlights.scss';
-const RenderFlights = ({
-  filterArrivals,
-  filterDepartures,
-  clickArrivals,
-  clickDepartures,
-  flightTypeArrivals,
-  flightTypeDepartures,
-}) => {
-  const [searchParams] = useSearchParams();
-  const searchParamsArrivals = searchParams.get('arrivals');
-  const searchParamsDepartures = searchParams.get('departures');
 
+const RenderFlights = ({ filterArrivals, filterDepartures }) => {
+  const [searchParams] = useSearchParams();
+  const flightTypeParam = searchParams.get('type');
 
   return (
     <ul className="flights-list__voyages">
-      {clickArrivals === true && clickDepartures === false
+      {flightTypeParam === 'arrivals' && filterArrivals.length > 0
         ? filterArrivals.map(
             ({
               terminal,
@@ -50,6 +37,7 @@ const RenderFlights = ({
                     <img
                       className="flights-list__logo-img"
                       src={airlineLogo}
+                      alt="Airline Logo"
                     />
                   </span>
                   <span className="flights-list__codeshare">{codeShare}</span>
@@ -86,6 +74,7 @@ const RenderFlights = ({
                     <img
                       className="flights-list__logo-img"
                       src={airlineLogo}
+                      alt="Airline Logo"
                     />
                   </span>
                   <span className="flights-list__codeshare">{codeShare}</span>
@@ -93,7 +82,7 @@ const RenderFlights = ({
               );
             }
           )}
-      {filterArrivals.length === 0 && filterDepartures.length === 0 ? (
+      {filterArrivals.length === 0 && filterDepartures.length === 0 && (
         <span
           style={{
             position: 'absolute',
@@ -104,17 +93,14 @@ const RenderFlights = ({
           }}>
           No flights
         </span>
-      ) : (
-        ''
       )}
     </ul>
   );
 };
 
 export default RenderFlights;
+
 RenderFlights.propTypes = {
   filterArrivals: PropTypes.array,
   filterDepartures: PropTypes.array,
-  setClickArrivals: PropTypes.func,
-  setClickDepartures: PropTypes.func,
 };

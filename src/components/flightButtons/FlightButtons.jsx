@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import './flightButtons.scss';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 const FlightButtons = ({
   filterArrivals,
@@ -36,10 +37,6 @@ const FlightButtons = ({
   setFlights,
   printFlights,
 }) => {
-  const [flightTypeArrivals, setFlightType] = useState('arrivals');
-  const [flightTypeDepartures, setFlightTypeDepartures] =
-    useState('departures');
-
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +49,7 @@ const FlightButtons = ({
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
-      arrivals: flightTypeArrivals,
+      type: 'arrivals',
     });
     navigate({
       pathname: location.pathname,
@@ -68,7 +65,7 @@ const FlightButtons = ({
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
-      departures: flightTypeDepartures,
+     type: 'departures',
     });
     navigate({
       pathname: location.pathname,
@@ -115,7 +112,6 @@ const mapState = (state) => {
   };
 };
 const mapDispatch = {
-
   printFlights,
 };
 export default connect(mapState, mapDispatch)(FlightButtons);
