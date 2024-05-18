@@ -4,8 +4,6 @@ import './datePanel.scss';
 
 const DatePanel = ({
   onClickDate,
-  setPickedDate,
-  pickedDate,
   onChangeDate,
 }) => {
   const oneDayMs = 86400000;
@@ -42,7 +40,6 @@ const DatePanel = ({
     <div className="date-panel">
       <input
         type="date"
-       // value={pickedDate.toLocaleDateString()}
         onChange={(e) => onChangeDate(e)}
         className="input__type-date"
       />

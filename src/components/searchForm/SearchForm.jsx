@@ -24,12 +24,7 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({
-  printFlights,
-  searchFlights,
-  flightType,
-  setFlightType,
-}) => {
+const SearchForm = ({ printFlights, searchFlights }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
   const [modalWindow, setModalWindow] = useState(false);
@@ -130,13 +125,7 @@ const SearchForm = ({
         setClickArrivals={setClickArrivals}
         setClickDepartures={setClickDepartures}
         searchParams={searchParams}
-        pickedDateFromURL={pickedDateFromURL}
-        setPickedDate={setPickedDate}
         pickedDate={pickedDate}
-        setFlights={setFlights}
-        fetchFlightsForDate={fetchFlightsForDate}
-        flightType={flightType}
-        setFlightType={setFlightType}
       />
       <DatePanel
         onChangeDate={onChangeDate}
@@ -153,8 +142,6 @@ const SearchForm = ({
         filterArrivals={filterArrivals}
         clickArrivals={clickArrivals}
         clickDepartures={clickDepartures}
-        flightType={flightType}
-        setFlightType={setFlightType}
       />
     </div>
   );

@@ -83,16 +83,7 @@ const RenderFlights = ({ filterArrivals, filterDepartures }) => {
             }
           )}
       {filterArrivals.length === 0 && filterDepartures.length === 0 && (
-        <span
-          style={{
-            position: 'absolute',
-            paddingLeft: 550,
-            marginTop: 150,
-            color: 'black',
-            fontSize: 42,
-          }}>
-          No flights
-        </span>
+        <span className="no-flights">No flights</span>
       )}
     </ul>
   );

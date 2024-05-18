@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import {
-  printArrivals,
-  printDepartures,
-  printFlights,
-} from '../../redux/actions';
-import {
-  useNavigate,
-  useParams,
-  createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { printFlights } from '../../redux/actions';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { flightsSelector, searchFlightsSelector } from '../../redux/selector';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,21 +11,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import './flightButtons.scss';
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 const FlightButtons = ({
   filterArrivals,
   filterDepartures,
   setClickArrivals,
   setClickDepartures,
-  searchParams,
-  pickedDateFromURL,
-  setPickedDate,
-  printDepartures,
-  printArrivals,
   pickedDate,
-  fetchFlightsForDate,
-  setFlights,
   printFlights,
 }) => {
   const [filteredFlights, setFilteredFlights] = useState([]);
@@ -65,7 +48,7 @@ const FlightButtons = ({
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
-     type: 'departures',
+      type: 'departures',
     });
     navigate({
       pathname: location.pathname,
