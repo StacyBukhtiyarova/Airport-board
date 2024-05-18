@@ -36,7 +36,10 @@ const FlightButtons = ({
   setFlights,
   printFlights,
 }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [flightTypeArrivals, setFlightType] = useState('arrivals');
+  const [flightTypeDepartures, setFlightTypeDepartures] =
+    useState('departures');
+
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +52,7 @@ const FlightButtons = ({
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
-      arrivals: 'arrivals',
+      arrivals: flightTypeArrivals,
     });
     navigate({
       pathname: location.pathname,
@@ -65,7 +68,7 @@ const FlightButtons = ({
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
-      departures: 'departures',
+      departures: flightTypeDepartures,
     });
     navigate({
       pathname: location.pathname,
@@ -112,8 +115,7 @@ const mapState = (state) => {
   };
 };
 const mapDispatch = {
-  // printDepartures,
-  // printArrivals,
+
   printFlights,
 };
 export default connect(mapState, mapDispatch)(FlightButtons);

@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import {
+  useNavigate,
+  useParams,
+  createSearchParams,
+  useSearchParams,
+} from 'react-router-dom';
 import './renderFlights.scss';
 const RenderFlights = ({
   filterArrivals,
   filterDepartures,
   clickArrivals,
   clickDepartures,
+  flightTypeArrivals,
+  flightTypeDepartures,
 }) => {
+  const [searchParams] = useSearchParams();
+  const searchParamsArrivals = searchParams.get('arrivals');
+  const searchParamsDepartures = searchParams.get('departures');
+
+
   return (
     <ul className="flights-list__voyages">
       {clickArrivals === true && clickDepartures === false
