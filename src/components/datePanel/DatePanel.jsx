@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './datePanel.scss';
 
-const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
+const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
   const oneDayMs = 86400000;
   const dateOptions = {
     day: '2-digit',
@@ -32,6 +32,7 @@ const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
     const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
     onClickDate(tomorrowDate);
   };
+
   return (
     <div className="date-panel">
       <input
@@ -47,7 +48,15 @@ const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
           className="date-panel__button">
           <span>YESTERDAY</span>
         </button>
-        <span className="date-panel__line"></span>
+        <span
+          className="date-panel__line"
+          style={{
+            borderBottomColor:
+              pickedDate.toDateString() ===
+              new Date(new Date().getTime() - oneDayMs).toDateString()
+                ? '#1eb7ee'
+                : '',
+          }}></span>
       </div>
       <div className="date-panel__container">
         <span>{today}</span>
@@ -56,7 +65,14 @@ const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
           className="date-panel__button">
           <span>TODAY</span>
         </button>
-        <span className="date-panel__line"></span>
+        <span
+          className="date-panel__line"
+          style={{
+            borderBottomColor:
+              pickedDate.toDateString() === new Date().toDateString()
+                ? '#1eb7ee'
+                : '',
+          }}></span>
       </div>
       <div className="date-panel__container">
         <span>{tomorrow}</span>
@@ -65,7 +81,15 @@ const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
           className="date-panel__button">
           <span>TOMORROW</span>
         </button>
-        <span className="date-panel__line"></span>
+        <span
+          className="date-panel__line"
+          style={{
+            borderBottomColor:
+              pickedDate.toDateString() ===
+              new Date(new Date().getTime() + oneDayMs).toDateString()
+                ? '#1eb7ee'
+                : '',
+          }}></span>
       </div>
     </div>
   );
