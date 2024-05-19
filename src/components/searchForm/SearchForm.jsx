@@ -83,8 +83,20 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       search: searchParams.toString(),
     });
   };
+  const flightTypeFromURL = searchParams.get('type');
   const pickedDateFromURL = searchParams.get('selectedDate');
+
   useEffect(() => {
+    if (!pickedDateFromURL) {
+      const searchParams = createSearchParams({
+        selectedDate: new Date().toLocaleDateString(),
+        type: 'departures',
+      });
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    }
     if (pickedDateFromURL) {
       const [day, month, year] = pickedDateFromURL.split('.');
       const formattedDate = `${year}-${month}-${day}`;
