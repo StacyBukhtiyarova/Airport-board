@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './datePanel.scss';
 
-const DatePanel = ({ onClickDate, onChangeDate }) => {
+const DatePanel = ({ onClickDate, onChangeDate,pickedDate }) => {
   const oneDayMs = 86400000;
   const dateOptions = {
     day: '2-digit',
@@ -32,10 +32,10 @@ const DatePanel = ({ onClickDate, onChangeDate }) => {
     const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
     onClickDate(tomorrowDate);
   };
-
   return (
     <div className="date-panel">
       <input
+        value={pickedDate.toISOString().split('T')[0]}
         type="date"
         onChange={(e) => onChangeDate(e)}
         className="date-panel__container input__type-date"
