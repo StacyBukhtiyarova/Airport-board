@@ -1,15 +1,15 @@
 .date-panel {
   display: flex;
-  justify-content: center;
-  margin: 0 37%;
+  justify-content: flex-end;
+  width: 700px;
+  margin-left: 26.5%;
   text-align: center;
   border: 1.5px solid;
 
   &__container {
+    display: flex;
     flex-direction: column;
-    width: 100px;
-    margin-right: 15px;
-
+    width: 192px;
     &:hover {
       background-color: #1eb7ee;
       .date-panel__line {
@@ -28,7 +28,7 @@
 
   &__line {
     display: block;
-    width: 100px;
+    width: 192px;
     height: 5px;
     border-bottom: 5px solid #fff;
   }
@@ -44,8 +44,9 @@
 
 .input__type-date {
   position: absolute;
-  left: 390px;
+  left: 385px;
   height: 75px;
+  width: 120px;
   background-color: transparent;
   color: #fff;
   border: 1px solid;

@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './datePanel.scss';
 
-const DatePanel = ({
-  onClickDate,
-  onChangeDate,
-}) => {
+const DatePanel = ({ onClickDate, onChangeDate }) => {
   const oneDayMs = 86400000;
   const dateOptions = {
     day: '2-digit',
@@ -41,7 +38,7 @@ const DatePanel = ({
       <input
         type="date"
         onChange={(e) => onChangeDate(e)}
-        className="input__type-date"
+        className="date-panel__container input__type-date"
       />
       <div className="date-panel__container">
         <span>{yesterday}</span>
