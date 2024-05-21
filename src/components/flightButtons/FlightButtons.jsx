@@ -23,6 +23,7 @@ const FlightButtons = ({
   setClickDepartures,
   pickedDate,
   printFlights,
+
 }) => {
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();

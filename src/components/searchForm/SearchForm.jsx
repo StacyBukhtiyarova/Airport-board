@@ -51,13 +51,7 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   const onClickDate = (date) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
-    const searchParams = createSearchParams({
-      selectedDate: date.toLocaleDateString(),
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
+    getFlightType(date);
   };
 
   const fetchFlightsForDate = (date) => {
@@ -71,19 +65,36 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       setFlights(filteredFlights);
     });
   };
+
+  const flightTypeParams = searchParams.get('type');
+  const getFlightType = (date) => {
+    if (flightTypeParams === 'departures') {
+      const searchParams = createSearchParams({
+        selectedDate: date.toLocaleDateString(),
+        type: 'departures',
+      });
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    } else {
+      const searchParams = createSearchParams({
+        selectedDate: date.toLocaleDateString(),
+        type: 'arrivals',
+      });
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    }
+  };
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
-    const searchParams = createSearchParams({
-      selectedDate: date.toLocaleDateString(),
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
+    getFlightType(date);
   };
-  const flightTypeFromURL = searchParams.get('type');
+
   const pickedDateFromURL = searchParams.get('selectedDate');
 
   useEffect(() => {
