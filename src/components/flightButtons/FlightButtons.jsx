@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { printFlights } from '../../redux/actions';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import {
+  useNavigate,
+  createSearchParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { flightsSelector, searchFlightsSelector } from '../../redux/selector';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +27,8 @@ const FlightButtons = ({
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
+  const flightTypeParams = searchParams.get('type');
   const onClickArrivals = () => {
     setClickArrivals(true);
     setClickDepartures(false);
@@ -66,7 +71,12 @@ const FlightButtons = ({
         <button
           type="submit"
           className="flights__departure-button "
-          onClick={onClickDepartures}>
+          onClick={onClickDepartures}
+          style={{
+            backgroundColor: flightTypeParams === 'departures' ? '#1eb7ee' : '',
+            color: flightTypeParams === 'departures' ? '#fff' : '',
+            border: flightTypeParams === 'departures' ? '5px solid #fff' : '',
+          }}>
           Виліт
         </button>
       </div>
@@ -79,7 +89,12 @@ const FlightButtons = ({
         <button
           type="submit"
           className="flights__arrival-button"
-          onClick={onClickArrivals}>
+          onClick={onClickArrivals}
+          style={{
+            backgroundColor: flightTypeParams === 'arrivals' ? '#1eb7ee' : '',
+            color: flightTypeParams === 'arrivals' ? '#fff' : '',
+            border: flightTypeParams === 'arrivals' ? '5px solid #fff' : '',
+          }}>
           Приліт
         </button>
       </div>
