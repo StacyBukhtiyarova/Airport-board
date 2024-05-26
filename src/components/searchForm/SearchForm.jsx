@@ -24,34 +24,32 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const SearchForm = ({ printFlights, searchFlights }) => {
+const SearchForm = ({
+  printFlights,
+  searchFlight,
+  event,
+  filteredArrivals,
+  setFilteredFlights,
+  onClickFlights,
+  onClickSearchFlight,
+  filterCodeShare,
+  filterCodeShar
+ 
+}) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
-  const [modalWindow, setModalWindow] = useState(false);
-  const [clickArrivals, setClickArrivals] = useState(false);
-  const [clickDepartures, setClickDepartures] = useState(false);
+  const [clickFlightTypeButton, setClickFlightTypeButton] =
+    useState('departures');
+
   const [pickedDate, setPickedDate] = useState(new Date());
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const onClickFlights = (e) => {
-    e.preventDefault();
-    setModalWindow(false);
-    return fetchRequest().then((data) => {
-      setFlights(data), dispatch(printFlights(data));
-    });
-  };
-
-  const onClickSearchFlight = (e) => {
-    setInput(e.target.value);
-    dispatch(searchFlights(e.target.value));
-  };
-
   const onClickDate = (date) => {
     setPickedDate(date);
     fetchFlightsForDate(date);
-    getFlightType(date);
   };
 
   const fetchFlightsForDate = (date) => {
@@ -67,32 +65,11 @@ const SearchForm = ({ printFlights, searchFlights }) => {
   };
 
   const flightTypeParams = searchParams.get('type');
-  const getFlightType = (date) => {
-    if (flightTypeParams === 'departures') {
-      const searchParams = createSearchParams({
-        selectedDate: date.toLocaleDateString(),
-        type: 'departures',
-      });
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString(),
-      });
-    } else {
-      const searchParams = createSearchParams({
-        selectedDate: date.toLocaleDateString(),
-        type: 'arrivals',
-      });
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString(),
-      });
-    }
-  };
+
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
-    getFlightType(date);
   };
 
   const pickedDateFromURL = searchParams.get('selectedDate');
@@ -129,24 +106,32 @@ const SearchForm = ({ printFlights, searchFlights }) => {
     ({ arrivalCity, arrivalDate }) =>
       arrivalCity.toLowerCase().match(input.toLowerCase()) &&
       new Date(arrivalDate).toDateString() ===
-        new Date(pickedDate).toDateString()
+        new Date(pickedDate).toDateString() 
+   
   );
-
+  console.log(input);
   return (
     <div className="container">
       <SearchField
-        modalWindow={modalWindow}
-        setModalWindow={setModalWindow}
+        input={input}
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}
+        setInput={setInput}
+        flights={flights}
+        setFlights={setFlights}
       />
       <FlightButtons
+        filterCodeShare={filterCodeShare}
+        input={input}
+        flights={flights}
+        filteredArrivals={filteredArrivals}
+        setFilteredFlights={setFilteredFlights}
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
-        setClickArrivals={setClickArrivals}
-        setClickDepartures={setClickDepartures}
+        setClickFlightTypeButton={setClickFlightTypeButton}
+        clickFlightTypeButton={clickFlightTypeButton}
         searchParams={searchParams}
         pickedDate={pickedDate}
       />
@@ -161,10 +146,11 @@ const SearchForm = ({ printFlights, searchFlights }) => {
       />
 
       <RenderFlights
+        filterCodeShare={filterCodeShare}
+        filteredArrivals={filteredArrivals}
         filterDepartures={filterDepartures}
         filterArrivals={filterArrivals}
-        clickArrivals={clickArrivals}
-        clickDepartures={clickDepartures}
+        clickFlightTypeButton={setClickFlightTypeButton}
       />
     </div>
   );

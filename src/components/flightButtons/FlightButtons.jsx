@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { printFlights } from '../../redux/actions';
+import { printFlights, searchFlights } from '../../redux/actions';
 import {
   useNavigate,
   createSearchParams,
@@ -13,26 +13,36 @@ import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
-
+import fetchRequest from '../../gateways/serverRequests';
 import './flightButtons.scss';
 
 const FlightButtons = ({
+  setClickFlightTypeButton,
+  setClickDepartures,
   filterArrivals,
   filterDepartures,
-  setClickArrivals,
-  setClickDepartures,
   pickedDate,
   printFlights,
-
+  flights,
+  filterCodeShare,
+  clickFlightTypeButton,
+  searchFlight,
+  searchFlights,
+  filteredArrivals,
 }) => {
+  const [input, setInput] = useState('');
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
   const flightTypeParams = searchParams.get('type');
-  const onClickArrivals = () => {
-    setClickArrivals(true);
-    setClickDepartures(false);
+
+  const onClickArrivals = (e) => {
+    // e.preventDefault();
+    setInput(input);
+    setFilteredFlights(filterArrivals);
+    setClickFlightTypeButton('arrivals');
     setFilteredFlights(filterArrivals);
     dispatch(printFlights(filterArrivals));
 
@@ -47,11 +57,9 @@ const FlightButtons = ({
   };
 
   const onClickDepartures = () => {
-    setClickDepartures(true);
-    setClickArrivals(false);
+    setClickFlightTypeButton('arrivals');
     setFilteredFlights(filterDepartures);
     dispatch(printFlights(filterDepartures));
-
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'departures',
@@ -70,8 +78,8 @@ const FlightButtons = ({
           className="plane-icon__departure"
         />
         <button
-          type="submit"
-          className="flights__departure-button "
+          type="button"
+          className="flights__departure-button"
           onClick={onClickDepartures}
           style={{
             backgroundColor: flightTypeParams === 'departures' ? '#1eb7ee' : '',
@@ -88,7 +96,7 @@ const FlightButtons = ({
           className="plane-icon__arrival"
         />
         <button
-          type="submit"
+          type="button"
           className="flights__arrival-button"
           onClick={onClickArrivals}
           style={{
@@ -108,15 +116,22 @@ const mapState = (state) => {
     arrivals: searchFlightsSelector(state),
     departures: searchFlightsSelector(state),
     flights: flightsSelector(state),
+    searchFlight: searchFlightsSelector(state),
   };
 };
 const mapDispatch = {
   printFlights,
+  searchFlights,
 };
 export default connect(mapState, mapDispatch)(FlightButtons);
+
 FlightButtons.propTypes = {
   filterArrivals: PropTypes.array,
   filterDepartures: PropTypes.array,
-  setClickArrivals: PropTypes.func,
+  setFlightTypeButton: PropTypes.func,
   setClickDepartures: PropTypes.func,
+  pickedDate: PropTypes.object,
+  printFlights: PropTypes.func,
+  flights: PropTypes.array,
+  input: PropTypes.string,
 };

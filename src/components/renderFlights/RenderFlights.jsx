@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
+
 import './renderFlights.scss';
 
 const RenderFlights = ({ filterArrivals, filterDepartures }) => {
   const [searchParams] = useSearchParams();
   const flightTypeParam = searchParams.get('type');
-  console.log(filterArrivals, filterDepartures);
+
   return (
     <ul className="flights-list__voyages">
       {flightTypeParam === 'arrivals' && filterArrivals.length > 0
