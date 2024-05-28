@@ -28,13 +28,12 @@ const SearchForm = ({
   printFlights,
   searchFlight,
   event,
-  filteredArrivals,
+  filteredDepartures,
   setFilteredFlights,
   onClickFlights,
   onClickSearchFlight,
   filterCodeShare,
-  filterCodeShar
- 
+  filterCodeShar,
 }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
@@ -94,22 +93,26 @@ const SearchForm = ({
   }, [searchParams]);
 
   const filterDepartures = flights.filter(
-    ({ departureDate, departureCity }) =>
+    ({ departureDate, departureCity, codeShare }) =>
       departureCity.toLowerCase().match(input.toLowerCase()) &&
       new Date(departureDate).toDateString() ===
         new Date(pickedDate).toDateString() &&
       new Date(pickedDate).toDateString() ===
         new Date(pickedDateFromURL).toDateString()
   );
-
+  const filterDeparturesCodeShare = filterDepartures.filter(({ codeShare }) => {
+    return codeShare.includes(searchFlight.searchFlights.searchFlight);
+  });
   const filterArrivals = flights.filter(
-    ({ arrivalCity, arrivalDate }) =>
+    ({ arrivalCity, arrivalDate, codeShare }) =>
       arrivalCity.toLowerCase().match(input.toLowerCase()) &&
       new Date(arrivalDate).toDateString() ===
-        new Date(pickedDate).toDateString() 
-   
+        new Date(pickedDate).toDateString()
   );
-  console.log(input);
+  const filterArrivalsCodeShare = filterArrivals.filter(({ codeShare }) => {
+    return codeShare.includes(searchFlight.searchFlights.searchFlight);
+  });
+
   return (
     <div className="container">
       <SearchField
@@ -123,10 +126,12 @@ const SearchForm = ({
         setFlights={setFlights}
       />
       <FlightButtons
-        filterCodeShare={filterCodeShare}
         input={input}
         flights={flights}
-        filteredArrivals={filteredArrivals}
+        setFlights={setFlights}
+        filterArrivalsCodeShare={filterArrivalsCodeShare}
+        filterDeparturesCodeShare={filterDeparturesCodeShare}
+        filteredDepartures={filteredDepartures}
         setFilteredFlights={setFilteredFlights}
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
@@ -146,10 +151,13 @@ const SearchForm = ({
       />
 
       <RenderFlights
+        flights={flights}
         filterCodeShare={filterCodeShare}
-        filteredArrivals={filteredArrivals}
-        filterDepartures={filterDepartures}
+        filterArrivalsCodeShare={filterArrivalsCodeShare}
+        filterDeparturesCodeShare={filterDeparturesCodeShare}
         filterArrivals={filterArrivals}
+        filterDepartures={filterDepartures}
+        filteredDepartures={filteredDepartures}
         clickFlightTypeButton={setClickFlightTypeButton}
       />
     </div>

@@ -4,7 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 
 import './renderFlights.scss';
 
-const RenderFlights = ({ filterArrivals, filterDepartures }) => {
+const RenderFlights = ({
+  filterDepartures,
+  filterArrivals,
+  flights,
+  filteredDepartures,
+}) => {
   const [searchParams] = useSearchParams();
   const flightTypeParam = searchParams.get('type');
 
@@ -96,3 +101,4 @@ RenderFlights.propTypes = {
   filterArrivals: PropTypes.array,
   filterDepartures: PropTypes.array,
 };
+
