@@ -16,16 +16,24 @@ import {
 } from '../../redux/actions.js';
 import './searchField.scss';
 
-const SearchField = ({ searchFlights, flights, setFlights, searchFlight }) => {
+const SearchField = ({
+  searchFlights,
+  flights,
+  setFlights,
+  searchFlight,
+  setSearchButton,
+}) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState('');
 
   const onClickSearchFlight = (e) => {
     dispatch(searchFlights(e.target.value));
     setInput(e.target.value);
+    setSearchButton(true);
   };
 
   const onClickFlights = () => {
+    setSearchButton(true);
     setInput(input);
     const filterCodeShare = flights.filter(({ codeShare }) => {
       return codeShare.includes(input);

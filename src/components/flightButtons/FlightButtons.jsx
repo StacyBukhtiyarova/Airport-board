@@ -21,28 +21,29 @@ const FlightButtons = ({
   setClickDepartures,
   filterArrivals,
   filterDepartures,
-  // filterArrivalsCodeShare,
-  // filterDeparturesCodeShare,
+  filterArrivalsCodeShare,
+  filterDeparturesCodeShare,
   pickedDate,
   printFlights,
-  flights,
+  setFilterByInput,
   filterCodeShare,
   clickFlightTypeButton,
   searchFlight,
-
+  flights,
   setFlights,
+ 
   searchFlights,
 }) => {
   const [input, setInput] = useState('');
   const [filteredFlights, setFilteredFlights] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [searchParams] = useSearchParams();
   const flightTypeParams = searchParams.get('type');
 
   const onClickArrivals = () => {
-    //  setInput(input);
+    setInput(input);
+   
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'arrivals',
@@ -51,22 +52,22 @@ const FlightButtons = ({
       pathname: location.pathname,
       search: decodeURIComponent(searchParams.toString()),
     });
-    const filterArrivalsCodeShare = filterArrivals.filter(({ codeShare }) => {
-      return codeShare.includes(searchFlight.searchFlights.searchFlight);
-    });
-    setFilteredFlights(filterArrivalsCodeShare);
-    dispatch(printFlights(filterArrivalsCodeShare));
-    console.log(filterArrivalsCodeShare);
-    return filterArrivalsCodeShare;
+    const filterFlights = filterArrivals.filter(({ codeShare }) =>
+      codeShare.includes(searchFlight.searchFlights.searchFlight)
+    );
+    setFilteredFlights(filterFlights);
+    dispatch(printFlights(filterFlights));
+   
+
+    return filteredFlights;
   };
 
   const onClickDepartures = () => {
-    // setInput(input);
-    const filterDeparturesCodeShare = filterDepartures.filter(
-      ({ codeShare }) => {
-        return codeShare.includes(searchFlight.searchFlights.searchFlight);
-      }
-    );
+    setInput(input);
+   
+    const filterFlights = filterDepartures.filter(({ codeShare }) => {
+      return codeShare.includes(searchFlight.searchFlights.searchFlight);
+    });
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'departures',
@@ -75,10 +76,11 @@ const FlightButtons = ({
       pathname: location.pathname,
       search: decodeURIComponent(searchParams.toString()),
     });
-    setFilteredFlights(filterDeparturesCodeShare);
-    dispatch(printFlights(filterDeparturesCodeShare));
-    console.log(filterDeparturesCodeShare)
-    return filterDeparturesCodeShare;
+    setFilteredFlights(filterFlights);
+    dispatch(printFlights(filterFlights));
+    console.log(filterFlights);
+
+    return filteredFlights;
   };
 
   return (

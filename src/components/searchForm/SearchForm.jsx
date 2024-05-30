@@ -25,26 +25,23 @@ import {
 } from '../../redux/actions.js';
 
 const SearchForm = ({
-  printFlights,
   searchFlight,
-  event,
+
   filteredDepartures,
   setFilteredFlights,
   onClickFlights,
   onClickSearchFlight,
   filterCodeShare,
-  filterCodeShar,
 }) => {
   const [flights, setFlights] = useState([]);
   const [input, setInput] = useState('');
-  const [clickFlightTypeButton, setClickFlightTypeButton] =
-    useState('departures');
-
+  const [searchButton, setSearchButton] = useState(false);
   const [pickedDate, setPickedDate] = useState(new Date());
-
-  const dispatch = useDispatch();
+console.log(searchButton)
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  const [filterByInput, setFilterByInput] = useState(false);
 
   const onClickDate = (date) => {
     setPickedDate(date);
@@ -63,16 +60,21 @@ const SearchForm = ({
     });
   };
 
-  const flightTypeParams = searchParams.get('type');
-
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
     fetchFlightsForDate(date);
+    const searchParams = createSearchParams({
+      selectedDate: date.toLocaleDateString(),
+    });
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
   };
 
   const pickedDateFromURL = searchParams.get('selectedDate');
-
+ 
   useEffect(() => {
     if (!pickedDateFromURL) {
       const searchParams = createSearchParams({
@@ -116,6 +118,7 @@ const SearchForm = ({
   return (
     <div className="container">
       <SearchField
+        setSearchButton={setSearchButton}
         input={input}
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
@@ -127,18 +130,14 @@ const SearchForm = ({
       />
       <FlightButtons
         input={input}
-        flights={flights}
-        setFlights={setFlights}
         filterArrivalsCodeShare={filterArrivalsCodeShare}
         filterDeparturesCodeShare={filterDeparturesCodeShare}
-        filteredDepartures={filteredDepartures}
-        setFilteredFlights={setFilteredFlights}
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
-        setClickFlightTypeButton={setClickFlightTypeButton}
-        clickFlightTypeButton={clickFlightTypeButton}
         searchParams={searchParams}
         pickedDate={pickedDate}
+        filterByInput={filterByInput}
+        setFilterByInput={setFilterByInput}
       />
       <DatePanel
         onChangeDate={onChangeDate}
@@ -151,14 +150,15 @@ const SearchForm = ({
       />
 
       <RenderFlights
+        searchButton={searchButton}
+
         flights={flights}
-        filterCodeShare={filterCodeShare}
         filterArrivalsCodeShare={filterArrivalsCodeShare}
         filterDeparturesCodeShare={filterDeparturesCodeShare}
         filterArrivals={filterArrivals}
         filterDepartures={filterDepartures}
-        filteredDepartures={filteredDepartures}
-        clickFlightTypeButton={setClickFlightTypeButton}
+        filterByInput={filterByInput}
+        setFilterByInput={setFilterByInput}
       />
     </div>
   );
