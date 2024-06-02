@@ -13,37 +13,24 @@ import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
-import fetchRequest from '../../gateways/serverRequests';
 import './flightButtons.scss';
 
 const FlightButtons = ({
-  setClickFlightTypeButton,
+  setClickArrivals,
   setClickDepartures,
-  filterArrivals,
-  filterDepartures,
-  filterArrivalsCodeShare,
-  filterDeparturesCodeShare,
   pickedDate,
-  printFlights,
-  setFilterByInput,
-  filterCodeShare,
-  clickFlightTypeButton,
-  searchFlight,
   flights,
-  setFlights,
- 
+  setFormSearchParams,
   searchFlights,
 }) => {
-  const [input, setInput] = useState('');
-  const [filteredFlights, setFilteredFlights] = useState([]);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const flightTypeParams = searchParams.get('type');
 
   const onClickArrivals = () => {
-    setInput(input);
-   
+    setFormSearchParams({ type: 'arrivals' });
+    setClickArrivals(true);
+    setClickDepartures(false);
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'arrivals',
@@ -52,22 +39,15 @@ const FlightButtons = ({
       pathname: location.pathname,
       search: decodeURIComponent(searchParams.toString()),
     });
-    const filterFlights = filterArrivals.filter(({ codeShare }) =>
-      codeShare.includes(searchFlight.searchFlights.searchFlight)
-    );
-    setFilteredFlights(filterFlights);
-    dispatch(printFlights(filterFlights));
-   
 
-    return filteredFlights;
+    return flights;
   };
 
   const onClickDepartures = () => {
-    setInput(input);
-   
-    const filterFlights = filterDepartures.filter(({ codeShare }) => {
-      return codeShare.includes(searchFlight.searchFlights.searchFlight);
-    });
+    setFormSearchParams({ type: 'departures' });
+    setClickArrivals(false);
+    setClickDepartures(true);
+
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'departures',
@@ -76,11 +56,8 @@ const FlightButtons = ({
       pathname: location.pathname,
       search: decodeURIComponent(searchParams.toString()),
     });
-    setFilteredFlights(filterFlights);
-    dispatch(printFlights(filterFlights));
-    console.log(filterFlights);
 
-    return filteredFlights;
+    return flights;
   };
 
   return (
@@ -128,7 +105,7 @@ const mapState = (state) => {
   return {
     arrivals: searchFlightsSelector(state),
     departures: searchFlightsSelector(state),
-    flights: flightsSelector(state),
+    //  flights: flightsSelector(state),
     searchFlight: searchFlightsSelector(state),
   };
 };

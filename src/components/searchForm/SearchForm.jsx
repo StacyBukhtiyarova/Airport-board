@@ -25,37 +25,45 @@ import {
 } from '../../redux/actions.js';
 
 const SearchForm = ({
+  flightsList,
   searchFlight,
-
-  filteredDepartures,
-  setFilteredFlights,
   onClickFlights,
   onClickSearchFlight,
-  filterCodeShare,
 }) => {
   const [flights, setFlights] = useState([]);
-  const [input, setInput] = useState('');
   const [searchButton, setSearchButton] = useState(false);
   const [pickedDate, setPickedDate] = useState(new Date());
-console.log(searchButton)
+  const [clickArrivals, setClickArrivals] = useState(false);
+  const [clickDepartures, setClickDepartures] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  const [filterByInput, setFilterByInput] = useState(false);
+  console.log(searchParams);
+  const [formSearchParams, setFormSearchParams] = useState({
+    searchTerm: '',
+  });
 
   const onClickDate = (date) => {
     setPickedDate(date);
-    fetchFlightsForDate(date);
+    fetchFlightsForDate(date, searchFlight.searchFlights.searchFlight);
   };
 
-  const fetchFlightsForDate = (date) => {
+  const fetchFlightsForDate = (date, searchCode) => {
+    console.log(searchCode);
     fetchRequest().then((data) => {
-      const filteredFlights = data.filter(({ departureDate, arrivalDate }) => {
-        return (
-          new Date(departureDate).toDateString() === date.toDateString() ||
-          new Date(arrivalDate).toDateString() === date.toDateString()
-        );
-      });
+      const filteredFlights = data
+        .filter(({ departureDate, codeShare }) => {
+          if (searchCode !== undefined) {
+            return (
+              new Date(departureDate).toDateString() === date.toDateString() &&
+              codeShare.includes(searchCode)
+            );
+          } else {
+            return (
+              new Date(departureDate).toDateString() === date.toDateString()
+            );
+          }
+        });
+
       setFlights(filteredFlights);
     });
   };
@@ -63,7 +71,7 @@ console.log(searchButton)
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
-    fetchFlightsForDate(date);
+    fetchFlightsForDate(date, searchFlight.searchFlights.searchFlight);
     const searchParams = createSearchParams({
       selectedDate: date.toLocaleDateString(),
     });
@@ -74,7 +82,8 @@ console.log(searchButton)
   };
 
   const pickedDateFromURL = searchParams.get('selectedDate');
- 
+  const flightType = searchParams.get('type');
+
   useEffect(() => {
     if (!pickedDateFromURL) {
       const searchParams = createSearchParams({
@@ -90,75 +99,47 @@ console.log(searchButton)
       const [day, month, year] = pickedDateFromURL.split('.');
       const formattedDate = `${year}-${month}-${day}`;
       setPickedDate(new Date(formattedDate));
-      fetchFlightsForDate(new Date(formattedDate));
+      fetchFlightsForDate(new Date(formattedDate), searchFlight.searchFlights.searchFlight);
     }
-  }, [searchParams]);
-
-  const filterDepartures = flights.filter(
-    ({ departureDate, departureCity, codeShare }) =>
-      departureCity.toLowerCase().match(input.toLowerCase()) &&
-      new Date(departureDate).toDateString() ===
-        new Date(pickedDate).toDateString() &&
-      new Date(pickedDate).toDateString() ===
-        new Date(pickedDateFromURL).toDateString()
-  );
-  const filterDeparturesCodeShare = filterDepartures.filter(({ codeShare }) => {
-    return codeShare.includes(searchFlight.searchFlights.searchFlight);
-  });
-  const filterArrivals = flights.filter(
-    ({ arrivalCity, arrivalDate, codeShare }) =>
-      arrivalCity.toLowerCase().match(input.toLowerCase()) &&
-      new Date(arrivalDate).toDateString() ===
-        new Date(pickedDate).toDateString()
-  );
-  const filterArrivalsCodeShare = filterArrivals.filter(({ codeShare }) => {
-    return codeShare.includes(searchFlight.searchFlights.searchFlight);
-  });
+    if (flightType === 'arrivals') {
+      setClickArrivals(true);
+      setClickDepartures(false);
+    } else {
+      setClickArrivals(false);
+      setClickDepartures(true);
+    }
+  }, [searchParams, formSearchParams]);
 
   return (
     <div className="container">
       <SearchField
+        setFormSearchParams={setFormSearchParams}
         setSearchButton={setSearchButton}
-        input={input}
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
-        filterDepartures={filterDepartures}
-        filterArrivals={filterArrivals}
-        setInput={setInput}
         flights={flights}
         setFlights={setFlights}
       />
       <FlightButtons
-        input={input}
-        filterArrivalsCodeShare={filterArrivalsCodeShare}
-        filterDeparturesCodeShare={filterDeparturesCodeShare}
-        filterArrivals={filterArrivals}
-        filterDepartures={filterDepartures}
+        flights={flights}
+        setFormSearchParams={setFormSearchParams}
+        setClickDepartures={setClickDepartures}
+        setClickArrivals={setClickArrivals}
         searchParams={searchParams}
         pickedDate={pickedDate}
-        filterByInput={filterByInput}
-        setFilterByInput={setFilterByInput}
       />
       <DatePanel
         onChangeDate={onChangeDate}
         onClickDate={onClickDate}
         pickedDate={pickedDate}
       />
-      <FlightsTitles
-        filterArrivals={filterArrivals}
-        filterDepartures={filterDepartures}
-      />
+      <FlightsTitles flights={flights} />
 
       <RenderFlights
         searchButton={searchButton}
-
         flights={flights}
-        filterArrivalsCodeShare={filterArrivalsCodeShare}
-        filterDeparturesCodeShare={filterDeparturesCodeShare}
-        filterArrivals={filterArrivals}
-        filterDepartures={filterDepartures}
-        filterByInput={filterByInput}
-        setFilterByInput={setFilterByInput}
+        clickArrivals={clickArrivals}
+        clickDepartures={clickDepartures}
       />
     </div>
   );

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './flightsTitles.scss';
 
-const FlightsTitles = ({ filterArrivals, filterDepartures }) => {
+const FlightsTitles = ({ flights }) => {
   
-  return filterArrivals.length > 0 && filterDepartures.length > 0 ? (
+  return flights.length > 0 ? (
     <ul className="flights-list">
       <li className="flights-list__titles">Термінал</li>
       <li className="flights-list__titles">Розклад</li>
