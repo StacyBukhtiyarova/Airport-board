@@ -25,45 +25,33 @@ import {
 } from '../../redux/actions.js';
 
 const SearchForm = ({
-  flightsList,
   searchFlight,
+
+  filteredDepartures,
+  setFilteredFlights,
   onClickFlights,
   onClickSearchFlight,
+  filterCodeShare,
 }) => {
   const [flights, setFlights] = useState([]);
-  const [searchButton, setSearchButton] = useState(false);
+  const [input, setInput] = useState('');
   const [pickedDate, setPickedDate] = useState(new Date());
-  const [clickArrivals, setClickArrivals] = useState(false);
-  const [clickDepartures, setClickDepartures] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
-  const [formSearchParams, setFormSearchParams] = useState({
-    searchTerm: '',
-  });
 
   const onClickDate = (date) => {
     setPickedDate(date);
-    fetchFlightsForDate(date, searchFlight.searchFlights.searchFlight);
+    fetchFlightsForDate(date);
   };
 
-  const fetchFlightsForDate = (date, searchCode) => {
-    console.log(searchCode);
+  const fetchFlightsForDate = (date) => {
     fetchRequest().then((data) => {
-      const filteredFlights = data
-        .filter(({ departureDate, codeShare }) => {
-          if (searchCode !== undefined) {
-            return (
-              new Date(departureDate).toDateString() === date.toDateString() &&
-              codeShare.includes(searchCode)
-            );
-          } else {
-            return (
-              new Date(departureDate).toDateString() === date.toDateString()
-            );
-          }
-        });
-
+      const filteredFlights = data.filter(({ departureDate, arrivalDate }) => {
+        return (
+          new Date(departureDate).toDateString() === date.toDateString() ||
+          new Date(arrivalDate).toDateString() === date.toDateString()
+        );
+      });
       setFlights(filteredFlights);
     });
   };
@@ -71,7 +59,7 @@ const SearchForm = ({
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
-    fetchFlightsForDate(date, searchFlight.searchFlights.searchFlight);
+    fetchFlightsForDate(date);
     const searchParams = createSearchParams({
       selectedDate: date.toLocaleDateString(),
     });
@@ -82,7 +70,6 @@ const SearchForm = ({
   };
 
   const pickedDateFromURL = searchParams.get('selectedDate');
-  const flightType = searchParams.get('type');
 
   useEffect(() => {
     if (!pickedDateFromURL) {
@@ -99,33 +86,24 @@ const SearchForm = ({
       const [day, month, year] = pickedDateFromURL.split('.');
       const formattedDate = `${year}-${month}-${day}`;
       setPickedDate(new Date(formattedDate));
-      fetchFlightsForDate(new Date(formattedDate), searchFlight.searchFlights.searchFlight);
+      fetchFlightsForDate(new Date(formattedDate));
     }
-    if (flightType === 'arrivals') {
-      setClickArrivals(true);
-      setClickDepartures(false);
-    } else {
-      setClickArrivals(false);
-      setClickDepartures(true);
-    }
-  }, [searchParams, formSearchParams]);
+  }, [searchParams]);
 
   return (
     <div className="container">
       <SearchField
-        setFormSearchParams={setFormSearchParams}
-        setSearchButton={setSearchButton}
+        input={input}
         onClickSearchFlight={onClickSearchFlight}
         onClickFlights={onClickFlights}
+        setInput={setInput}
         flights={flights}
         setFlights={setFlights}
       />
       <FlightButtons
+        pickedDateFromURL={pickedDateFromURL}
         flights={flights}
-        setFormSearchParams={setFormSearchParams}
-        setClickDepartures={setClickDepartures}
-        setClickArrivals={setClickArrivals}
-        searchParams={searchParams}
+        setFlights={setFlights}
         pickedDate={pickedDate}
       />
       <DatePanel
@@ -135,12 +113,7 @@ const SearchForm = ({
       />
       <FlightsTitles flights={flights} />
 
-      <RenderFlights
-        searchButton={searchButton}
-        flights={flights}
-        clickArrivals={clickArrivals}
-        clickDepartures={clickDepartures}
-      />
+      <RenderFlights flights={flights} />
     </div>
   );
 };

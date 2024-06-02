@@ -20,8 +20,7 @@ const SearchField = ({
   searchFlights,
   flights,
   setFlights,
-  setSearchButton,
-  setFormSearchParams
+  
 }) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState('');
@@ -29,18 +28,14 @@ const SearchField = ({
   const onClickSearchFlight = (e) => {
     dispatch(searchFlights(e.target.value));
     setInput(e.target.value);
-    setSearchButton(false);
   };
 
   const onClickFlights = () => {
-    setSearchButton(true);
-    setInput(input);
+
     const filterCodeShare = flights.filter(({ codeShare }) => {
       return codeShare.includes(input);
     });
-
-
-    setFormSearchParams({ searchTerm: input });
+    setFlights(filterCodeShare);
     dispatch(printFlights(filterCodeShare));
   };
 
