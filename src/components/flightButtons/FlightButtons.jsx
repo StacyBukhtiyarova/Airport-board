@@ -13,23 +13,17 @@ import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
-import fetchRequest from '../../gateways/serverRequests';
 import './flightButtons.scss';
 
-const FlightButtons = ({
-  filterArrivals,
-  filterDepartures,
-  pickedDate,
-  printFlights,
-}) => {
+const FlightButtons = ({ pickedDate, printFlights, filterCodeShare }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
   const flightTypeParams = searchParams.get('type');
 
-  const onClickArrivals = (e) => {
-    dispatch(printFlights(filterArrivals));
+  const onClickArrivals = () => {
+    dispatch(printFlights(filterCodeShare));
 
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
@@ -42,7 +36,7 @@ const FlightButtons = ({
   };
 
   const onClickDepartures = () => {
-    dispatch(printFlights(filterDepartures));
+    dispatch(printFlights(filterCodeShare));
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'departures',
@@ -96,8 +90,6 @@ const FlightButtons = ({
 
 const mapState = (state) => {
   return {
-    arrivals: searchFlightsSelector(state),
-    departures: searchFlightsSelector(state),
     flights: flightsSelector(state),
     searchFlight: searchFlightsSelector(state),
   };
@@ -109,12 +101,7 @@ const mapDispatch = {
 export default connect(mapState, mapDispatch)(FlightButtons);
 
 FlightButtons.propTypes = {
-  filterArrivals: PropTypes.array,
-  filterDepartures: PropTypes.array,
-  setFlightTypeButton: PropTypes.func,
-  setClickDepartures: PropTypes.func,
   pickedDate: PropTypes.object,
   printFlights: PropTypes.func,
-  flights: PropTypes.array,
-  input: PropTypes.string,
+  filterCodeShare: PropTypes.array,
 };

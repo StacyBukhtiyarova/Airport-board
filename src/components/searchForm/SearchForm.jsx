@@ -18,19 +18,12 @@ import SearchField from '../searchField/SearchField.jsx';
 import DatePanel from '../datePanel/DatePanel.jsx';
 import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
-import {
-  searchFlights,
-  printArrivals,
-  printDepartures,
-  printFlights,
-} from '../../redux/actions.js';
+import { searchFlights, printFlights } from '../../redux/actions.js';
 
-const SearchForm = ({ searchFlight, flightsList }) => {
+const SearchForm = ({ searchFlight }) => {
   const [input, setInput] = useState('');
   const [flights, setFlights] = useState([]);
   const [pickedDate, setPickedDate] = useState(new Date());
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -75,30 +68,13 @@ const SearchForm = ({ searchFlight, flightsList }) => {
       const formattedDate = `${year}-${month}-${day}`;
       setPickedDate(new Date(formattedDate));
       fetchFlightsForDate(new Date(formattedDate));
-    }
+    } 
   }, [searchParams]);
 
-  const filterDepartures = flights.filter(
-    ({ departureDate, departureCity }) =>
-      departureCity.toLowerCase().match(input.toLowerCase()) &&
-      new Date(departureDate).toDateString() ===
-        new Date(pickedDate).toDateString() &&
-      new Date(pickedDate).toDateString() ===
-        new Date(pickedDateFromURL).toDateString()
-  );
-  const filterDeparturesCodeShare = filterDepartures.filter(
-    ({ codeShare }) => codeShare === searchFlight.searchFlights.searchFlight
-  );
-
-  const filterArrivals = flights.filter(
-    ({ arrivalCity, arrivalDate }) =>
-      arrivalCity.toLowerCase().match(input.toLowerCase()) &&
-      new Date(arrivalDate).toDateString() ===
-        new Date(pickedDate).toDateString()
-  );
-  const filterArrivalsCodeShare = filterDepartures.filter(({ codeShare }) =>
+  const filterCodeShare = flights.filter(({ codeShare }) =>
     codeShare.includes(searchFlight.searchFlights.searchFlight)
   );
+  console.log(filterCodeShare);
 
   return (
     <div className="container">
@@ -107,10 +83,9 @@ const SearchForm = ({ searchFlight, flightsList }) => {
         setFlights={setFlights}
       />
       <FlightButtons
+        filterCodeShare={filterCodeShare}
         input={input}
         flights={flights}
-        filterArrivals={filterArrivals}
-        filterDepartures={filterDepartures}
         searchParams={searchParams}
         pickedDate={pickedDate}
       />
@@ -119,16 +94,13 @@ const SearchForm = ({ searchFlight, flightsList }) => {
         onClickDate={onClickDate}
         pickedDate={pickedDate}
       />
-      <FlightsTitles
-        filterArrivals={filterArrivals}
-        filterDepartures={filterDepartures}
-      />
+      <FlightsTitles filterCodeShare={filterCodeShare} />
 
       <RenderFlights
-        filterArrivalsCodeShare={filterArrivalsCodeShare}
-        filterDeparturesCodeShare={filterDeparturesCodeShare}
-        filterDepartures={filterDepartures}
-        filterArrivals={filterArrivals}
+        
+        filterCodeShare={filterCodeShare}
+        flights={flights}
+        input={input}
       />
     </div>
   );
@@ -142,8 +114,6 @@ const mapState = (state) => {
 };
 
 const mapDispatch = {
-  printDepartures,
-  printArrivals,
   printFlights,
   searchFlights,
 };
@@ -152,7 +122,5 @@ export default connect(mapState, mapDispatch)(SearchForm);
 
 SearchForm.propTypes = {
   searchFlights: PropTypes.func,
-  printArrivals: PropTypes.func,
-  printDepartures: PropTypes.func,
   printFlights: PropTypes.func,
 };

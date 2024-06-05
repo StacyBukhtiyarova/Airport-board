@@ -15,26 +15,21 @@ import {
   printFlights,
 } from '../../redux/actions.js';
 
-const RenderFlights = ({
-  filterArrivals,
-  filterDepartures,
-  filterArrivalsCodeShare,
-  filterDeparturesCodeShare,
-  searchFlight,
-  flightsList,
-}) => {
+const RenderFlights = ({ filterCodeShare, searchFlight, flights, input }) => {
   const [searchParams] = useSearchParams();
   const flightTypeParam = searchParams.get('type');
   const [renderedFlights, setRenderedFlights] = useState([]);
- // console.log(flightsList.map(({ codeShare }) => codeShare));
+  console.log(input);
   useEffect(() => {
-    setRenderedFlights(filterArrivals);
-    if (searchFlight.searchFlights.searchFlight !== undefined) {
-      setRenderedFlights(filterArrivalsCodeShare);
-    }
-  }, [filterArrivals]);
+    setRenderedFlights(flights);
 
-  console.log(renderedFlights);
+    if (
+      searchFlight.searchFlights.searchFlight !== undefined ||
+      searchFlight.searchFlights.searchFlight === ''
+    ) {
+      setRenderedFlights(filterCodeShare);
+    }
+  }, [flights]);
 
   return (
     <ul className="flights-list__voyages">
@@ -111,7 +106,7 @@ const RenderFlights = ({
               );
             }
           )}
-      {filterArrivals.length === 0 && filterDepartures.length === 0 && (
+      {filterCodeShare.length === 0 && (
         <span className="no-flights">No flights</span>
       )}
     </ul>
