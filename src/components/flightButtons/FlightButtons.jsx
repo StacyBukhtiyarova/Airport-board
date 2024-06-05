@@ -13,67 +13,44 @@ import {
   faPlaneDeparture,
   faPlaneArrival,
 } from '@fortawesome/free-solid-svg-icons';
+import fetchRequest from '../../gateways/serverRequests';
 import './flightButtons.scss';
 
 const FlightButtons = ({
+  filterArrivals,
+  filterDepartures,
   pickedDate,
-  pickedDateFromURL,
-  flightsList,
-  flights,
-  setFlights,
   printFlights,
-  searchFlight,
 }) => {
-  console.log(flightsList);
-  console.log(searchFlight);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [input, setInput] = useState('');
+
   const [searchParams] = useSearchParams();
   const flightTypeParams = searchParams.get('type');
 
-  const onClickArrivals = () => {
+  const onClickArrivals = (e) => {
+    dispatch(printFlights(filterArrivals));
+
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'arrivals',
     });
     navigate({
       pathname: location.pathname,
-      search: searchParams.toString(),
+      search: decodeURIComponent(searchParams.toString()),
     });
-    const filterArrivals = flights.filter(
-      ({ arrivalCity, arrivalDate, codeShare }) =>
-        arrivalCity.toLowerCase().match(input.toLowerCase()) &&
-        new Date(arrivalDate).toDateString() ===
-          new Date(pickedDate).toDateString()
-    );
-
-    setFlights(filterArrivals);
-    dispatch(printFlights(filterArrivals));
-    return flights;
   };
 
   const onClickDepartures = () => {
+    dispatch(printFlights(filterDepartures));
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'departures',
     });
     navigate({
       pathname: location.pathname,
-      search: searchParams.toString(),
+      search: decodeURIComponent(searchParams.toString()),
     });
-    const filterDepartures = flights.filter(
-      ({ departureDate, departureCity, codeShare }) =>
-        departureCity.toLowerCase().match(input.toLowerCase()) &&
-        new Date(departureDate).toDateString() ===
-          new Date(pickedDate).toDateString() &&
-        new Date(pickedDate).toDateString() ===
-          new Date(pickedDateFromURL).toDateString()
-    );
-
-    setFlights(filterDepartures);
-    dispatch(printFlights(filterDepartures));
-    return flights;
   };
 
   return (
@@ -121,7 +98,7 @@ const mapState = (state) => {
   return {
     arrivals: searchFlightsSelector(state),
     departures: searchFlightsSelector(state),
-    flightsList: flightsSelector(state),
+    flights: flightsSelector(state),
     searchFlight: searchFlightsSelector(state),
   };
 };

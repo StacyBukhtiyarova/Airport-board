@@ -1,16 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  useNavigate,
-  createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
-
 import './datePanel.scss';
 
 const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const oneDayMs = 86400000;
   const dateOptions = {
     day: '2-digit',
@@ -27,40 +19,18 @@ const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
     'ua-Ua',
     dateOptions
   );
-  const handleClickYesterday = (e) => {
+  const handleClickYesterday = () => {
     const yesterdayDate = new Date(new Date().getTime() - oneDayMs);
-
     onClickDate(yesterdayDate);
-    const searchParams = createSearchParams({
-      selectedDate: yesterdayDate.toLocaleDateString(),
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
   };
 
   const handleClickToday = () => {
     onClickDate(new Date());
-    const searchParams = createSearchParams({
-      selectedDate: new Date().toLocaleDateString(),
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
   };
 
   const handleClickTomorrow = () => {
     const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
     onClickDate(tomorrowDate);
-    const searchParams = createSearchParams({
-      selectedDate: tomorrowDate.toLocaleDateString(),
-    });
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString(),
-    });
   };
 
   return (
