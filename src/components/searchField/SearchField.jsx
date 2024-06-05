@@ -16,9 +16,9 @@ import {
 } from '../../redux/actions.js';
 import './searchField.scss';
 
-const SearchField = ({ searchFlights, flights, setFlights }) => {
+const SearchField = ({ searchFlights, flights, setFlights,input,setInput }) => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState('');
+ // const [input, setInput] = useState('');
 
   const onClickSearchFlight = (e) => {
     dispatch(searchFlights(e.target.value));

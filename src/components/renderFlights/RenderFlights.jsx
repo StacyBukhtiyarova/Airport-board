@@ -19,18 +19,15 @@ const RenderFlights = ({ filterCodeShare, searchFlight, flights, input }) => {
   const [searchParams] = useSearchParams();
   const flightTypeParam = searchParams.get('type');
   const [renderedFlights, setRenderedFlights] = useState([]);
-  console.log(input);
+  const a = '';
   useEffect(() => {
     setRenderedFlights(flights);
 
-    if (
-      searchFlight.searchFlights.searchFlight !== undefined ||
-      searchFlight.searchFlights.searchFlight === ''
-    ) {
+    if (input !== '') {
       setRenderedFlights(filterCodeShare);
     }
   }, [flights]);
-
+  console.log(renderedFlights);
   return (
     <ul className="flights-list__voyages">
       {flightTypeParam === 'arrivals'

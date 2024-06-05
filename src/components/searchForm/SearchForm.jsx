@@ -68,7 +68,7 @@ const SearchForm = ({ searchFlight }) => {
       const formattedDate = `${year}-${month}-${day}`;
       setPickedDate(new Date(formattedDate));
       fetchFlightsForDate(new Date(formattedDate));
-    } 
+    }
   }, [searchParams]);
 
   const filterCodeShare = flights.filter(({ codeShare }) =>
@@ -81,6 +81,8 @@ const SearchForm = ({ searchFlight }) => {
       <SearchField
         flights={flights}
         setFlights={setFlights}
+        input={input}
+        setInput={setInput}
       />
       <FlightButtons
         filterCodeShare={filterCodeShare}
@@ -97,7 +99,6 @@ const SearchForm = ({ searchFlight }) => {
       <FlightsTitles filterCodeShare={filterCodeShare} />
 
       <RenderFlights
-        
         filterCodeShare={filterCodeShare}
         flights={flights}
         input={input}
