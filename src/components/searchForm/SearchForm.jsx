@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   useNavigate,
   createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
-  flightsSelector,
-  searchFlightsSelector,
-} from '../../redux/selector.js';
+import { searchFlightsSelector } from '../../redux/selector.js';
 
 import fetchRequest from '../../gateways/serverRequests.js';
 import RenderFlights from '../renderFlights/RenderFlights.jsx';
@@ -17,8 +14,6 @@ import FlightsTitles from '../flightTitles/FlightsTitles.jsx';
 import SearchField from '../searchField/SearchField.jsx';
 import DatePanel from '../datePanel/DatePanel.jsx';
 import FlightButtons from '../flightButtons/FlightButtons.jsx';
-
-import { searchFlights, printFlights } from '../../redux/actions.js';
 
 const SearchForm = ({ searchFlight }) => {
   const [input, setInput] = useState('');
@@ -43,11 +38,18 @@ const SearchForm = ({ searchFlight }) => {
       setFlights(filteredFlights);
     });
   };
-
   const onChangeDate = (e) => {
     const date = new Date(e.target.value);
     setPickedDate(date);
-    fetchFlightsForDate(date);
+    fetchFlightsForDate(date, searchFlight.searchFlights.searchFlight);
+    const searchParams = createSearchParams({
+      selectedDate: date.toLocaleDateString(),
+      type: 'departures',
+    });
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
   };
 
   const pickedDateFromURL = searchParams.get('selectedDate');
@@ -74,7 +76,6 @@ const SearchForm = ({ searchFlight }) => {
   const filterCodeShare = flights.filter(({ codeShare }) =>
     codeShare.includes(searchFlight.searchFlights.searchFlight)
   );
-  console.log(filterCodeShare);
 
   return (
     <div className="container">
@@ -99,6 +100,7 @@ const SearchForm = ({ searchFlight }) => {
       <FlightsTitles filterCodeShare={filterCodeShare} />
 
       <RenderFlights
+        setInput={setInput}
         filterCodeShare={filterCodeShare}
         flights={flights}
         input={input}
@@ -108,20 +110,11 @@ const SearchForm = ({ searchFlight }) => {
 };
 
 const mapState = (state) => {
-  return {
-    flightsList: flightsSelector(state),
-    searchFlight: searchFlightsSelector(state),
-  };
+  return { searchFlight: searchFlightsSelector(state) };
 };
 
-const mapDispatch = {
-  printFlights,
-  searchFlights,
-};
-
-export default connect(mapState, mapDispatch)(SearchForm);
+export default connect(mapState)(SearchForm);
 
 SearchForm.propTypes = {
-  searchFlights: PropTypes.func,
-  printFlights: PropTypes.func,
+  searchFlight: PropTypes.object,
 };

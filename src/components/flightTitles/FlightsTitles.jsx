@@ -19,6 +19,5 @@ const FlightsTitles = ({ filterCodeShare }) => {
 
 export default FlightsTitles;
 FlightsTitles.propTypes = {
-  filterArrivals: PropTypes.array,
-  filterDepartures: PropTypes.array,
+  filterCodeShare: PropTypes.array,
 };

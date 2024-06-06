@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { printFlights, searchFlights } from '../../redux/actions';
+import { printFlights } from '../../redux/actions';
 import {
   useNavigate,
   createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
-import { flightsSelector, searchFlightsSelector } from '../../redux/selector';
+import { flightsSelector } from '../../redux/selector';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -91,12 +91,10 @@ const FlightButtons = ({ pickedDate, printFlights, filterCodeShare }) => {
 const mapState = (state) => {
   return {
     flights: flightsSelector(state),
-    searchFlight: searchFlightsSelector(state),
   };
 };
 const mapDispatch = {
   printFlights,
-  searchFlights,
 };
 export default connect(mapState, mapDispatch)(FlightButtons);
 

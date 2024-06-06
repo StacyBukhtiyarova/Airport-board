@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import './datePanel.scss';
 
 const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
@@ -40,6 +42,10 @@ const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
         type="date"
         onChange={(e) => onChangeDate(e)}
         className="date-panel__container input__type-date"
+      />
+      <FontAwesomeIcon
+        className="calendar-icon"
+        icon={faCalendar}
       />
       <div className="date-panel__container">
         <span>{yesterday}</span>
@@ -97,6 +103,8 @@ const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
 
 DatePanel.propTypes = {
   onClickDate: PropTypes.func.isRequired,
+  onChangeDate: PropTypes.func,
+  pickedDate: PropTypes.object,
 };
 
 export default DatePanel;

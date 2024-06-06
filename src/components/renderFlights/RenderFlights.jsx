@@ -1,33 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
 
 import './renderFlights.scss';
-import {
-  flightsSelector,
-  searchFlightsSelector,
-} from '../../redux/selector.js';
-import {
-  searchFlights,
-  printArrivals,
-  printDepartures,
-  printFlights,
-} from '../../redux/actions.js';
 
-const RenderFlights = ({ filterCodeShare, searchFlight, flights, input }) => {
+const RenderFlights = ({ filterCodeShare, flights, input }) => {
   const [searchParams] = useSearchParams();
   const flightTypeParam = searchParams.get('type');
   const [renderedFlights, setRenderedFlights] = useState([]);
-  const a = '';
+
   useEffect(() => {
     setRenderedFlights(flights);
-
     if (input !== '') {
       setRenderedFlights(filterCodeShare);
     }
   }, [flights]);
-  console.log(renderedFlights);
+
   return (
     <ul className="flights-list__voyages">
       {flightTypeParam === 'arrivals'
@@ -110,23 +98,10 @@ const RenderFlights = ({ filterCodeShare, searchFlight, flights, input }) => {
   );
 };
 
-const mapState = (state) => {
-  return {
-    flightsList: flightsSelector(state),
-    searchFlight: searchFlightsSelector(state),
-  };
-};
-
-const mapDispatch = {
-  printDepartures,
-  printArrivals,
-  printFlights,
-  searchFlights,
-};
-
-export default connect(mapState, mapDispatch)(RenderFlights);
+export default RenderFlights;
 
 RenderFlights.propTypes = {
-  filterArrivals: PropTypes.array,
-  filterDepartures: PropTypes.array,
+  filterCodeShare: PropTypes.array,
+  input: PropTypes.string,
+  flights: PropTypes.array,
 };

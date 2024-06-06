@@ -56,6 +56,16 @@
   &::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
   }
 
   &:hover {
@@ -66,15 +76,11 @@
   background-color: #1eb7ee;
 }
 
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        background: transparent;
-        bottom: 0;
-        color: transparent;
-        cursor: pointer;
-        height: auto;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: auto;
-    }
+
+.calendar-icon {
+  height: 20px;
+  position: relative;
+  left: -10px;
+  top: 26px;
+
+}
