@@ -70,16 +70,12 @@ import { connect, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  flightsSelector,
-  searchFlightsSelector,
-} from '../../redux/selector.js';
+import { searchFlightsSelector } from '../../redux/selector.js';
 import { searchFlights, printFlights } from '../../redux/actions.js';
 import './searchField.scss';
 
 const SearchField = ({ flights, setFlights, input, setInput }) => {
   const dispatch = useDispatch();
-  const [selectedDate, setSelectedDate] = useState(null);
 
   const onClickSearchFlight = (e) => {
     setInput(e.target.value);
@@ -92,7 +88,6 @@ const SearchField = ({ flights, setFlights, input, setInput }) => {
     setFlights(filterCodeShare);
     dispatch(printFlights(filterCodeShare));
     dispatch(searchFlights(input));
-    
   };
 
   return (
