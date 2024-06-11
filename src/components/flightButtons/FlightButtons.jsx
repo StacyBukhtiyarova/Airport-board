@@ -24,7 +24,6 @@ const FlightButtons = ({ pickedDate, printFlights, filterCodeShare }) => {
 
   const onClickArrivals = () => {
     dispatch(printFlights(filterCodeShare));
-
     const searchParams = createSearchParams({
       selectedDate: pickedDate.toLocaleDateString(),
       type: 'arrivals',

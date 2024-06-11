@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './flightsTitles.scss';
 
-const FlightsTitles = ({ filterCodeShare }) => {
-  return filterCodeShare.length > 0 ? (
+const FlightsTitles = ({ filterCodeShare, flights }) => {
+
+  return filterCodeShare.length > 0 || flights.length > 0 ? (
     <ul className="flights-list">
       <li className="flights-list__titles">Термінал</li>
       <li className="flights-list__titles">Розклад</li>
@@ -19,5 +20,5 @@ const FlightsTitles = ({ filterCodeShare }) => {
 
 export default FlightsTitles;
 FlightsTitles.propTypes = {
-  filterCodeShare: PropTypes.array,
+  renderedFlights: PropTypes.array,
 };

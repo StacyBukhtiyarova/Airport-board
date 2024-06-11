@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
-
 import './renderFlights.scss';
 
 const RenderFlights = ({ filterCodeShare, flights, input }) => {
@@ -91,7 +90,7 @@ const RenderFlights = ({ filterCodeShare, flights, input }) => {
               );
             }
           )}
-      {filterCodeShare.length === 0 && (
+      {renderedFlights.length === 0 && (
         <span className="no-flights">No flights</span>
       )}
     </ul>

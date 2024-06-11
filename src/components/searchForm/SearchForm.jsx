@@ -15,7 +15,7 @@ import SearchField from '../searchField/SearchField.jsx';
 import DatePanel from '../datePanel/DatePanel.jsx';
 import FlightButtons from '../flightButtons/FlightButtons.jsx';
 
-const SearchForm = ({ searchFlight }) => {
+const SearchForm = ({ searchFlight, renderedFlights }) => {
   const [input, setInput] = useState('');
   const [flights, setFlights] = useState([]);
   const [pickedDate, setPickedDate] = useState(new Date());
@@ -71,7 +71,7 @@ const SearchForm = ({ searchFlight }) => {
       setPickedDate(new Date(formattedDate));
       fetchFlightsForDate(new Date(formattedDate));
     }
-  }, [searchParams]);
+  }, [searchParams, searchFlight]);
 
   const filterCodeShare = flights.filter(({ codeShare }) =>
     codeShare.includes(searchFlight.searchFlights.searchFlight)
@@ -97,8 +97,11 @@ const SearchForm = ({ searchFlight }) => {
         onClickDate={onClickDate}
         pickedDate={pickedDate}
       />
-      <FlightsTitles filterCodeShare={filterCodeShare} />
-
+      <FlightsTitles
+        renderedFlights={renderedFlights}
+        filterCodeShare={filterCodeShare}
+        flights={flights}
+      />
       <RenderFlights
         setInput={setInput}
         filterCodeShare={filterCodeShare}
@@ -108,7 +111,6 @@ const SearchForm = ({ searchFlight }) => {
     </div>
   );
 };
-
 const mapState = (state) => {
   return { searchFlight: searchFlightsSelector(state) };
 };
