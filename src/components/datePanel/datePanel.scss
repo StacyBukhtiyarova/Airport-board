@@ -10,7 +10,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    width: 192px;
+    width: 28%;
     &:hover {
       background-color: #1eb7ee;
       .date-panel__line {
@@ -29,7 +29,7 @@
 
   &__line {
     display: block;
-    width: 192px;
+    width: 100%;
     height: 5px;
     border-bottom: 5px solid #fff;
   }
