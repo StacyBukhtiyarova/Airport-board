@@ -53,68 +53,70 @@ const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
   };
 
   return (
-    <div className="date-panel">
-      <input
-        value={pickedDate.toISOString().split('T')[0]}
-        type="date"
-        onChange={(e) => onChangeDate(e)}
-        className="date-panel__container input__type-date"
-      />
+    <>
       <FontAwesomeIcon
         className="calendar-icon"
         icon={faCalendar}
       />
-      <div className="date-panel__container">
-        <span>{yesterday}</span>
-        <button
-          onClick={handleClickYesterday}
-          className="date-panel__button">
-          <span>YESTERDAY</span>
-        </button>
-        <span
-          className="date-panel__line"
-          style={{
-            borderBottomColor:
-              pickedDate.toDateString() ===
-              new Date(new Date().getTime() - oneDayMs).toDateString()
-                ? '#1eb7ee'
-                : '',
-          }}></span>
+      <div className="date-panel">
+        <input
+          value={pickedDate.toISOString().split('T')[0]}
+          type="date"
+          onChange={(e) => onChangeDate(e)}
+          className="date-panel__container input__type-date"></input>
+
+        <div className="date-panel__container">
+          <span>{yesterday}</span>
+          <button
+            onClick={handleClickYesterday}
+            className="date-panel__button">
+            <span>YESTERDAY</span>
+          </button>
+          <span
+            className="date-panel__line"
+            style={{
+              borderBottomColor:
+                pickedDate.toDateString() ===
+                new Date(new Date().getTime() - oneDayMs).toDateString()
+                  ? '#1eb7ee'
+                  : '',
+            }}></span>
+        </div>
+        <div className="date-panel__container">
+          <span>{today}</span>
+          <button
+            onClick={handleClickToday}
+            className="date-panel__button">
+            <span>TODAY</span>
+          </button>
+          <span
+            className="date-panel__line"
+            style={{
+              borderBottomColor:
+                pickedDate.toDateString() === new Date().toDateString()
+                  ? '#1eb7ee'
+                  : '',
+            }}></span>
+        </div>
+        <div className="date-panel__container">
+          <span>{tomorrow}</span>
+          <button
+            onClick={handleClickTomorrow}
+            className="date-panel__button">
+            <span>TOMORROW</span>
+          </button>
+          <span
+            className="date-panel__line"
+            style={{
+              borderBottomColor:
+                pickedDate.toDateString() ===
+                new Date(new Date().getTime() + oneDayMs).toDateString()
+                  ? '#1eb7ee'
+                  : '',
+            }}></span>
+        </div>
       </div>
-      <div className="date-panel__container">
-        <span>{today}</span>
-        <button
-          onClick={handleClickToday}
-          className="date-panel__button">
-          <span>TODAY</span>
-        </button>
-        <span
-          className="date-panel__line"
-          style={{
-            borderBottomColor:
-              pickedDate.toDateString() === new Date().toDateString()
-                ? '#1eb7ee'
-                : '',
-          }}></span>
-      </div>
-      <div className="date-panel__container">
-        <span>{tomorrow}</span>
-        <button
-          onClick={handleClickTomorrow}
-          className="date-panel__button">
-          <span>TOMORROW</span>
-        </button>
-        <span
-          className="date-panel__line"
-          style={{
-            borderBottomColor:
-              pickedDate.toDateString() ===
-              new Date(new Date().getTime() + oneDayMs).toDateString()
-                ? '#1eb7ee'
-                : '',
-          }}></span>
-      </div>
-    </div>
+    </>
   );
 };
 
