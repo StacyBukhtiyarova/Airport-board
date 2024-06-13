@@ -1,10 +1,11 @@
 .date-panel {
   display: flex;
-  justify-content: flex-end;
-  width: 700px;
-  margin-left: 27.5%;
-  text-align: center;
+  margin: auto;
+  position: relative;
+  left: 1%;
   border: 1.5px solid;
+  text-align: center;
+  width: 48%;
 
   &__container {
     display: flex;
@@ -32,26 +33,19 @@
     height: 5px;
     border-bottom: 5px solid #fff;
   }
-
-  &__calendar-icon {
-    height: 40px;
-    width: 40px;
-    margin-top: 10px;
-    margin-right: 25px;
-    color: #fff;
-  }
 }
 
 .input__type-date {
   display: block;
-  position: absolute;
-  left: 27.5%;
+  position: relative;
+  left: 2%;
   height: 75px;
   width: 120px;
   background-color: transparent;
   color: #fff;
-  border: 1px solid;
+  //border: 1px solid;
   cursor: pointer;
+  margin: 0;
 
   &::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -76,11 +70,9 @@
   background-color: #1eb7ee;
 }
 
-
 .calendar-icon {
   height: 20px;
   position: relative;
-  left: -10px;
+  left: -5px;
   top: 26px;
-
 }

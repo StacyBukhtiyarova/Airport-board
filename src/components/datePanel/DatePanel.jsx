@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import './datePanel.scss';
 
-const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
+const DatePanel = ({ onClickDate, pickedDate, onChangeDate }) => {
+  const navigate = useNavigate();
   const oneDayMs = 86400000;
   const dateOptions = {
     day: '2-digit',
@@ -21,18 +23,33 @@ const DatePanel = ({ onClickDate, onChangeDate, pickedDate }) => {
     'ua-Ua',
     dateOptions
   );
+
   const handleClickYesterday = () => {
     const yesterdayDate = new Date(new Date().getTime() - oneDayMs);
     onClickDate(yesterdayDate);
+    updateURL(yesterdayDate);
   };
 
   const handleClickToday = () => {
     onClickDate(new Date());
+    updateURL(new Date());
   };
 
   const handleClickTomorrow = () => {
     const tomorrowDate = new Date(new Date().getTime() + oneDayMs);
     onClickDate(tomorrowDate);
+    updateURL(tomorrowDate);
+  };
+
+  const updateURL = (date) => {
+    const searchParams = createSearchParams({
+      selectedDate: date.toLocaleDateString(),
+      type: 'departures',
+    });
+    navigate({
+      pathname: location.pathname,
+      search: decodeURIComponent(searchParams.toString()),
+    });
   };
 
   return (
