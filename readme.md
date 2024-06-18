@@ -4,6 +4,7 @@
 
 Layout support desktop (up-to-1920) version.
 
+To check the flights select,for example, 04.04.2023,05.01.2022, 30.03.2023 date
 ### The tech stack is:
 
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
